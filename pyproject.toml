@@ -1,0 +1,5 @@
+[project]
+name = "fx-bias-radar-engine"
+version = "0.1.0"
+description = "FX Bias Radar Python engine - M0 OANDA data access scaffold"
+requires-python = ">=3.11"
