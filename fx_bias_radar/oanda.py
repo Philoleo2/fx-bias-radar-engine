@@ -55,15 +55,22 @@ class OandaClient:
         instrument: str,
         *,
         granularity: str = "H4",
-        count: int = 10,
+        count: int | None = 10,
+        from_time: str | None = None,
+        to_time: str | None = None,
         price: str = "M",
         include_incomplete: bool = False,
     ) -> list[Candle]:
         params = {
             "granularity": granularity,
-            "count": str(count),
             "price": price,
         }
+        if from_time:
+            params["from"] = from_time
+            if to_time:
+                params["to"] = to_time
+        elif count is not None:
+            params["count"] = str(count)
         payload = self._request_json(
             "GET",
             f"/v3/instruments/{instrument}/candles",

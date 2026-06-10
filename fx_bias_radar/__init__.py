@@ -1,5 +1,6 @@
-"""FX Bias Radar Python engine package."""
+"""FX Bias Radar - Python engine (M1 port of Pine Production v1.1).
 
-__all__ = ["__version__"]
+Radar of attention only: no entries, no lines, no orders, no alerts (M2).
+"""
 
-__version__ = "0.1.0"
+__version__ = "1.1.0-m1"

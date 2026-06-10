@@ -1,0 +1,36 @@
+# Scheduled H4 scan - DISATTIVATO fino al gate M1 (fix review Codex, Finding 1).
+# Lo schedule e' commentato: il merge di questo file NON attiva alcun cron.
+# Resta solo workflow_dispatch (run manuale) per i test di parita' live.
+#
+# DOPO il gate M1 (golden test verdi + parita' live 3-5 giorni confermata da
+# Leonardo): de-commentare il blocco "schedule" qui sotto.
+name: h4-scan
+
+on:
+  # schedule:
+  #   - cron: "5 1,5,9,13,17,21 * * *"   # de-commentare SOLO dopo il gate M1
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run H4 scan
+        env:
+          OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
+          OANDA_ENV: practice
+        run: python scripts/run_h4_scan.py --oanda --count 500 --out reports
+      - name: Commit report
+        run: |
+          git config user.name "fx-bias-radar-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add reports/
+          git diff --cached --quiet || git commit -m "H4 scan report [skip ci]"
+          git push
