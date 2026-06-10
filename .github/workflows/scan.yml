@@ -22,15 +22,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Check OANDA secret
+        env:
+          OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$OANDA_ACCESS_TOKEN" ]; then
+            echo "OANDA_ACCESS_TOKEN secret is missing or empty"
+            exit 1
+          fi
       - name: Run H4 scan
         env:
           OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
           OANDA_ENV: practice
-        run: python scripts/run_h4_scan.py --oanda --count 500 --out reports
+        run: python scripts/run_h4_scan.py --oanda --count 500 --out reports/actions
       - name: Commit report
         run: |
           git config user.name "fx-bias-radar-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add reports/
+          git add -f reports/actions/
           git diff --cached --quiet || git commit -m "H4 scan report [skip ci]"
           git push
