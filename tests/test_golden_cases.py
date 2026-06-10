@@ -38,6 +38,13 @@ def day(results, date):
     return [r for r in results if r.time.startswith(date)]
 
 
+def bar_at(results, timestamp):
+    bars = [r for r in results if r.time == timestamp]
+    if not bars:
+        raise AssertionError(f"missing bar {timestamp}")
+    return bars[0]
+
+
 @unittest.skipUnless(os.path.isdir(FIXTURES),
                      "golden fixtures missing: run scripts/build_fixtures.py")
 class TestGoldenEURUSD(unittest.TestCase):
@@ -111,9 +118,11 @@ class TestGoldenFlatNegatives(unittest.TestCase):
         self.assertTrue(all(not r.display_active for r in bars))
 
     def test_gbpjpy_flat_2026_06_04(self):
-        bars = day(_results("GBPJPY"), "2026-06-04")
-        self.assertTrue(bars)
-        self.assertTrue(all(not r.display_active for r in bars))
+        # Screenshot evidence was punctual (2026-06-04 19:48 UTC+2). The last
+        # closed OANDA H4 bar before that screenshot is 13:00 UTC; earlier same
+        # day bars can still carry an old SHORT/RESUME and are out of scope.
+        bar = bar_at(_results("GBPJPY"), "2026-06-04T13:00:00+00:00")
+        self.assertFalse(bar.display_active)
 
     def test_audcad_flat_2026_06_04(self):
         bars = day(_results("AUDCAD"), "2026-06-04")
