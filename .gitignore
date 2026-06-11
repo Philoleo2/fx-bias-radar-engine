@@ -11,3 +11,5 @@ venv/
 reports/
 *.log
 .codex_tmp_*/
+
+.vercel
