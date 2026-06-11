@@ -5,6 +5,7 @@ const els = {
   tokenInput: document.getElementById("tokenInput"),
   saveToken: document.getElementById("saveTokenBtn"),
   changeToken: document.getElementById("changeTokenBtn"),
+  barLabel: document.getElementById("barLabel"),
   lastBar: document.getElementById("lastBar"),
   generatedAt: document.getElementById("generatedAt"),
   source: document.getElementById("source"),
@@ -49,8 +50,9 @@ function isLivePayload(data) {
     && String(data.source || "").toLowerCase().startsWith("oanda "));
 }
 
-function setLiveState(isLive, cacheHit = false) {
-  els.cacheState.textContent = isLive ? (cacheHit ? "LIVE OANDA (cache)" : "LIVE OANDA") : "NON LIVE";
+function setLiveState(isLive, cacheHit = false, barStatus = "closed") {
+  const suffix = barStatus === "forming" ? " INTRABAR" : "";
+  els.cacheState.textContent = isLive ? (cacheHit ? `LIVE OANDA${suffix} (cache)` : `LIVE OANDA${suffix}`) : "NON LIVE";
   els.cacheState.className = isLive ? "live-ok" : "live-error";
 }
 
@@ -104,7 +106,7 @@ async function loadScan() {
 
   setStatus("Aggiorno", "loading");
   try {
-    const response = await fetch("/api/scan", {
+    const response = await fetch("/api/scan?mode=intrabar", {
       headers: { Authorization: `Bearer ${saved}` },
       cache: "no-store",
     });
@@ -132,11 +134,17 @@ async function loadScan() {
 }
 
 function render(data) {
-  els.lastBar.textContent = formatTime(data.last_closed_h4_utc);
+  const isForming = data.bar_status === "forming";
+  els.barLabel.textContent = isForming ? "H4 in corso, chiude" : "Ultima H4 chiusa";
+  els.lastBar.textContent = formatTime(isForming ? data.analyzed_h4_close_utc : data.last_closed_h4_utc);
   els.generatedAt.textContent = formatTime(data.generated_at_utc);
   els.source.textContent = data.source || "-";
-  setLiveState(true, Boolean(data.cache && data.cache.hit));
-  renderWarnings(data.warnings || []);
+  setLiveState(true, Boolean(data.cache && data.cache.hit), data.bar_status);
+  const warnings = [...(data.warnings || [])];
+  if (isForming) {
+    warnings.unshift("Anteprima intrabar: allineata a TradingView live, puo' cambiare fino alla chiusura H4.");
+  }
+  renderWarnings(warnings);
   renderFocus(data.focus || []);
   renderPairs(data.pairs || []);
 }

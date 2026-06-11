@@ -34,6 +34,60 @@ class TestScanApiLiveOnly(unittest.TestCase):
                 scan_api.build_scan_payload()
             fallback.assert_not_called()
 
+    def test_default_dashboard_scan_uses_intrabar_oanda(self):
+        os.environ["OANDA_ACCESS_TOKEN"] = "secret-token"
+        os.environ["OANDA_ENV"] = "practice"
+        os.environ["CACHE_SECONDS"] = "0"
+        report = {
+            "run_time_utc": "2026-06-11T19:30:00+00:00",
+            "analyzed_bar_utc": "2026-06-11T17:00:00+00:00",
+            "analyzed_bar_close_utc": "2026-06-11T21:00:00+00:00",
+            "bar_status": "forming",
+            "last_complete_bar_utc": "2026-06-11T13:00:00+00:00",
+            "last_complete_bar_close_utc": "2026-06-11T17:00:00+00:00",
+            "last_aligned_bar_utc": "2026-06-11T17:00:00+00:00",
+            "last_closed_bar_utc": "2026-06-11T17:00:00+00:00",
+            "misaligned_pairs": [],
+            "focus": [],
+            "events_this_bar": [],
+            "hidden_this_bar": [],
+            "pairs": [],
+            "disclaimer": "Radar di attenzione: decisione sulle linee manuali.",
+        }
+        with patch.object(scan_api.S, "run_scan_from_oanda", return_value=report) as run:
+            payload = scan_api.build_scan_payload()
+        run.assert_called_once()
+        self.assertTrue(run.call_args.kwargs["include_incomplete"])
+        self.assertEqual(payload["requested_mode"], "intrabar")
+        self.assertEqual(payload["bar_status"], "forming")
+
+    def test_closed_mode_keeps_incomplete_bars_out(self):
+        os.environ["OANDA_ACCESS_TOKEN"] = "secret-token"
+        os.environ["OANDA_ENV"] = "practice"
+        os.environ["CACHE_SECONDS"] = "0"
+        report = {
+            "run_time_utc": "2026-06-11T19:30:00+00:00",
+            "analyzed_bar_utc": "2026-06-11T13:00:00+00:00",
+            "analyzed_bar_close_utc": "2026-06-11T17:00:00+00:00",
+            "bar_status": "closed",
+            "last_complete_bar_utc": "2026-06-11T13:00:00+00:00",
+            "last_complete_bar_close_utc": "2026-06-11T17:00:00+00:00",
+            "last_aligned_bar_utc": "2026-06-11T13:00:00+00:00",
+            "last_closed_bar_utc": "2026-06-11T17:00:00+00:00",
+            "misaligned_pairs": [],
+            "focus": [],
+            "events_this_bar": [],
+            "hidden_this_bar": [],
+            "pairs": [],
+            "disclaimer": "Radar di attenzione: decisione sulle linee manuali.",
+        }
+        with patch.object(scan_api.S, "run_scan_from_oanda", return_value=report) as run:
+            payload = scan_api.build_scan_payload(mode="closed")
+        run.assert_called_once()
+        self.assertFalse(run.call_args.kwargs["include_incomplete"])
+        self.assertEqual(payload["requested_mode"], "closed")
+        self.assertEqual(payload["bar_status"], "closed")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -24,9 +24,11 @@ class AlignInfo:
     times: List[str]
     latest_by_pair: Dict[str, str]
     misaligned_pairs: List[str]  # pairs whose own latest != global aligned latest
+    latest_complete_by_pair: Dict[str, str] | None = None
+    latest_aligned_is_complete: bool = True
 
 
-def align(candles_by_pair: Dict[str, List[Candle]]):
+def align(candles_by_pair: Dict[str, List[Candle]], *, include_incomplete: bool = False):
     """Align complete candles on the common UTC timestamp grid.
 
     Returns (times, closes_by_pair, AlignInfo). M1.1 requirement: report the
@@ -34,10 +36,15 @@ def align(candles_by_pair: Dict[str, List[Candle]]):
     """
     sets = []
     latest = {}
+    latest_complete = {}
     for pair, cs in candles_by_pair.items():
-        ts = [c.time for c in cs if c.complete]
-        if not ts:
+        complete_ts = [c.time for c in cs if c.complete]
+        if not complete_ts:
             raise ValueError(f"no complete candles for {pair}")
+        latest_complete[pair] = max(complete_ts)
+        ts = [c.time for c in cs if include_incomplete or c.complete]
+        if not ts:
+            raise ValueError(f"no candles for {pair}")
         sets.append(set(ts))
         latest[pair] = max(ts)
     common = set.intersection(*sets)
@@ -45,13 +52,18 @@ def align(candles_by_pair: Dict[str, List[Candle]]):
     if not times:
         raise ValueError("no common timestamps across pairs")
     closes = {}
+    complete_by_pair = {}
     for pair, cs in candles_by_pair.items():
-        by_t = {c.time: c.c for c in cs if c.complete}
+        by_t = {c.time: c.c for c in cs if include_incomplete or c.complete}
+        complete_by_pair[pair] = {c.time: c.complete for c in cs}
         closes[pair] = [by_t[t] for t in times]
     aligned_latest = times[-1]
     misaligned = sorted(p for p, t in latest.items() if t != aligned_latest)
+    aligned_complete = all(complete_by_pair[p].get(aligned_latest, False) for p in candles_by_pair)
     return times, closes, AlignInfo(times=times, latest_by_pair=latest,
-                                    misaligned_pairs=misaligned)
+                                    misaligned_pairs=misaligned,
+                                    latest_complete_by_pair=latest_complete,
+                                    latest_aligned_is_complete=aligned_complete)
 
 
 def save_fixture_dir(path: str, candles_by_pair: Dict[str, List[Candle]]) -> None:

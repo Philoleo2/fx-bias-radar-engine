@@ -30,13 +30,17 @@ def build_scan_report(
     run_time_utc: Optional[str] = None,
     focus_max_rows: int = 5,
     focus_cluster_cap: int = 2,
+    include_incomplete: bool = False,
 ) -> dict:
     """Run the validated engine on an already loaded candle universe."""
     missing = [pair for pair in P.PAIRS if pair not in candles_by_pair]
     if missing:
         raise ValueError(f"coppie mancanti: {missing}")
 
-    times, closes, align_info = C.align(candles_by_pair)
+    times, closes, align_info = C.align(
+        candles_by_pair,
+        include_incomplete=include_incomplete,
+    )
     cd = CI.build(times, closes)
 
     last_by_pair = {}
@@ -58,11 +62,13 @@ def run_scan_from_fixtures(
     fixtures_dir: str,
     *,
     run_time_utc: Optional[str] = None,
+    include_incomplete: bool = False,
 ) -> dict:
     """Run a scan from fixture JSON files."""
     return build_scan_report(
         C.load_fixture_dir(fixtures_dir),
         run_time_utc=run_time_utc,
+        include_incomplete=include_incomplete,
     )
 
 
@@ -71,6 +77,7 @@ def run_scan_from_oanda(
     token: Optional[str] = None,
     env: Optional[str] = None,
     count: int = DEFAULT_COUNT,
+    include_incomplete: bool = False,
 ) -> dict:
     """Fetch live OANDA H4 candles and run the shared scan."""
     from .oanda_fetch import env_credentials, fetch_all_pairs
@@ -78,8 +85,16 @@ def run_scan_from_oanda(
     if token is None:
         token, resolved_env = env_credentials()
         env = env or resolved_env
-    candles_by_pair = fetch_all_pairs(token, env=env or "practice", count=count)
-    return build_scan_report(candles_by_pair)
+    candles_by_pair = fetch_all_pairs(
+        token,
+        env=env or "practice",
+        count=count,
+        include_incomplete=include_incomplete,
+    )
+    return build_scan_report(
+        candles_by_pair,
+        include_incomplete=include_incomplete,
+    )
 
 
 def latest_report_path(report_dir: str = "reports/actions") -> Optional[str]:
@@ -118,6 +133,7 @@ def dashboard_payload(
     source: str,
     warnings: Optional[List[str]] = None,
     cache_hit: bool = False,
+    requested_mode: str = "closed",
 ) -> dict:
     """Build the public dashboard JSON payload.
 
@@ -131,16 +147,27 @@ def dashboard_payload(
             "Alcune coppie non sono allineate sull'ultima H4 chiusa."
         )
     is_live = source.strip().lower().startswith("oanda ")
+    bar_status = report.get("bar_status", "closed")
     return {
         "ok": True,
         "data_status": "live" if is_live else "fallback",
         "is_live": is_live,
+        "requested_mode": requested_mode,
+        "bar_status": bar_status,
         "generated_at_utc": report["run_time_utc"],
+        "analyzed_h4_utc": report["analyzed_bar_utc"],
+        "analyzed_h4_close_utc": report["analyzed_bar_close_utc"],
         "last_closed_h4_utc": report.get(
-            "last_closed_bar_utc",
+            "last_complete_bar_close_utc",
+            report.get(
+                "last_closed_bar_utc",
+                report["last_aligned_bar_utc"],
+            ),
+        ),
+        "last_closed_h4_open_utc": report.get(
+            "last_complete_bar_utc",
             report["last_aligned_bar_utc"],
         ),
-        "last_closed_h4_open_utc": report["last_aligned_bar_utc"],
         "source": source,
         "engine": ENGINE_LABEL,
         "cache": {"hit": bool(cache_hit)},

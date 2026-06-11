@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
 from .candles import Candle
@@ -52,16 +53,27 @@ def _client_for(token: str, env: str) -> OandaClient:
 
 def fetch_h4(instrument: str, token: str, env: str = "practice",
              count: Optional[int] = 500, from_time: Optional[str] = None,
-             to_time: Optional[str] = None) -> List[Candle]:
-    """Fetch H4 midpoint candles; only complete=True are returned."""
+             to_time: Optional[str] = None,
+             include_incomplete: bool = False) -> List[Candle]:
+    """Fetch H4 midpoint candles; by default only complete=True are returned."""
+    request_count = count
+    request_to = to_time
+    if include_incomplete and count is not None and from_time is None and to_time is None:
+        request_count = count + 1
+        request_to = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+
     raw = _client_for(token, env).candles(
         instrument,
         granularity="H4",
-        count=count,
+        count=request_count,
         from_time=from_time,
-        to_time=to_time,
+        to_time=request_to,
         price="M",
+        include_incomplete=include_incomplete,
     )
+    if include_incomplete and count is not None and raw and raw[-1].complete and len(raw) > count:
+        raw = raw[-count:]
+
     return [
         Candle(
             time=c.time.isoformat(),
@@ -73,13 +85,14 @@ def fetch_h4(instrument: str, token: str, env: str = "practice",
             complete=c.complete,
         )
         for c in raw
-        if c.complete
+        if include_incomplete or c.complete
     ]
 
 
 def fetch_all_pairs(token: str, env: str = "practice", count: int = 500,
                     from_time: Optional[str] = None,
                     to_time: Optional[str] = None,
+                    include_incomplete: bool = False,
                     max_workers: int = 8) -> Dict[str, List[Candle]]:
     """Fetch all 28 pairs concurrently to keep dashboard/API latency bounded."""
     out: Dict[str, List[Candle]] = {}
@@ -87,7 +100,8 @@ def fetch_all_pairs(token: str, env: str = "practice", count: int = 500,
 
     def fetch_pair(pair: str):
         return pair, fetch_h4(P.oanda_instrument(pair), token, env=env,
-                              count=count, from_time=from_time, to_time=to_time)
+                              count=count, from_time=from_time, to_time=to_time,
+                              include_incomplete=include_incomplete)
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {pool.submit(fetch_pair, pair): pair for pair in P.PAIRS}

@@ -38,13 +38,22 @@ def build_report(run_time_utc: str, align_info: AlignInfo,
         })
     events = [row for row in pairs_rows if row["attention_event"]]
     hidden = [row for row in pairs_rows if row["hidden_reason"]]
-    last_bar_open = align_info.times[-1]
+    analyzed_bar_open = align_info.times[-1]
+    latest_complete_values = list((align_info.latest_complete_by_pair or {}).values())
+    last_complete_bar_open = min(latest_complete_values) if latest_complete_values else analyzed_bar_open
+    analyzed_is_complete = bool(align_info.latest_aligned_is_complete)
     return {
         "run_time_utc": run_time_utc,
-        "last_aligned_bar_utc": last_bar_open,
-        "last_closed_bar_utc": _h4_close_time(last_bar_open),
+        "last_aligned_bar_utc": analyzed_bar_open,
+        "analyzed_bar_utc": analyzed_bar_open,
+        "analyzed_bar_close_utc": _h4_close_time(analyzed_bar_open),
+        "bar_status": "closed" if analyzed_is_complete else "forming",
+        "last_complete_bar_utc": last_complete_bar_open,
+        "last_complete_bar_close_utc": _h4_close_time(last_complete_bar_open),
+        "last_closed_bar_utc": _h4_close_time(last_complete_bar_open),
         "misaligned_pairs": align_info.misaligned_pairs,
         "latest_by_pair": align_info.latest_by_pair,
+        "latest_complete_by_pair": align_info.latest_complete_by_pair or {},
         "focus": [asdict(f) for f in focus_rows],
         "events_this_bar": events,
         "hidden_this_bar": hidden,
@@ -58,8 +67,11 @@ def render_markdown(rep: dict) -> str:
     L.append(f"# FX Bias Radar - scan {rep['run_time_utc']}")
     L.append("")
     close_time = rep.get("last_closed_bar_utc", rep["last_aligned_bar_utc"])
+    analyzed_open = rep.get("analyzed_bar_utc", rep["last_aligned_bar_utc"])
+    analyzed_close = rep.get("analyzed_bar_close_utc", close_time)
+    status = rep.get("bar_status", "closed")
     L.append(f"Ultima barra H4 chiusa (UTC): {close_time}")
-    L.append(f"Apertura barra H4 dati OANDA (UTC): {rep['last_aligned_bar_utc']}")
+    L.append(f"Barra H4 analizzata (UTC): {analyzed_open} -> {analyzed_close} ({status})")
     if rep["misaligned_pairs"]:
         L.append(f"ATTENZIONE coppie non allineate: {', '.join(rep['misaligned_pairs'])}")
     L.append("")

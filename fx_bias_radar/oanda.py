@@ -67,9 +67,9 @@ class OandaClient:
         }
         if from_time:
             params["from"] = from_time
-            if to_time:
-                params["to"] = to_time
-        elif count is not None:
+        if to_time:
+            params["to"] = to_time
+        if count is not None and not from_time:
             params["count"] = str(count)
         payload = self._request_json(
             "GET",

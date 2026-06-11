@@ -32,9 +32,17 @@ def _cache_seconds() -> int:
     return _int_query(os.environ.get("CACHE_SECONDS"), 0, 0, 600)
 
 
-def build_scan_payload(count: int = S.DEFAULT_COUNT) -> dict:
+def _scan_mode(value) -> str:
+    mode = str(value or "intrabar").strip().lower()
+    if mode in {"closed", "close", "h4close"}:
+        return "closed"
+    return "intrabar"
+
+
+def build_scan_payload(count: int = S.DEFAULT_COUNT, mode: str = "intrabar") -> dict:
+    mode = _scan_mode(mode)
     ttl = _cache_seconds()
-    cache_key = f"oanda:{count}"
+    cache_key = f"oanda:{mode}:{count}"
     now = time.time()
     if ttl > 0 and _CACHE["key"] == cache_key and _CACHE["payload"] is not None:
         if now - float(_CACHE["created"]) <= ttl:
@@ -48,8 +56,18 @@ def build_scan_payload(count: int = S.DEFAULT_COUNT) -> dict:
         raise RuntimeError("OANDA_ACCESS_TOKEN mancante: dati live non disponibili")
 
     try:
-        report = S.run_scan_from_oanda(token=token, env=env, count=count)
-        payload = S.dashboard_payload(report, source=f"OANDA {env}", cache_hit=False)
+        report = S.run_scan_from_oanda(
+            token=token,
+            env=env,
+            count=count,
+            include_incomplete=(mode == "intrabar"),
+        )
+        payload = S.dashboard_payload(
+            report,
+            source=f"OANDA {env}",
+            cache_hit=False,
+            requested_mode=mode,
+        )
     except Exception as exc:
         detail = sanitize_error(str(exc), [token])
         raise RuntimeError(f"OANDA live non disponibile: {detail}") from exc
@@ -76,8 +94,9 @@ class handler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         qs = parse_qs(parsed.query)
         count = _int_query((qs.get("count") or [S.DEFAULT_COUNT])[0], S.DEFAULT_COUNT, 400, 800)
+        mode = _scan_mode((qs.get("mode") or ["intrabar"])[0])
         try:
-            payload = build_scan_payload(count=count)
+            payload = build_scan_payload(count=count, mode=mode)
             self._send_json(payload, status=200)
         except Exception as exc:
             self._send_json(
