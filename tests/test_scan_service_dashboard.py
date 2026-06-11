@@ -54,5 +54,22 @@ class TestScanServiceDashboard(unittest.TestCase):
         self.assertEqual(cli_report["focus"], service_report["focus"])
 
 
+    def test_actions_fallback_path_independent_of_cwd(self):
+        """Review Sonnet (M2C): the Vercel function cwd is not the repo root;
+        the latest committed Actions report must still be found."""
+        reports_dir = os.path.join(ROOT, "reports", "actions")
+        if not os.path.isdir(reports_dir):
+            self.skipTest("no committed Actions reports in repo")
+        cwd = os.getcwd()
+        with tempfile.TemporaryDirectory() as tmp:
+            try:
+                os.chdir(tmp)
+                path = S.latest_report_path()
+                self.assertIsNotNone(path)
+                self.assertTrue(os.path.isfile(path))
+            finally:
+                os.chdir(cwd)
+
+
 if __name__ == "__main__":
     unittest.main()

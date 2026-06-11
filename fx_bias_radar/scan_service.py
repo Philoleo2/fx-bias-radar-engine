@@ -83,11 +83,21 @@ def run_scan_from_oanda(
 
 
 def latest_report_path(report_dir: str = "reports/actions") -> Optional[str]:
-    """Return the newest committed JSON scan report, if one exists."""
-    files = glob.glob(os.path.join(report_dir, "scan_*.json"))
-    if not files:
-        return None
-    return max(files, key=os.path.getmtime)
+    """Return the newest committed JSON scan report, if one exists.
+
+    Review Sonnet (M2C): relative dirs are also resolved against the repo
+    root, so the Actions fallback works when the serverless cwd is not the
+    repo root (e.g. Vercel). Display/infra only: engine untouched.
+    """
+    search_dirs = [report_dir]
+    if not os.path.isabs(report_dir):
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        search_dirs.append(os.path.join(repo_root, report_dir))
+    for directory in search_dirs:
+        files = glob.glob(os.path.join(directory, "scan_*.json"))
+        if files:
+            return max(files, key=os.path.getmtime)
+    return None
 
 
 def load_report_json(path: str) -> dict:
