@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FX Bias Radar</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Metodo Garlando</p>
+          <h1>FX Bias Radar</h1>
+          <p class="disclaimer">Radar di attenzione: decisione sulle linee manuali.</p>
+        </div>
+        <div class="top-actions">
+          <span id="statusPill" class="status-pill idle">In attesa</span>
+          <button id="refreshBtn" class="button primary" type="button">Aggiorna</button>
+        </div>
+      </header>
+
+      <section id="loginPanel" class="auth-panel">
+        <label for="tokenInput">Dashboard token</label>
+        <div class="auth-row">
+          <input id="tokenInput" type="password" autocomplete="current-password" placeholder="Token">
+          <button id="saveTokenBtn" class="button primary" type="button">Entra</button>
+        </div>
+      </section>
+
+      <section class="meta-grid">
+        <div class="metric">
+          <span>Ultima H4 chiusa</span>
+          <strong id="lastBar">-</strong>
+        </div>
+        <div class="metric">
+          <span>Generato</span>
+          <strong id="generatedAt">-</strong>
+        </div>
+        <div class="metric">
+          <span>Fonte</span>
+          <strong id="source">-</strong>
+        </div>
+        <div class="metric">
+          <span>Cache</span>
+          <strong id="cacheState">-</strong>
+        </div>
+      </section>
+
+      <section id="warnings" class="warnings" hidden></section>
+
+      <section class="section-head">
+        <div>
+          <p class="eyebrow">Focus operativo</p>
+          <h2>Da controllare ora</h2>
+        </div>
+        <div class="download-actions">
+          <button id="downloadJsonBtn" class="button" type="button">JSON</button>
+          <button id="downloadCsvBtn" class="button" type="button">CSV</button>
+          <button id="downloadMdBtn" class="button" type="button">Report</button>
+        </div>
+      </section>
+
+      <section id="focusGrid" class="focus-grid"></section>
+
+      <section class="table-panel">
+        <div class="table-toolbar">
+          <div>
+            <p class="eyebrow">Universo 28 coppie</p>
+            <h2>Tutte le coppie</h2>
+          </div>
+          <div class="filters" role="tablist" aria-label="Filtro coppie">
+            <button class="filter active" data-filter="all" type="button">Tutte</button>
+            <button class="filter" data-filter="focus" type="button">Focus</button>
+            <button class="filter" data-filter="LONG" type="button">Long</button>
+            <button class="filter" data-filter="SHORT" type="button">Short</button>
+            <button class="filter" data-filter="flat" type="button">Nessuno</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Coppia</th>
+                <th>Bias</th>
+                <th>Tipo</th>
+                <th>Stato</th>
+                <th>Score</th>
+                <th>Forte</th>
+                <th>Debole</th>
+                <th>Spread</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody id="pairsBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

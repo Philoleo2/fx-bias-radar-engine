@@ -1,0 +1,141 @@
+"""Shared scan service for CLI, dashboard API, and future Telegram alerts.
+
+This module is display/infrastructure only. It does not change the engine,
+thresholds, scoring, protective memory, or anti-flip behavior.
+"""
+
+from __future__ import annotations
+
+import glob
+import json
+import os
+from datetime import datetime, timezone
+from typing import Dict, List, Optional
+
+from . import candles as C
+from . import currency_index as CI
+from . import engine as E
+from . import pairs as P
+from . import report as R
+from .candles import Candle
+from .focus import build_focus
+
+ENGINE_LABEL = "M1 Python port - FX Bias Radar v1.1/v1.3 current logic"
+DEFAULT_COUNT = 500
+
+
+def build_scan_report(
+    candles_by_pair: Dict[str, List[Candle]],
+    *,
+    run_time_utc: Optional[str] = None,
+    focus_max_rows: int = 5,
+    focus_cluster_cap: int = 2,
+) -> dict:
+    """Run the validated engine on an already loaded candle universe."""
+    missing = [pair for pair in P.PAIRS if pair not in candles_by_pair]
+    if missing:
+        raise ValueError(f"coppie mancanti: {missing}")
+
+    times, closes, align_info = C.align(candles_by_pair)
+    cd = CI.build(times, closes)
+
+    last_by_pair = {}
+    for pair in P.PAIRS:
+        frames = CI.pair_frames(cd, pair)
+        results = E.run_pair(pair, frames)
+        last_by_pair[pair] = results[-1]
+
+    focus_rows = build_focus(
+        last_by_pair,
+        max_rows=focus_max_rows,
+        cluster_cap=focus_cluster_cap,
+    )
+    stamp = run_time_utc or datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return R.build_report(stamp, align_info, last_by_pair, focus_rows)
+
+
+def run_scan_from_fixtures(
+    fixtures_dir: str,
+    *,
+    run_time_utc: Optional[str] = None,
+) -> dict:
+    """Run a scan from fixture JSON files."""
+    return build_scan_report(
+        C.load_fixture_dir(fixtures_dir),
+        run_time_utc=run_time_utc,
+    )
+
+
+def run_scan_from_oanda(
+    *,
+    token: Optional[str] = None,
+    env: Optional[str] = None,
+    count: int = DEFAULT_COUNT,
+) -> dict:
+    """Fetch live OANDA H4 candles and run the shared scan."""
+    from .oanda_fetch import env_credentials, fetch_all_pairs
+
+    if token is None:
+        token, resolved_env = env_credentials()
+        env = env or resolved_env
+    candles_by_pair = fetch_all_pairs(token, env=env or "practice", count=count)
+    return build_scan_report(candles_by_pair)
+
+
+def latest_report_path(report_dir: str = "reports/actions") -> Optional[str]:
+    """Return the newest committed JSON scan report, if one exists."""
+    files = glob.glob(os.path.join(report_dir, "scan_*.json"))
+    if not files:
+        return None
+    return max(files, key=os.path.getmtime)
+
+
+def load_report_json(path: str) -> dict:
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def load_latest_actions_report(report_dir: str = "reports/actions") -> Optional[dict]:
+    path = latest_report_path(report_dir)
+    if not path:
+        return None
+    return load_report_json(path)
+
+
+def dashboard_payload(
+    report: dict,
+    *,
+    source: str,
+    warnings: Optional[List[str]] = None,
+    cache_hit: bool = False,
+) -> dict:
+    """Build the public dashboard JSON payload.
+
+    The payload intentionally contains no credentials, account ids, or raw
+    request URLs. Markdown is included so the browser can download the same
+    report format used by GitHub Actions.
+    """
+    warnings_out = list(warnings or [])
+    if report.get("misaligned_pairs"):
+        warnings_out.append(
+            "Alcune coppie non sono allineate sull'ultima H4 chiusa."
+        )
+    return {
+        "ok": True,
+        "generated_at_utc": report["run_time_utc"],
+        "last_closed_h4_utc": report["last_aligned_bar_utc"],
+        "source": source,
+        "engine": ENGINE_LABEL,
+        "cache": {"hit": bool(cache_hit)},
+        "warnings": warnings_out,
+        "misaligned_pairs": report.get("misaligned_pairs", []),
+        "focus": report.get("focus", []),
+        "events_this_bar": report.get("events_this_bar", []),
+        "hidden_this_bar": report.get("hidden_this_bar", []),
+        "pairs": report.get("pairs", []),
+        "disclaimer": report.get(
+            "disclaimer",
+            "Radar di attenzione: decisione sulle linee manuali.",
+        ),
+        "markdown": R.render_markdown(report),
+    }

@@ -8,6 +8,7 @@ This module keeps the M1 interface but routes requests through the M0
 from __future__ import annotations
 
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List, Optional
 
 from .candles import Candle
@@ -78,11 +79,21 @@ def fetch_h4(instrument: str, token: str, env: str = "practice",
 
 def fetch_all_pairs(token: str, env: str = "practice", count: int = 500,
                     from_time: Optional[str] = None,
-                    to_time: Optional[str] = None) -> Dict[str, List[Candle]]:
-    out = {}
-    for pair in P.PAIRS:
-        out[pair] = fetch_h4(P.oanda_instrument(pair), token, env=env,
-                             count=count, from_time=from_time, to_time=to_time)
+                    to_time: Optional[str] = None,
+                    max_workers: int = 8) -> Dict[str, List[Candle]]:
+    """Fetch all 28 pairs concurrently to keep dashboard/API latency bounded."""
+    out: Dict[str, List[Candle]] = {}
+    workers = max(1, min(max_workers, len(P.PAIRS)))
+
+    def fetch_pair(pair: str):
+        return pair, fetch_h4(P.oanda_instrument(pair), token, env=env,
+                              count=count, from_time=from_time, to_time=to_time)
+
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {pool.submit(fetch_pair, pair): pair for pair in P.PAIRS}
+        for future in as_completed(futures):
+            pair, candles = future.result()
+            out[pair] = candles
     return out
 
 
