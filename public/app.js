@@ -44,6 +44,27 @@ function setStatus(label, mode) {
   els.status.className = `status-pill ${mode}`;
 }
 
+function isLivePayload(data) {
+  return Boolean(data && data.is_live === true && data.data_status === "live"
+    && String(data.source || "").toLowerCase().startsWith("oanda "));
+}
+
+function setLiveState(isLive, cacheHit = false) {
+  els.cacheState.textContent = isLive ? (cacheHit ? "LIVE OANDA (cache)" : "LIVE OANDA") : "NON LIVE";
+  els.cacheState.className = isLive ? "live-ok" : "live-error";
+}
+
+function clearOperationalData(message) {
+  scanData = null;
+  els.lastBar.textContent = "-";
+  els.generatedAt.textContent = "-";
+  els.source.textContent = "-";
+  setLiveState(false);
+  showWarning(message);
+  els.focusGrid.innerHTML = `<div class="empty danger">${escapeHtml("Dati live non disponibili. Non usare il radar per decidere.")}</div>`;
+  els.pairsBody.innerHTML = "";
+}
+
 function formatTime(value) {
   if (!value) return "-";
   const date = new Date(value);
@@ -93,15 +114,20 @@ async function loadScan() {
       return;
     }
     if (!response.ok || !data.ok) {
-      throw new Error(data.detail || data.error || "scan non riuscito");
+      throw new Error(data.detail || data.error || "Dati live OANDA non disponibili");
+    }
+    if (!isLivePayload(data)) {
+      clearOperationalData("Dati non live bloccati: aggiorna piu' tardi.");
+      setStatus("Non live", "error");
+      return;
     }
     scanData = data;
     render(data);
     syncAuthUi();
-    setStatus("Online", "ok");
+    setStatus("Live OANDA", "ok");
   } catch (error) {
-    setStatus("Errore", "error");
-    showWarning(error.message || "Errore durante lo scan");
+    setStatus("Non live", "error");
+    clearOperationalData(error.message || "Dati live OANDA non disponibili");
   }
 }
 
@@ -109,7 +135,7 @@ function render(data) {
   els.lastBar.textContent = formatTime(data.last_closed_h4_utc);
   els.generatedAt.textContent = formatTime(data.generated_at_utc);
   els.source.textContent = data.source || "-";
-  els.cacheState.textContent = data.cache && data.cache.hit ? "hit" : "fresh";
+  setLiveState(true, Boolean(data.cache && data.cache.hit));
   renderWarnings(data.warnings || []);
   renderFocus(data.focus || []);
   renderPairs(data.pairs || []);

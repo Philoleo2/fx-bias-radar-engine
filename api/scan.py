@@ -29,19 +29,7 @@ def _int_query(value, default: int, minimum: int, maximum: int) -> int:
 
 
 def _cache_seconds() -> int:
-    return _int_query(os.environ.get("CACHE_SECONDS"), 60, 0, 600)
-
-
-def _latest_actions_fallback(warning: str):
-    report = S.load_latest_actions_report()
-    if not report:
-        return None
-    return S.dashboard_payload(
-        report,
-        source="GitHub Actions latest committed report",
-        warnings=[warning],
-        cache_hit=False,
-    )
+    return _int_query(os.environ.get("CACHE_SECONDS"), 0, 0, 600)
 
 
 def build_scan_payload(count: int = S.DEFAULT_COUNT) -> dict:
@@ -57,19 +45,14 @@ def build_scan_payload(count: int = S.DEFAULT_COUNT) -> dict:
     token = os.environ.get("OANDA_ACCESS_TOKEN", "").strip()
     env = os.environ.get("OANDA_ENV", "practice").strip() or "practice"
     if not token:
-        fallback = _latest_actions_fallback("OANDA token assente: uso ultimo report Actions se disponibile.")
-        if fallback:
-            return fallback
-        raise RuntimeError("OANDA_ACCESS_TOKEN mancante")
+        raise RuntimeError("OANDA_ACCESS_TOKEN mancante: dati live non disponibili")
 
     try:
         report = S.run_scan_from_oanda(token=token, env=env, count=count)
         payload = S.dashboard_payload(report, source=f"OANDA {env}", cache_hit=False)
     except Exception as exc:
-        fallback = _latest_actions_fallback("OANDA live non disponibile: uso ultimo report Actions.")
-        if fallback:
-            return fallback
-        raise RuntimeError(sanitize_error(str(exc), [token])) from exc
+        detail = sanitize_error(str(exc), [token])
+        raise RuntimeError(f"OANDA live non disponibile: {detail}") from exc
 
     if ttl > 0:
         _CACHE["key"] = cache_key

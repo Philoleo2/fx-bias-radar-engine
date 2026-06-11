@@ -23,6 +23,8 @@ class TestScanServiceDashboard(unittest.TestCase):
         payload = S.dashboard_payload(report, source="fixtures")
 
         self.assertTrue(payload["ok"])
+        self.assertFalse(payload["is_live"])
+        self.assertEqual(payload["data_status"], "fallback")
         self.assertEqual(payload["generated_at_utc"], report["run_time_utc"])
         self.assertEqual(payload["last_closed_h4_utc"], report["last_closed_bar_utc"])
         self.assertEqual(payload["last_closed_h4_open_utc"], report["last_aligned_bar_utc"])
@@ -38,6 +40,12 @@ class TestScanServiceDashboard(unittest.TestCase):
         self.assertEqual(bar_close, bar_open + timedelta(hours=4))
         payload = S.dashboard_payload(report, source="fixtures")
         self.assertEqual(payload["last_closed_h4_utc"], report["last_closed_bar_utc"])
+
+    def test_dashboard_payload_marks_oanda_source_live(self):
+        report = S.run_scan_from_fixtures(FIXTURES, run_time_utc="2026-06-11T00:00:00+00:00")
+        payload = S.dashboard_payload(report, source="OANDA practice")
+        self.assertTrue(payload["is_live"])
+        self.assertEqual(payload["data_status"], "live")
 
     def test_cli_and_service_focus_match_on_fixtures(self):
         service_report = S.run_scan_from_fixtures(FIXTURES, run_time_utc="2026-06-11T00:00:00+00:00")

@@ -130,8 +130,11 @@ def dashboard_payload(
         warnings_out.append(
             "Alcune coppie non sono allineate sull'ultima H4 chiusa."
         )
+    is_live = source.strip().lower().startswith("oanda ")
     return {
         "ok": True,
+        "data_status": "live" if is_live else "fallback",
+        "is_live": is_live,
         "generated_at_utc": report["run_time_utc"],
         "last_closed_h4_utc": report.get(
             "last_closed_bar_utc",

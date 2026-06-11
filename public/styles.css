@@ -228,6 +228,14 @@ h2 {
   overflow-wrap: anywhere;
 }
 
+.live-ok {
+  color: #b9f2c8;
+}
+
+.live-error {
+  color: #ffd5d8;
+}
+
 .warnings {
   margin-bottom: 18px;
   padding: 12px 14px;
@@ -371,6 +379,14 @@ th {
   display: grid;
   place-items: center;
   color: var(--muted);
+}
+
+.empty.danger {
+  border-color: rgba(239, 109, 114, 0.55);
+  background: var(--red-soft);
+  color: #ffd5d8;
+  padding: 18px;
+  text-align: center;
 }
 
 @media (max-width: 980px) {
