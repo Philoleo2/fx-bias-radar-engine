@@ -4,6 +4,7 @@ const els = {
   loginPanel: document.getElementById("loginPanel"),
   tokenInput: document.getElementById("tokenInput"),
   saveToken: document.getElementById("saveTokenBtn"),
+  changeToken: document.getElementById("changeTokenBtn"),
   lastBar: document.getElementById("lastBar"),
   generatedAt: document.getElementById("generatedAt"),
   source: document.getElementById("source"),
@@ -21,6 +22,21 @@ let activeFilter = "all";
 
 function token() {
   return localStorage.getItem("fxbr.dashboardToken") || "";
+}
+
+function syncAuthUi() {
+  const hasToken = Boolean(token());
+  els.loginPanel.hidden = hasToken;
+  els.changeToken.hidden = !hasToken;
+}
+
+function requestToken(message = "") {
+  localStorage.removeItem("fxbr.dashboardToken");
+  els.tokenInput.value = "";
+  syncAuthUi();
+  setStatus("Token richiesto", "idle");
+  if (message) showWarning(message);
+  window.setTimeout(() => els.tokenInput.focus(), 0);
 }
 
 function setStatus(label, mode) {
@@ -59,7 +75,7 @@ function escapeHtml(value) {
 
 async function loadScan() {
   const saved = token();
-  els.loginPanel.hidden = Boolean(saved);
+  syncAuthUi();
   if (!saved) {
     setStatus("Token richiesto", "idle");
     return;
@@ -72,11 +88,16 @@ async function loadScan() {
       cache: "no-store",
     });
     const data = await response.json();
+    if (response.status === 401) {
+      requestToken("Token non valido: inserisci quello corretto.");
+      return;
+    }
     if (!response.ok || !data.ok) {
       throw new Error(data.detail || data.error || "scan non riuscito");
     }
     scanData = data;
     render(data);
+    syncAuthUi();
     setStatus("Online", "ok");
   } catch (error) {
     setStatus("Errore", "error");
@@ -181,6 +202,8 @@ els.saveToken.addEventListener("click", () => {
   const value = els.tokenInput.value.trim();
   if (!value) return;
   localStorage.setItem("fxbr.dashboardToken", value);
+  els.warnings.hidden = true;
+  els.warnings.textContent = "";
   loadScan();
 });
 
@@ -189,6 +212,10 @@ els.tokenInput.addEventListener("keydown", (event) => {
 });
 
 els.refresh.addEventListener("click", loadScan);
+
+els.changeToken.addEventListener("click", () => {
+  requestToken("Token rimosso da questo dispositivo.");
+});
 
 document.querySelectorAll(".filter").forEach((button) => {
   button.addEventListener("click", () => {
@@ -215,4 +242,5 @@ els.downloadMd.addEventListener("click", () => {
 });
 
 els.tokenInput.value = token();
+syncAuthUi();
 loadScan();

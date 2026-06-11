@@ -133,7 +133,11 @@ def dashboard_payload(
     return {
         "ok": True,
         "generated_at_utc": report["run_time_utc"],
-        "last_closed_h4_utc": report["last_aligned_bar_utc"],
+        "last_closed_h4_utc": report.get(
+            "last_closed_bar_utc",
+            report["last_aligned_bar_utc"],
+        ),
+        "last_closed_h4_open_utc": report["last_aligned_bar_utc"],
         "source": source,
         "engine": ENGINE_LABEL,
         "cache": {"hit": bool(cache_hit)},

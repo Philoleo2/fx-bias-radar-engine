@@ -4,6 +4,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from datetime import datetime, timedelta
 
 from fx_bias_radar import scan_service as S
 
@@ -23,11 +24,20 @@ class TestScanServiceDashboard(unittest.TestCase):
 
         self.assertTrue(payload["ok"])
         self.assertEqual(payload["generated_at_utc"], report["run_time_utc"])
-        self.assertEqual(payload["last_closed_h4_utc"], report["last_aligned_bar_utc"])
+        self.assertEqual(payload["last_closed_h4_utc"], report["last_closed_bar_utc"])
+        self.assertEqual(payload["last_closed_h4_open_utc"], report["last_aligned_bar_utc"])
         self.assertEqual(payload["focus"], report["focus"])
         self.assertEqual(payload["pairs"], report["pairs"])
         self.assertIn("Radar di attenzione", payload["disclaimer"])
         self.assertIn("## Focus list", payload["markdown"])
+
+    def test_last_closed_h4_is_close_time_not_oanda_open_time(self):
+        report = S.run_scan_from_fixtures(FIXTURES, run_time_utc="2026-06-11T00:00:00+00:00")
+        bar_open = datetime.fromisoformat(report["last_aligned_bar_utc"])
+        bar_close = datetime.fromisoformat(report["last_closed_bar_utc"])
+        self.assertEqual(bar_close, bar_open + timedelta(hours=4))
+        payload = S.dashboard_payload(report, source="fixtures")
+        self.assertEqual(payload["last_closed_h4_utc"], report["last_closed_bar_utc"])
 
     def test_cli_and_service_focus_match_on_fixtures(self):
         service_report = S.run_scan_from_fixtures(FIXTURES, run_time_utc="2026-06-11T00:00:00+00:00")
