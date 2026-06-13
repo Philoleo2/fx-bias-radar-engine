@@ -33,13 +33,15 @@ def _cache_seconds() -> int:
 
 
 def _scan_mode(value) -> str:
-    mode = str(value or "intrabar").strip().lower()
-    if mode in {"closed", "close", "h4close"}:
-        return "closed"
-    return "intrabar"
+    # Default operativo = barra H4 CHIUSA (no repaint, FR039). L'intrabar resta
+    # opt-in via ?mode=intrabar per la sola "Anteprima" del frontend.
+    mode = str(value or "closed").strip().lower()
+    if mode in {"intrabar", "live", "forming"}:
+        return "intrabar"
+    return "closed"
 
 
-def build_scan_payload(count: int = S.DEFAULT_COUNT, mode: str = "intrabar") -> dict:
+def build_scan_payload(count: int = S.DEFAULT_COUNT, mode: str = "closed") -> dict:
     mode = _scan_mode(mode)
     ttl = _cache_seconds()
     cache_key = f"oanda:{mode}:{count}"
@@ -94,7 +96,7 @@ class handler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         qs = parse_qs(parsed.query)
         count = _int_query((qs.get("count") or [S.DEFAULT_COUNT])[0], S.DEFAULT_COUNT, 400, 800)
-        mode = _scan_mode((qs.get("mode") or ["intrabar"])[0])
+        mode = _scan_mode((qs.get("mode") or ["closed"])[0])
         try:
             payload = build_scan_payload(count=count, mode=mode)
             self._send_json(payload, status=200)

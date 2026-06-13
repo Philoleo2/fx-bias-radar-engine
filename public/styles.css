@@ -435,3 +435,149 @@ th {
     min-height: 190px;
   }
 }
+
+/* ===== M2E (FR039): eventi a chiusura, anteprima intrabar, spia movimento ===== */
+
+/* Toggle "Anteprima intrabar" */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.86rem;
+  user-select: none;
+}
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggle .sw {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  transition: background 0.15s ease, border-color 0.15s ease;
+  flex: none;
+}
+.toggle .sw::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: left 0.15s ease, background 0.15s ease;
+}
+.toggle input:checked + .sw {
+  background: rgba(106, 167, 255, 0.25);
+  border-color: var(--blue);
+}
+.toggle input:checked + .sw::after {
+  left: 20px;
+  background: var(--blue);
+}
+.toggle input:focus-visible + .sw {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Legenda ROT/RESUME */
+.legend {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+/* Sezione "Eventi a questa chiusura": il blocco piu' in evidenza */
+.events-head {
+  margin-top: 18px;
+}
+.events-panel {
+  border: 1px solid rgba(106, 167, 255, 0.35);
+  box-shadow: 0 0 0 1px rgba(106, 167, 255, 0.08), var(--shadow);
+}
+.events-panel .event-row td {
+  background: rgba(106, 167, 255, 0.05);
+}
+
+/* Badge TIPO (ROT / RESUME) */
+.tipo {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.tipo-rot {
+  background: rgba(242, 185, 93, 0.16);
+  color: var(--amber);
+}
+.tipo-resume {
+  background: rgba(106, 167, 255, 0.16);
+  color: var(--blue);
+}
+
+/* Riga vuota nelle tabelle */
+.empty-cell {
+  text-align: center;
+  color: var(--muted);
+  font-style: italic;
+  padding: 18px 12px;
+}
+.empty-cell.danger {
+  color: var(--red);
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* Movimento live (anteprima intrabar) */
+.live-move {
+  opacity: 0.96;
+}
+.live-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  margin: 0 0 6px;
+  background: rgba(242, 185, 93, 0.1);
+  border: 1px solid rgba(242, 185, 93, 0.3);
+  border-radius: 8px;
+  color: var(--amber);
+  font-size: 0.84rem;
+}
+.spia {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  padding: 2px 9px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+.spia-inv {
+  background: var(--red-soft);
+  color: var(--red);
+}
+.spia-raf {
+  background: rgba(242, 185, 93, 0.16);
+  color: var(--amber);
+}
+
+/* Nota a pie' pagina (no-repaint) */
+.foot-note {
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: center;
+}
