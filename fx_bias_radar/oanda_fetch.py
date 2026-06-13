@@ -93,7 +93,7 @@ def fetch_all_pairs(token: str, env: str = "practice", count: int = 500,
                     from_time: Optional[str] = None,
                     to_time: Optional[str] = None,
                     include_incomplete: bool = False,
-                    max_workers: int = 8) -> Dict[str, List[Candle]]:
+                    max_workers: int = 28) -> Dict[str, List[Candle]]:
     """Fetch all 28 pairs concurrently to keep dashboard/API latency bounded."""
     out: Dict[str, List[Candle]] = {}
     workers = max(1, min(max_workers, len(P.PAIRS)))
