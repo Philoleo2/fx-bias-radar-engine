@@ -12,7 +12,7 @@ from fx_bias_radar.config import (
     load_oanda_config,
     mask_secret,
 )
-from fx_bias_radar.oanda import OandaClient
+from fx_bias_radar.oanda import OandaClient, OandaError
 from fx_bias_radar.pairs import PAIRS_28, normalize_instrument
 
 
@@ -36,6 +36,19 @@ class _FakeOandaClient:
     def candles(self, *args, **kwargs):
         self.calls.append(kwargs)
         return self.candles_out
+
+
+class _FlakyOandaClient:
+    def __init__(self, outcomes):
+        self.outcomes = list(outcomes)
+        self.calls = []
+
+    def candles(self, *args, **kwargs):
+        self.calls.append(kwargs)
+        outcome = self.outcomes.pop(0)
+        if isinstance(outcome, Exception):
+            raise outcome
+        return outcome
 
 
 class OandaM0Tests(unittest.TestCase):
@@ -113,6 +126,33 @@ class OandaM0Tests(unittest.TestCase):
 
         self.assertEqual(len(candles), 2)
         self.assertEqual(candles[0].time, "2026-06-11T09:00:00+00:00")
+
+    def test_fetch_h4_retries_transient_oanda_522(self) -> None:
+        fake_client = _FlakyOandaClient([
+            OandaError("OANDA HTTP 522: error code: 522", status_code=522),
+            [_raw_candle("2026-06-11T13:00:00+00:00", True)],
+        ])
+
+        with patch.object(oanda_fetch, "_client_for", return_value=fake_client), \
+                patch.object(oanda_fetch.time, "sleep") as sleep:
+            candles = oanda_fetch.fetch_h4("USD_CHF", "token", count=2)
+
+        self.assertEqual(len(candles), 1)
+        self.assertEqual(len(fake_client.calls), 2)
+        sleep.assert_called_once()
+
+    def test_fetch_h4_does_not_retry_auth_errors(self) -> None:
+        fake_client = _FlakyOandaClient([
+            OandaError("OANDA HTTP 401: unauthorized", status_code=401),
+        ])
+
+        with patch.object(oanda_fetch, "_client_for", return_value=fake_client), \
+                patch.object(oanda_fetch.time, "sleep") as sleep:
+            with self.assertRaisesRegex(OandaError, "401"):
+                oanda_fetch.fetch_h4("USD_CHF", "token", count=2)
+
+        self.assertEqual(len(fake_client.calls), 1)
+        sleep.assert_not_called()
 
 
 if __name__ == "__main__":

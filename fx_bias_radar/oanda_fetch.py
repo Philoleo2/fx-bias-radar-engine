@@ -8,6 +8,7 @@ This module keeps the M1 interface but routes requests through the M0
 from __future__ import annotations
 
 import os
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from typing import Dict, List, Optional
@@ -19,13 +20,15 @@ from .config import (
     OandaConfig,
     load_oanda_config,
 )
-from .oanda import OandaClient
+from .oanda import OandaClient, OandaError
 from . import pairs as P
 
 _BASE = {
     "practice": DEFAULT_PRACTICE_URL,
     "live": DEFAULT_LIVE_URL,
 }
+
+_TRANSIENT_OANDA_STATUS_CODES = {408, 429, 500, 502, 503, 504, 522, 524}
 
 
 def _client_for(token: str, env: str) -> OandaClient:
@@ -51,10 +54,18 @@ def _client_for(token: str, env: str) -> OandaClient:
     )
 
 
+def _is_transient_oanda_error(exc: OandaError) -> bool:
+    status_code = getattr(exc, "status_code", None)
+    if status_code in _TRANSIENT_OANDA_STATUS_CODES:
+        return True
+    message = str(exc).lower()
+    return "connection error" in message or "timed out" in message
+
+
 def fetch_h4(instrument: str, token: str, env: str = "practice",
              count: Optional[int] = 500, from_time: Optional[str] = None,
              to_time: Optional[str] = None,
-             include_incomplete: bool = False) -> List[Candle]:
+             include_incomplete: bool = False, retries: int = 2) -> List[Candle]:
     """Fetch H4 midpoint candles; by default only complete=True are returned."""
     request_count = count
     request_to = to_time
@@ -62,15 +73,24 @@ def fetch_h4(instrument: str, token: str, env: str = "practice",
         request_count = count + 1
         request_to = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
 
-    raw = _client_for(token, env).candles(
-        instrument,
-        granularity="H4",
-        count=request_count,
-        from_time=from_time,
-        to_time=request_to,
-        price="M",
-        include_incomplete=include_incomplete,
-    )
+    client = _client_for(token, env)
+    max_attempts = max(1, retries + 1)
+    for attempt in range(max_attempts):
+        try:
+            raw = client.candles(
+                instrument,
+                granularity="H4",
+                count=request_count,
+                from_time=from_time,
+                to_time=request_to,
+                price="M",
+                include_incomplete=include_incomplete,
+            )
+            break
+        except OandaError as exc:
+            if attempt >= max_attempts - 1 or not _is_transient_oanda_error(exc):
+                raise
+            time.sleep(0.25 * (2 ** attempt))
     if include_incomplete and count is not None and raw and raw[-1].complete and len(raw) > count:
         raw = raw[-count:]
 

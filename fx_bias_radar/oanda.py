@@ -16,6 +16,10 @@ from .config import OandaConfig
 class OandaError(RuntimeError):
     """Raised when OANDA returns an error or the response cannot be parsed."""
 
+    def __init__(self, message: str, *, status_code: int | None = None) -> None:
+        super().__init__(message)
+        self.status_code = status_code
+
 
 @dataclass(frozen=True)
 class Candle:
@@ -108,7 +112,8 @@ class OandaClient:
                 raw = response.read().decode("utf-8")
         except HTTPError as exc:
             body = exc.read().decode("utf-8", errors="replace")
-            raise OandaError(f"OANDA HTTP {exc.code}: {body}") from exc
+            raise OandaError(f"OANDA HTTP {exc.code}: {body}",
+                             status_code=exc.code) from exc
         except URLError as exc:
             raise OandaError(f"OANDA connection error: {exc.reason}") from exc
 
