@@ -9,6 +9,8 @@ __pycache__/
 .venv/
 venv/
 reports/
+!reports/prerottura/
+!reports/prerottura/pre_rottura_latest.json
 *.log
 .codex_tmp_*/
 

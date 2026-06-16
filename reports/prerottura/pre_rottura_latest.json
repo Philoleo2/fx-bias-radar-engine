@@ -1,0 +1,11 @@
+{
+  "ok": false,
+  "error": "no_data",
+  "kind": "pre_rottura",
+  "detail": "Pre-Rottura non ancora calcolata: in attesa del primo run del cron orario (HH:05).",
+  "riprese": [],
+  "rientri": [],
+  "lines_h1": { "timeframe": "H1", "times": [], "currencies": [] },
+  "ranking_h4": [],
+  "disclaimer": "Radar di attenzione: la decisione e' sulle linee manuali."
+}
