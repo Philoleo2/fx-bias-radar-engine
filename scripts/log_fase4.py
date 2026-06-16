@@ -33,7 +33,7 @@ FIELDS = [
     "h4_bias", "h4_tipo", "h4_stato", "h4_score", "h4_spread", "h4_event",
 ]
 
-_INACTIVE = ("", "NESSUNO", "NONE", "FLAT", "PIATTO")
+_INACTIVE = ("", "-", "NESSUNO", "NONE", "FLAT", "PIATTO")
 
 
 def build_log_rows(report_h4: dict, payload_pr: dict) -> list:

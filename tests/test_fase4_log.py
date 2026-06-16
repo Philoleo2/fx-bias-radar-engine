@@ -78,6 +78,16 @@ def test_rows_include_signals_and_active_exclude_flat():
     assert a["h4_bar_close_utc"] == "2026-06-16T14:00:00+00:00"
 
 
+def test_dash_tipo_is_inactive_without_h1_signal():
+    report = _report_h4()
+    report["pairs"].append(
+        {"pair": "USDJPY", "bias": "-", "tipo": "-", "stato": "NESSUNO",
+         "score": 5, "spread": 0.04, "attention_event": False}
+    )
+    rows = LF.build_log_rows(report, _payload_pr())
+    assert "USDJPY" not in {r["pair"] for r in rows}
+
+
 def test_append_writes_header_once_and_idempotent_helper(tmp_path):
     path = os.path.join(str(tmp_path), "fase4_log.csv")
     rows = LF.build_log_rows(_report_h4(), _payload_pr())
