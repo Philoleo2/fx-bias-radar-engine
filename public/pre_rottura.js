@@ -70,6 +70,13 @@ function fmtDateTime(value) {
   }).format(d);
 }
 
+function shiftHours(value, hours) {
+  if (!value) return value;
+  const t = Date.parse(value);
+  if (Number.isNaN(t)) return value;
+  return new Date(t + hours * 3600000).toISOString();
+}
+
 function fmtHour(value) {
   if (!value) return "";
   const d = new Date(value);
@@ -112,8 +119,8 @@ async function load() {
 
 function render(data) {
   els.generatedAt.textContent = fmtDateTime(data.generated_at_utc);
-  els.h1Bar.textContent = fmtDateTime(data.h1_last_bar_utc);
-  els.h4Bar.textContent = "H4 " + fmtDateTime(data.h4_last_bar_utc);
+  els.h1Bar.textContent = fmtDateTime(shiftHours(data.h1_last_bar_utc, 1));
+  els.h4Bar.textContent = "H4 " + fmtDateTime(shiftHours(data.h4_last_bar_utc, 4));
   els.dataState.textContent = "Aggiornato (orario)";
   const ranking = (data.ranking_h4 || []);
   els.rankingH4.textContent = ranking.length ? ("Forza H4: " + ranking.join(" > ")) : "";
@@ -123,7 +130,7 @@ function render(data) {
 
 function renderChart(lines) {
   if (!els.canvas || typeof Chart === "undefined") return;
-  const times = (lines.times || []).map(fmtHour);
+  const times = (lines.times || []).map(function (t) { return fmtHour(shiftHours(t, 1)); });
   const datasets = (lines.currencies || []).map(function (c) {
     const color = CCY_COLOR[c.ccy] || "#888";
     return {
@@ -155,18 +162,34 @@ function renderChart(lines) {
 }
 
 function card(row) {
-  const stato = row.stato || "";
-  const statoCls = stato === "RIPRESA" ? "tipo-resume" : "tipo-rot";
-  const extra = stato === "RIENTRO"
-    ? ("contro H4 da " + escapeHtml(row.h1_down_run) + " barre H1")
-    : "ripartenza fresca";
+  const ripresa = (String(row.stato).toUpperCase() === "RIPRESA");
+  const isLong = (String(row.dir).toUpperCase() === "LONG");
+  const fondoUp = isLong;
+  const oraUp = ripresa ? isLong : !isLong;
+  const col = function (up) { return up ? "var(--green)" : "var(--red)"; };
+  const arr = function (up) { return up ? "↑" : "↓"; };
+  const fondoSpan = '<span style="color:' + col(fondoUp) + '; font-weight:600;">'
+    + (fondoUp ? "su" : "giù") + " " + arr(fondoUp) + "</span>";
+  const oraSpan = '<span style="color:' + col(oraUp) + '; font-weight:600;">'
+    + (oraUp ? "sale" : "scende") + " " + arr(oraUp) + "</span>";
+  const phrase = "Fondo " + fondoSpan + ", ora " + oraSpan;
+  const pillBg = ripresa ? "rgba(96,189,125,0.16)" : "rgba(242,185,93,0.16)";
+  const pillCol = ripresa ? "var(--green)" : "var(--amber)";
+  const sameDir = isLong ? "long" : "short";
+  const oppDir = isLong ? "short" : "long";
+  const pillTxt = ripresa
+    ? ("Continuazione · il " + sameDir + " riparte")
+    : ("Pullback · ritest " + sameDir + ", o rottura → " + oppDir);
+  const pill = '<span style="display:inline-block; background:' + pillBg + "; color:" + pillCol
+    + '; font-size:12px; padding:3px 10px; border-radius:6px;">' + pillTxt + "</span>";
+  const detail = "Forza H4 " + escapeHtml(row.gap_h4) + " · spread H1 " + escapeHtml(row.h1_spread)
+    + (ripresa ? "" : " · contro da " + escapeHtml(row.h1_down_run) + " barre");
   return '<article class="focus-card">'
-    + '<div class="focus-top"><div class="pair">' + escapeHtml(row.pair) + "</div>" + dirBadge(row.dir) + "</div>"
+    + '<div class="focus-top"><div class="pair">' + escapeHtml(row.pair) + "</div></div>"
     + '<div class="focus-body">'
-    + '<div class="focus-row"><span>Stato</span><strong><span class="tipo ' + statoCls + '">' + escapeHtml(stato) + "</span></strong></div>"
-    + '<div class="focus-row"><span>Forza H4 (gap)</span><strong>' + escapeHtml(row.gap_h4) + "</strong></div>"
-    + '<div class="focus-row"><span>Spread H1</span><strong>' + escapeHtml(row.h1_spread) + "</strong></div>"
-    + '<div><span class="note">' + extra + "</span></div>"
+    + '<div style="font-size:15px; line-height:1.6; margin:4px 0 10px;">' + phrase + "</div>"
+    + "<div>" + pill + "</div>"
+    + '<div class="note" style="margin-top:8px;">' + detail + "</div>"
     + "</div>"
     + '<p class="focus-action">Disegna le linee, metti un alert, entra a rottura o ritest.</p>'
     + "</article>";
@@ -195,3 +218,7 @@ els.changeToken.addEventListener("click", function () { requestToken("Token rimo
 els.tokenInput.value = token();
 syncAuthUi();
 load();
+
+// Auto-aggiornamento: ricarica i dati ogni 5 minuti (il cron orario scrive il JSON;
+// cosi' la scheda aperta prende il nuovo snapshot senza ricaricare a mano).
+setInterval(load, 300000);
