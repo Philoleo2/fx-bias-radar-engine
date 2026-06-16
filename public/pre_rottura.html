@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FX Bias Radar - Pre-Rottura</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Metodo Garlando &middot; selezione anticipata</p>
+          <h1>Pre-Rottura</h1>
+          <p class="disclaimer">Dove guardare PRIMA della rottura. La decisione e' sulle linee manuali.</p>
+        </div>
+        <div class="top-actions">
+          <span id="statusPill" class="status-pill idle">In attesa</span>
+          <a class="button" href="/">Dashboard H4</a>
+          <button id="changeTokenBtn" class="button" type="button" hidden>Cambia token</button>
+          <button id="refreshBtn" class="button primary" type="button">Aggiorna</button>
+        </div>
+      </header>
+
+      <section id="loginPanel" class="auth-panel">
+        <label for="tokenInput">Dashboard token</label>
+        <div class="auth-row">
+          <input id="tokenInput" type="password" autocomplete="current-password" placeholder="Token">
+          <button id="saveTokenBtn" class="button primary" type="button">Entra</button>
+        </div>
+      </section>
+
+      <section class="meta-grid">
+        <div class="metric"><span>Aggiornato</span><strong id="generatedAt">-</strong></div>
+        <div class="metric"><span>Barra H1</span><strong id="h1Bar">-</strong></div>
+        <div class="metric"><span>Direzione</span><strong id="h4Bar">H4</strong></div>
+        <div class="metric"><span>Stato</span><strong id="dataState">-</strong></div>
+      </section>
+
+      <section id="warnings" class="warnings" hidden></section>
+
+      <!-- 8 LINEE DI FORZA VALUTE (H1) -->
+      <section class="section-head">
+        <div>
+          <p class="eyebrow">Forza valute (H1)</p>
+          <h2>Le 8 linee</h2>
+        </div>
+        <span id="rankingH4" class="legend"></span>
+      </section>
+      <section class="table-panel chart-panel">
+        <div class="chart-wrap"><canvas id="linesChart"></canvas></div>
+      </section>
+
+      <!-- RIPRESE -->
+      <section class="section-head">
+        <div>
+          <p class="eyebrow">Continuazione allineata (caso d'oro)</p>
+          <h2>Riprese</h2>
+        </div>
+        <span class="legend">H4 + H1 stessa direzione, ripartenza fresca</span>
+      </section>
+      <section id="ripreseGrid" class="focus-grid"></section>
+
+      <!-- RIENTRI -->
+      <section class="section-head">
+        <div>
+          <p class="eyebrow">Mean-reversion (contro H4 per &ge; 3 barre H1)</p>
+          <h2>Rientri</h2>
+        </div>
+        <span class="legend">pullback in direzione H4 oppure inizio inversione: decide la linea</span>
+      </section>
+      <section id="rientriGrid" class="focus-grid"></section>
+
+      <footer class="foot-note">
+        Selezione anticipata a bassa confidenza (H1), subordinata alla direzione H4. La precisione e' la tua linea: disegna, metti l'alert, entra a rottura o ritest. Aggiornamento orario lato server.
+      </footer>
+    </main>
+    <script src="/pre_rottura.js"></script>
+  </body>
+</html>

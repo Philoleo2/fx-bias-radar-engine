@@ -581,3 +581,14 @@ th {
   font-size: 0.8rem;
   text-align: center;
 }
+
+/* ===== M3 Pre-Rottura: grafico 8 linee ===== */
+.chart-panel { padding: 10px 12px 14px; }
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 360px;
+}
+@media (max-width: 640px) {
+  .chart-wrap { height: 300px; }
+}
