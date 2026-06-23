@@ -52,28 +52,18 @@
         <div class="chart-wrap"><canvas id="linesChart"></canvas></div>
       </section>
 
-      <!-- RIPRESE -->
+      <!-- ROTAZIONI -->
       <section class="section-head">
         <div>
-          <p class="eyebrow">Continuazione allineata (caso d'oro)</p>
-          <h2>Riprese</h2>
+          <p class="eyebrow">Rotazione forza valutaria (H1)</p>
+          <h2>Rotazioni</h2>
         </div>
-        <span class="legend">H4 + H1 stessa direzione, ripartenza fresca</span>
+        <span class="legend">la valuta forte molla e la debole recupera: estremo che gira</span>
       </section>
-      <section id="ripreseGrid" class="focus-grid"></section>
-
-      <!-- RIENTRI -->
-      <section class="section-head">
-        <div>
-          <p class="eyebrow">Mean-reversion (contro H4 per &ge; 3 barre H1)</p>
-          <h2>Rientri</h2>
-        </div>
-        <span class="legend">pullback in direzione H4 oppure inizio inversione: decide la linea</span>
-      </section>
-      <section id="rientriGrid" class="focus-grid"></section>
+      <section id="rotazioniGrid" class="focus-grid"></section>
 
       <footer class="foot-note">
-        Selezione anticipata a bassa confidenza (H1), subordinata alla direzione H4. La precisione e' la tua linea: disegna, metti l'alert, entra a rottura o ritest. Aggiornamento orario lato server.
+        Segnala la rotazione tra valuta forte e debole su H1 (timing centrato, calibrato sul backtest). La campana sul prezzo e l'ingresso li decidi tu: disegna le linee, metti l'alert, entra a rottura o ritest. Aggiornamento orario lato server.
       </footer>
     </main>
     <script src="/pre_rottura.js"></script>

@@ -166,3 +166,49 @@ def label_pivots(sp: List[Num], *, swing: int = 6, ext_min: float = 2.0) -> List
         elif v == min(window) and v <= -ext_min:
             out.append({"bar": t, "dir": "LONG", "spread": v})
     return out
+
+
+# --- Integrazione col layer di forza H1 (display/selezione) ---
+# Parametri scelti dal backtest out-of-sample (precision 0.965, recall 0.894,
+# offset mediano +1 barra): rotazione centrata, ne' presto ne' tardi.
+DEFAULT_ROT_PARAMS = RotParams(method="slope_both", ext_min=1.5,
+                               k_window=12, conf_bars=1)
+
+
+def rotations_from_strength(h1_payload: dict,
+                            params: RotParams = DEFAULT_ROT_PARAMS,
+                            cluster_cap: int = 2) -> List[dict]:
+    """Dalle 8 serie z H1 (compute_strength) alle ROTAZIONI sull'ultima barra
+    chiusa. Una riga per coppia che ruota: forte (ex-forte che molla), debole
+    (ex-debole che recupera), direzione nuova, spread H1. Dedup per valuta."""
+    from . import pairs as P
+    z = {c["ccy"]: c.get("series") for c in h1_payload.get("currencies", [])}
+    rows: List[dict] = []
+    for pair in P.PAIRS:
+        base, quote = P.base_quote(pair)
+        zb, zq = z.get(base), z.get(quote)
+        if not zb or not zq or len(zb) != len(zq) or len(zb) < 14:
+            continue
+        sp = [(zb[i] - zq[i]) if (zb[i] is not None and zq[i] is not None) else None
+              for i in range(len(zb))]
+        t = len(sp) - 1
+        d = detect_at(sp, zb, zq, t, params)
+        if d is None:
+            continue
+        forte, debole = (base, quote) if d == "SHORT" else (quote, base)
+        rows.append({
+            "pair": pair, "dir": d, "base": base, "quote": quote,
+            "forte": forte, "debole": debole,
+            "spread_h1": round(sp[t], 4) if sp[t] is not None else None,
+        })
+    rows.sort(key=lambda r: -abs(r["spread_h1"] or 0.0))
+    out: List[dict] = []
+    cnt: dict = {}
+    for r in rows:
+        b, q = r["base"], r["quote"]
+        if cnt.get(b, 0) >= cluster_cap or cnt.get(q, 0) >= cluster_cap:
+            continue
+        cnt[b] = cnt.get(b, 0) + 1
+        cnt[q] = cnt.get(q, 0) + 1
+        out.append(r)
+    return out

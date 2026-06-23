@@ -78,3 +78,27 @@ def test_detect_at_none_before_extreme():
     sp, zb, zq = _top_series()
     # in piena salita (prima del picco) NON deve esserci ancora un giro
     assert detect_at(sp, zb, zq, 10, RotParams(ext_min=2.0)) is None
+
+
+def _top_at_end():
+    """Serie con picco vicino alla FINE: rotazione sull'ultima barra."""
+    zb = _ramp(0.0, 2.8, 26) + [2.7, 2.4]
+    zq = _ramp(0.0, -2.8, 26) + [-2.7, -2.4]
+    return zb, zq
+
+
+def test_rotations_from_strength_top_short():
+    from fx_bias_radar.rotation import rotations_from_strength
+    zb, zq = _top_at_end()
+    flat = [0.0] * len(zb)
+    payload = {"currencies": [
+        {"ccy": "AUD", "series": zb}, {"ccy": "NZD", "series": zq},
+        {"ccy": "EUR", "series": flat}, {"ccy": "GBP", "series": flat},
+        {"ccy": "USD", "series": flat}, {"ccy": "CAD", "series": flat},
+        {"ccy": "CHF", "series": flat}, {"ccy": "JPY", "series": flat},
+    ]}
+    rot = rotations_from_strength(payload)
+    by = {r["pair"]: r for r in rot}
+    assert "AUDNZD" in by, by
+    assert by["AUDNZD"]["dir"] == "SHORT"
+    assert by["AUDNZD"]["forte"] == "AUD" and by["AUDNZD"]["debole"] == "NZD"

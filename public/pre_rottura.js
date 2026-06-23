@@ -11,8 +11,7 @@ const els = {
   dataState: document.getElementById("dataState"),
   warnings: document.getElementById("warnings"),
   rankingH4: document.getElementById("rankingH4"),
-  ripreseGrid: document.getElementById("ripreseGrid"),
-  rientriGrid: document.getElementById("rientriGrid"),
+  rotazioniGrid: document.getElementById("rotazioniGrid"),
   canvas: document.getElementById("linesChart"),
 };
 
@@ -104,7 +103,7 @@ async function load() {
     if (!data.ok) {
       els.dataState.textContent = "Nessun dato";
       showWarning(data.detail || "Pre-Rottura non disponibile.");
-      renderLists([], []);
+      renderRotations([]);
       setStatus("In attesa cron", "idle");
       return;
     }
@@ -125,7 +124,7 @@ function render(data) {
   const ranking = (data.ranking_h4 || []);
   els.rankingH4.textContent = ranking.length ? ("Forza H4: " + ranking.join(" > ")) : "";
   renderChart(data.lines_h1 || {});
-  renderLists(data.riprese || [], data.rientri || []);
+  renderRotations(data.rotazioni || []);
 }
 
 function renderChart(lines) {
@@ -162,30 +161,22 @@ function renderChart(lines) {
 }
 
 function card(row) {
-  const ripresa = (String(row.stato).toUpperCase() === "RIPRESA");
-  const isLong = (String(row.dir).toUpperCase() === "LONG");
-  const fondoUp = isLong;
-  const oraUp = ripresa ? isLong : !isLong;
-  const col = function (up) { return up ? "var(--green)" : "var(--red)"; };
-  const arr = function (up) { return up ? "↑" : "↓"; };
-  const fondoSpan = '<span style="color:' + col(fondoUp) + '; font-weight:600;">'
-    + (fondoUp ? "su" : "giù") + " " + arr(fondoUp) + "</span>";
-  const oraSpan = '<span style="color:' + col(oraUp) + '; font-weight:600;">'
-    + (oraUp ? "sale" : "scende") + " " + arr(oraUp) + "</span>";
-  const phrase = "Fondo " + fondoSpan + ", ora " + oraSpan;
-  const pillBg = ripresa ? "rgba(96,189,125,0.16)" : "rgba(242,185,93,0.16)";
-  const pillCol = ripresa ? "var(--green)" : "var(--amber)";
-  const sameDir = isLong ? "long" : "short";
-  const oppDir = isLong ? "short" : "long";
-  const pillTxt = ripresa
-    ? ("Continuazione · il " + sameDir + " riparte")
-    : ("Pullback · ritest " + sameDir + ", o rottura → " + oppDir);
+  const isLong = String(row.dir).toUpperCase() === "LONG";
+  // ex-forte molla (giu', rosso), ex-debole recupera (su', verde)
+  const mollaSpan = '<span style="color:var(--red); font-weight:600;">'
+    + escapeHtml(row.forte) + " molla ↓</span>";
+  const recSpan = '<span style="color:var(--green); font-weight:600;">'
+    + escapeHtml(row.debole) + " recupera ↑</span>";
+  const phrase = mollaSpan + ", " + recSpan;
+  const pillTxt = "Rotazione · ora " + (isLong ? "long" : "short");
+  const pillBg = isLong ? "rgba(96,189,125,0.16)" : "rgba(239,109,114,0.16)";
+  const pillCol = isLong ? "var(--green)" : "var(--red)";
   const pill = '<span style="display:inline-block; background:' + pillBg + "; color:" + pillCol
     + '; font-size:12px; padding:3px 10px; border-radius:6px;">' + pillTxt + "</span>";
-  const detail = "Forza H4 " + escapeHtml(row.gap_h4) + " · spread H1 " + escapeHtml(row.h1_spread)
-    + (ripresa ? "" : " · contro da " + escapeHtml(row.h1_down_run) + " barre");
+  const detail = "Spread di forza H1 " + escapeHtml(row.spread_h1);
   return '<article class="focus-card">'
-    + '<div class="focus-top"><div class="pair">' + escapeHtml(row.pair) + "</div></div>"
+    + '<div class="focus-top"><div class="pair">' + escapeHtml(row.pair) + "</div>"
+    + dirBadge(String(row.dir).toUpperCase()) + "</div>"
     + '<div class="focus-body">'
     + '<div style="font-size:15px; line-height:1.6; margin:4px 0 10px;">' + phrase + "</div>"
     + "<div>" + pill + "</div>"
@@ -195,13 +186,10 @@ function card(row) {
     + "</article>";
 }
 
-function renderLists(riprese, rientri) {
-  els.ripreseGrid.innerHTML = riprese.length
-    ? riprese.map(card).join("")
-    : '<div class="empty">Nessuna ripresa a questa ora</div>';
-  els.rientriGrid.innerHTML = rientri.length
-    ? rientri.map(card).join("")
-    : '<div class="empty">Nessun rientro a questa ora</div>';
+function renderRotations(rotazioni) {
+  els.rotazioniGrid.innerHTML = (rotazioni && rotazioni.length)
+    ? rotazioni.map(card).join("")
+    : '<div class="empty">Nessuna rotazione a questa ora</div>';
 }
 
 els.saveToken.addEventListener("click", function () {
@@ -219,6 +207,5 @@ els.tokenInput.value = token();
 syncAuthUi();
 load();
 
-// Auto-aggiornamento: ricarica i dati ogni 5 minuti (il cron orario scrive il JSON;
-// cosi' la scheda aperta prende il nuovo snapshot senza ricaricare a mano).
+// Auto-aggiornamento: ricarica i dati ogni 5 minuti (il cron orario scrive il JSON).
 setInterval(load, 300000);

@@ -59,6 +59,9 @@ def main() -> int:
             f.write(data)
 
     print(f"Pre-Rottura: {latest}")
+    print(f"  rotazioni: {len(payload.get('rotazioni', []))}")
+    for r in payload.get("rotazioni", []):
+        print(f"  ROTAZIONE {r['pair']} {r['dir']} ({r['forte']} molla, {r['debole']} recupera) spreadH1={r['spread_h1']}")
     print(f"  riprese: {len(payload['riprese'])}  rientri: {len(payload['rientri'])}")
     for r in payload["riprese"]:
         print(f"  RIPRESA {r['pair']} {r['dir']} gapH4={r['gap_h4']}")
