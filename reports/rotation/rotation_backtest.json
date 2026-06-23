@@ -5,6 +5,26 @@
   "match_tol": 6,
   "pivot_swing": 6,
   "pivot_ext": 1.5,
+  "price_followthrough": {
+    "4": {
+      "n": 6432,
+      "mean_pct": -0.0003,
+      "median_pct": 0.005,
+      "hit_rate": 0.515
+    },
+    "12": {
+      "n": 6421,
+      "mean_pct": -0.0049,
+      "median_pct": -0.0,
+      "hit_rate": 0.5
+    },
+    "24": {
+      "n": 6393,
+      "mean_pct": 0.0086,
+      "median_pct": 0.0,
+      "hit_rate": 0.499
+    }
+  },
   "ranking": [
     {
       "params": {
@@ -14,20 +34,20 @@
         "method": "slope_both"
       },
       "train": {
-        "signals": 3268,
-        "pivots": 3170,
-        "matched": 2835,
-        "precision": 0.966,
-        "recall": 0.894,
-        "f1": 0.929,
-        "median_offset": 1.0,
-        "mean_offset": 0.8
+        "signals": 3267,
+        "pivots": 3173,
+        "matched": 2841,
+        "precision": 0.968,
+        "recall": 0.895,
+        "f1": 0.93,
+        "median_offset": 1,
+        "mean_offset": 0.81
       },
       "test": {
-        "signals": 3165,
-        "pivots": 3056,
+        "signals": 3166,
+        "pivots": 3057,
         "matched": 2732,
-        "precision": 0.965,
+        "precision": 0.964,
         "recall": 0.894,
         "f1": 0.928,
         "median_offset": 1,
@@ -43,18 +63,18 @@
         "method": "slope_both"
       },
       "train": {
-        "signals": 3800,
-        "pivots": 3170,
-        "matched": 3029,
-        "precision": 0.903,
+        "signals": 3795,
+        "pivots": 3173,
+        "matched": 3033,
+        "precision": 0.905,
         "recall": 0.956,
-        "f1": 0.928,
+        "f1": 0.93,
         "median_offset": 1.0,
         "mean_offset": 0.63
       },
       "test": {
-        "signals": 3707,
-        "pivots": 3056,
+        "signals": 3709,
+        "pivots": 3057,
         "matched": 2903,
         "precision": 0.89,
         "recall": 0.95,
@@ -72,10 +92,10 @@
         "method": "ema_cross"
       },
       "train": {
-        "signals": 3324,
-        "pivots": 3170,
-        "matched": 2956,
-        "precision": 0.947,
+        "signals": 3321,
+        "pivots": 3173,
+        "matched": 2957,
+        "precision": 0.948,
         "recall": 0.932,
         "f1": 0.94,
         "median_offset": 2,
@@ -83,12 +103,12 @@
       },
       "test": {
         "signals": 3151,
-        "pivots": 3056,
-        "matched": 2824,
+        "pivots": 3057,
+        "matched": 2825,
         "precision": 0.952,
         "recall": 0.924,
         "f1": 0.938,
-        "median_offset": 2,
+        "median_offset": 2.0,
         "mean_offset": 1.4
       },
       "score": 0.838
@@ -101,10 +121,10 @@
         "method": "ema_cross"
       },
       "train": {
-        "signals": 3324,
-        "pivots": 3170,
-        "matched": 2956,
-        "precision": 0.947,
+        "signals": 3321,
+        "pivots": 3173,
+        "matched": 2957,
+        "precision": 0.948,
         "recall": 0.932,
         "f1": 0.94,
         "median_offset": 2,
@@ -112,12 +132,12 @@
       },
       "test": {
         "signals": 3151,
-        "pivots": 3056,
-        "matched": 2824,
+        "pivots": 3057,
+        "matched": 2825,
         "precision": 0.952,
         "recall": 0.924,
         "f1": 0.938,
-        "median_offset": 2,
+        "median_offset": 2.0,
         "mean_offset": 1.4
       },
       "score": 0.838
@@ -130,10 +150,10 @@
         "method": "ema_cross"
       },
       "train": {
-        "signals": 3324,
-        "pivots": 3170,
-        "matched": 2956,
-        "precision": 0.947,
+        "signals": 3321,
+        "pivots": 3173,
+        "matched": 2957,
+        "precision": 0.948,
         "recall": 0.932,
         "f1": 0.94,
         "median_offset": 2,
@@ -141,12 +161,12 @@
       },
       "test": {
         "signals": 3151,
-        "pivots": 3056,
-        "matched": 2824,
+        "pivots": 3057,
+        "matched": 2825,
         "precision": 0.952,
         "recall": 0.924,
         "f1": 0.938,
-        "median_offset": 2,
+        "median_offset": 2.0,
         "mean_offset": 1.4
       },
       "score": 0.838
@@ -159,18 +179,18 @@
         "method": "slope_both"
       },
       "train": {
-        "signals": 2837,
-        "pivots": 3170,
-        "matched": 2478,
-        "precision": 0.968,
-        "recall": 0.782,
-        "f1": 0.865,
-        "median_offset": 1,
+        "signals": 2838,
+        "pivots": 3173,
+        "matched": 2485,
+        "precision": 0.97,
+        "recall": 0.783,
+        "f1": 0.867,
+        "median_offset": 1.0,
         "mean_offset": 0.8
       },
       "test": {
-        "signals": 2771,
-        "pivots": 3056,
+        "signals": 2772,
+        "pivots": 3057,
         "matched": 2385,
         "precision": 0.963,
         "recall": 0.78,
@@ -188,23 +208,23 @@
         "method": "ema_cross"
       },
       "train": {
-        "signals": 2916,
-        "pivots": 3170,
-        "matched": 2681,
-        "precision": 0.972,
+        "signals": 2918,
+        "pivots": 3173,
+        "matched": 2683,
+        "precision": 0.973,
         "recall": 0.846,
         "f1": 0.905,
-        "median_offset": 2,
+        "median_offset": 2.0,
         "mean_offset": 1.56
       },
       "test": {
         "signals": 2772,
-        "pivots": 3056,
-        "matched": 2571,
+        "pivots": 3057,
+        "matched": 2572,
         "precision": 0.981,
         "recall": 0.841,
         "f1": 0.906,
-        "median_offset": 2.0,
+        "median_offset": 2,
         "mean_offset": 1.52
       },
       "score": 0.806
@@ -217,23 +237,23 @@
         "method": "ema_cross"
       },
       "train": {
-        "signals": 2916,
-        "pivots": 3170,
-        "matched": 2681,
-        "precision": 0.972,
+        "signals": 2918,
+        "pivots": 3173,
+        "matched": 2683,
+        "precision": 0.973,
         "recall": 0.846,
         "f1": 0.905,
-        "median_offset": 2,
+        "median_offset": 2.0,
         "mean_offset": 1.56
       },
       "test": {
         "signals": 2772,
-        "pivots": 3056,
-        "matched": 2571,
+        "pivots": 3057,
+        "matched": 2572,
         "precision": 0.981,
         "recall": 0.841,
         "f1": 0.906,
-        "median_offset": 2.0,
+        "median_offset": 2,
         "mean_offset": 1.52
       },
       "score": 0.806
@@ -246,23 +266,23 @@
         "method": "ema_cross"
       },
       "train": {
-        "signals": 2916,
-        "pivots": 3170,
-        "matched": 2681,
-        "precision": 0.972,
+        "signals": 2918,
+        "pivots": 3173,
+        "matched": 2683,
+        "precision": 0.973,
         "recall": 0.846,
         "f1": 0.905,
-        "median_offset": 2,
+        "median_offset": 2.0,
         "mean_offset": 1.56
       },
       "test": {
         "signals": 2772,
-        "pivots": 3056,
-        "matched": 2571,
+        "pivots": 3057,
+        "matched": 2572,
         "precision": 0.981,
         "recall": 0.841,
         "f1": 0.906,
-        "median_offset": 2.0,
+        "median_offset": 2,
         "mean_offset": 1.52
       },
       "score": 0.806
@@ -275,19 +295,19 @@
         "method": "slope_both"
       },
       "train": {
-        "signals": 2914,
-        "pivots": 3170,
-        "matched": 2633,
-        "precision": 0.975,
-        "recall": 0.831,
+        "signals": 2907,
+        "pivots": 3173,
+        "matched": 2632,
+        "precision": 0.977,
+        "recall": 0.829,
         "f1": 0.897,
-        "median_offset": 2.0,
+        "median_offset": 2,
         "mean_offset": 1.52
       },
       "test": {
         "signals": 2826,
-        "pivots": 3056,
-        "matched": 2561,
+        "pivots": 3057,
+        "matched": 2562,
         "precision": 0.979,
         "recall": 0.838,
         "f1": 0.903,
@@ -304,20 +324,20 @@
         "method": "slope_both"
       },
       "train": {
-        "signals": 3389,
-        "pivots": 3170,
-        "matched": 2804,
-        "precision": 0.904,
-        "recall": 0.885,
+        "signals": 3381,
+        "pivots": 3173,
+        "matched": 2802,
+        "precision": 0.905,
+        "recall": 0.883,
         "f1": 0.894,
         "median_offset": 2,
         "mean_offset": 1.36
       },
       "test": {
-        "signals": 3335,
-        "pivots": 3056,
-        "matched": 2726,
-        "precision": 0.896,
+        "signals": 3336,
+        "pivots": 3057,
+        "matched": 2727,
+        "precision": 0.895,
         "recall": 0.892,
         "f1": 0.894,
         "median_offset": 2,
@@ -333,23 +353,23 @@
         "method": "ema_cross"
       },
       "train": {
-        "signals": 2567,
-        "pivots": 3170,
-        "matched": 2372,
-        "precision": 0.974,
-        "recall": 0.748,
-        "f1": 0.846,
+        "signals": 2570,
+        "pivots": 3173,
+        "matched": 2375,
+        "precision": 0.975,
+        "recall": 0.749,
+        "f1": 0.847,
         "median_offset": 2,
         "mean_offset": 1.63
       },
       "test": {
         "signals": 2453,
-        "pivots": 3056,
-        "matched": 2277,
+        "pivots": 3057,
+        "matched": 2278,
         "precision": 0.979,
         "recall": 0.745,
         "f1": 0.846,
-        "median_offset": 2,
+        "median_offset": 2.0,
         "mean_offset": 1.58
       },
       "score": 0.746
@@ -362,23 +382,23 @@
         "method": "ema_cross"
       },
       "train": {
-        "signals": 2567,
-        "pivots": 3170,
-        "matched": 2372,
-        "precision": 0.974,
-        "recall": 0.748,
-        "f1": 0.846,
+        "signals": 2570,
+        "pivots": 3173,
+        "matched": 2375,
+        "precision": 0.975,
+        "recall": 0.749,
+        "f1": 0.847,
         "median_offset": 2,
         "mean_offset": 1.63
       },
       "test": {
         "signals": 2453,
-        "pivots": 3056,
-        "matched": 2277,
+        "pivots": 3057,
+        "matched": 2278,
         "precision": 0.979,
         "recall": 0.745,
         "f1": 0.846,
-        "median_offset": 2,
+        "median_offset": 2.0,
         "mean_offset": 1.58
       },
       "score": 0.746
@@ -391,23 +411,23 @@
         "method": "ema_cross"
       },
       "train": {
-        "signals": 2567,
-        "pivots": 3170,
-        "matched": 2372,
-        "precision": 0.974,
-        "recall": 0.748,
-        "f1": 0.846,
+        "signals": 2570,
+        "pivots": 3173,
+        "matched": 2375,
+        "precision": 0.975,
+        "recall": 0.749,
+        "f1": 0.847,
         "median_offset": 2,
         "mean_offset": 1.63
       },
       "test": {
         "signals": 2453,
-        "pivots": 3056,
-        "matched": 2277,
+        "pivots": 3057,
+        "matched": 2278,
         "precision": 0.979,
         "recall": 0.745,
         "f1": 0.846,
-        "median_offset": 2,
+        "median_offset": 2.0,
         "mean_offset": 1.58
       },
       "score": 0.746
@@ -420,20 +440,20 @@
         "method": "slope_both"
       },
       "train": {
-        "signals": 2461,
-        "pivots": 3170,
-        "matched": 2175,
-        "precision": 0.972,
-        "recall": 0.686,
-        "f1": 0.804,
-        "median_offset": 1.0,
+        "signals": 2460,
+        "pivots": 3173,
+        "matched": 2179,
+        "precision": 0.974,
+        "recall": 0.687,
+        "f1": 0.806,
+        "median_offset": 1,
         "mean_offset": 0.91
       },
       "test": {
-        "signals": 2327,
-        "pivots": 3056,
+        "signals": 2328,
+        "pivots": 3057,
         "matched": 2055,
-        "precision": 0.975,
+        "precision": 0.974,
         "recall": 0.672,
         "f1": 0.796,
         "median_offset": 1.0,
