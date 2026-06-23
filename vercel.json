@@ -1,11 +1,14 @@
 {
+  "rewrites": [
+    { "source": "/", "destination": "/pre_rottura.html" }
+  ],
   "headers": [
     {
       "source": "/",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
     {
-      "source": "/(index.html|app.js|styles.css|pre_rottura.html|pre_rottura.js)",
+      "source": "/(styles.css|pre_rottura.html|pre_rottura.js)",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     }
   ],
