@@ -1,0 +1,24 @@
+# Test on-demand del digest email: invia SUBITO una mail di prova (ignora il gate
+# orario con --force). Usa i secret Gmail gia' impostati. Si lancia a mano.
+name: digest-test
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Send test digest (force)
+        env:
+          FXBR_GMAIL_USER: ${{ secrets.FXBR_GMAIL_USER }}
+          FXBR_GMAIL_APP_PASSWORD: ${{ secrets.FXBR_GMAIL_APP_PASSWORD }}
+          FXBR_DIGEST_TO: ${{ secrets.FXBR_DIGEST_TO }}
+        run: python scripts/send_digest.py --force
