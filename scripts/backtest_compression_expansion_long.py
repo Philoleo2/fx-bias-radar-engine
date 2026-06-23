@@ -92,6 +92,7 @@ def fetch_h1_history(instrument, token, env="practice", *, count=DEFAULT_COUNT,
         if remaining <= 0:
             break
         request_size = min(page_size, max(remaining, min(page_size, count)))
+        had_cursor = cursor is not None
         page = _request_page(client, instrument, env_cursor=cursor,
                              page_size=request_size, retries=retries)
         page = [c for c in page if c.complete]
@@ -103,7 +104,7 @@ def fetch_h1_history(instrument, token, env="practice", *, count=DEFAULT_COUNT,
             break
         seen_oldest = oldest
         cursor = _as_oanda_time(oldest)
-        if len(page) < request_size:
+        if had_cursor and len(page) < request_size:
             break
     return merge_unique_pages(pages, count)
 
