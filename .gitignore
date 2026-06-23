@@ -43,6 +43,9 @@ reports/
 !reports/h1d1/
 !reports/h1d1/h1_d1_align.md
 !reports/h1d1/h1_d1_align.json
+!reports/h1d1w/
+!reports/h1d1w/h1_d1_w_align.md
+!reports/h1d1w/h1_d1_w_align.json
 !reports/compexp_long/
 !reports/compexp_long/compression_expansion_long.md
 !reports/compexp_long/compression_expansion_long.json
