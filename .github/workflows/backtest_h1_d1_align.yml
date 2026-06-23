@@ -1,0 +1,33 @@
+# Confluenza H1+D1: rottura H1 allineata al daily (on-demand, H1 e D1 reali).
+name: backtest-h1-d1-align
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check OANDA secret
+        env:
+          OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$OANDA_ACCESS_TOKEN" ]; then
+            echo "OANDA_ACCESS_TOKEN secret is missing or empty"; exit 1
+          fi
+      - name: H1+D1 alignment backtest
+        env:
+          OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
+          OANDA_ENV: practice
+        run: python scripts/backtest_h1_d1_align.py --oanda --h1-count 20000 --d1-count 1500 --out reports/h1d1
+      - name: Commit report
+        run: |
+          git config user.name "fx-bias-radar-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f reports/h1d1/h1_d1_align.md reports/h1d1/h1_d1_align.json
+          git diff --cached --quiet || git commit -m "H1+D1 alignment report [skip ci]"
+          git push

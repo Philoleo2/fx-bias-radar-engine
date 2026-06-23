@@ -40,6 +40,9 @@ reports/
 !reports/comp_d1/
 !reports/comp_d1/compression_tf.md
 !reports/comp_d1/compression_tf.json
+!reports/h1d1/
+!reports/h1d1/h1_d1_align.md
+!reports/h1d1/h1_d1_align.json
 !reports/compexp_long/
 !reports/compexp_long/compression_expansion_long.md
 !reports/compexp_long/compression_expansion_long.json
