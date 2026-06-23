@@ -17,6 +17,17 @@ Ritorno medio/mediano nella direzione segnalata e hit rate, a +N barre H1.
 | +12 | 6421 | -0.0049 | -0.0 | 0.5 |
 | +24 | 6393 | 0.0086 | 0.0 | 0.499 |
 
+## Edge per FORZA della rotazione (|estremo| dello spread)
+Le rotazioni piu' forti hanno piu' follow-through? hit rate per orizzonte.
+
+| fascia estremo | n(+12) | hit +4 | hit +12 | hit +24 | medio % +24 |
+|---|---|---|---|---|---|
+| 1.5-2.0 | 1788 | 0.499 | 0.501 | 0.49 | 0.0067 |
+| 2.0-2.5 | 1378 | 0.513 | 0.497 | 0.499 | 0.0007 |
+| 2.5-3.0 | 982 | 0.505 | 0.509 | 0.496 | 0.0101 |
+| 3.0-3.5 | 786 | 0.534 | 0.508 | 0.492 | 0.0044 |
+| 3.5+ | 1487 | 0.534 | 0.492 | 0.515 | 0.0196 |
+
 ## Top 10 (per score out-of-sample)
 
 | # | method | ext | K | conf | prec | rec | f1 | off.med | score |
