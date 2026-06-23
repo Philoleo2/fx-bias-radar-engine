@@ -135,3 +135,75 @@ def run_strength_h1_from_oanda(*, token: Optional[str] = None,
         env = env or resolved_env
     candles_by_pair = fetch_all_h1(token, env=env or "practice", count=count)
     return compute_strength(candles_by_pair, window=window)
+
+
+def fetch_daily(instrument: str, token: str, env: str = "practice",
+                count: int = 300, retries: int = 2) -> List[Candle]:
+    """Scarica candele D (daily) midpoint COMPLETE per uno strumento."""
+    client = _client_for(token, env)
+    max_attempts = max(1, retries + 1)
+    raw = None
+    for attempt in range(max_attempts):
+        try:
+            raw = client.candles(instrument, granularity="D", count=count,
+                                  price="M", include_incomplete=False)
+            break
+        except OandaError as exc:
+            if attempt >= max_attempts - 1 or not _is_transient_oanda_error(exc):
+                raise
+            time.sleep(0.25 * (2 ** attempt))
+    return [Candle(time=c.time.isoformat(), o=c.open, h=c.high, l=c.low,
+                   c=c.close, volume=c.volume, complete=c.complete)
+            for c in raw if c.complete]
+
+
+def fetch_all_daily(token: str, env: str = "practice", count: int = 300,
+                    max_workers: int = 28) -> Dict[str, List[Candle]]:
+    out: Dict[str, List[Candle]] = {}
+    workers = max(1, min(max_workers, len(P.PAIRS)))
+
+    def fetch_pair(pair: str):
+        return pair, fetch_daily(P.oanda_instrument(pair), token, env=env, count=count)
+
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {pool.submit(fetch_pair, pair): pair for pair in P.PAIRS}
+        for future in as_completed(futures):
+            pair, cs = future.result()
+            out[pair] = cs
+    return out
+
+
+def fetch_weekly(instrument: str, token: str, env: str = "practice",
+                 count: int = 200, retries: int = 2) -> List[Candle]:
+    """Scarica candele W (weekly) midpoint COMPLETE per uno strumento."""
+    client = _client_for(token, env)
+    max_attempts = max(1, retries + 1)
+    raw = None
+    for attempt in range(max_attempts):
+        try:
+            raw = client.candles(instrument, granularity="W", count=count,
+                                  price="M", include_incomplete=False)
+            break
+        except OandaError as exc:
+            if attempt >= max_attempts - 1 or not _is_transient_oanda_error(exc):
+                raise
+            time.sleep(0.25 * (2 ** attempt))
+    return [Candle(time=c.time.isoformat(), o=c.open, h=c.high, l=c.low,
+                   c=c.close, volume=c.volume, complete=c.complete)
+            for c in raw if c.complete]
+
+
+def fetch_all_weekly(token: str, env: str = "practice", count: int = 200,
+                     max_workers: int = 28) -> Dict[str, List[Candle]]:
+    out: Dict[str, List[Candle]] = {}
+    workers = max(1, min(max_workers, len(P.PAIRS)))
+
+    def fetch_pair(pair: str):
+        return pair, fetch_weekly(P.oanda_instrument(pair), token, env=env, count=count)
+
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {pool.submit(fetch_pair, pair): pair for pair in P.PAIRS}
+        for future in as_completed(futures):
+            pair, cs = future.result()
+            out[pair] = cs
+    return out

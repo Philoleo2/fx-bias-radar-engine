@@ -45,7 +45,7 @@ jobs:
           git add -f reports/prerottura/pre_rottura_latest.json reports/prerottura/fase4_log.csv
           git diff --cached --quiet || git commit -m "Pre-Rottura H1 scan + Fase4 log [skip ci]"
           git push
-      - name: Digest email (08:00 / 15:00 Europe/Rome)
+      - name: Digest email allineate daily+weekly
         env:
           FXBR_GMAIL_USER: ${{ secrets.FXBR_GMAIL_USER }}
           FXBR_GMAIL_APP_PASSWORD: ${{ secrets.FXBR_GMAIL_APP_PASSWORD }}

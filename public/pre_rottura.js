@@ -11,8 +11,7 @@ const els = {
   dataState: document.getElementById("dataState"),
   warnings: document.getElementById("warnings"),
   rankingH4: document.getElementById("rankingH4"),
-  rotazioniGrid: document.getElementById("rotazioniGrid"),
-  compressioniGrid: document.getElementById("compressioniGrid"),
+  allineateGrid: document.getElementById("allineateGrid"),
   canvas: document.getElementById("linesChart"),
 };
 
@@ -44,15 +43,8 @@ function requestToken(message) {
   if (message) showWarning(message);
 }
 
-function showWarning(message) {
-  els.warnings.hidden = false;
-  els.warnings.textContent = message;
-}
-
-function clearWarning() {
-  els.warnings.hidden = true;
-  els.warnings.textContent = "";
-}
+function showWarning(message) { els.warnings.hidden = false; els.warnings.textContent = message; }
+function clearWarning() { els.warnings.hidden = true; els.warnings.textContent = ""; }
 
 function escapeHtml(value) {
   return String(value == null ? "" : value).replace(/[&<>"']/g, function (ch) {
@@ -65,8 +57,7 @@ function fmtDateTime(value) {
   const d = new Date(value);
   if (Number.isNaN(d.getTime())) return value;
   return new Intl.DateTimeFormat("it-IT", {
-    day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit",
-    timeZoneName: "short",
+    day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", timeZoneName: "short",
   }).format(d);
 }
 
@@ -96,16 +87,14 @@ async function load() {
   setStatus("Aggiorno", "loading");
   try {
     const res = await fetch("/api/pre_rottura", {
-      headers: { Authorization: "Bearer " + saved },
-      cache: "no-store",
+      headers: { Authorization: "Bearer " + saved }, cache: "no-store",
     });
     if (res.status === 401) { requestToken("Token non valido: inserisci quello corretto."); return; }
     const data = await res.json();
     if (!data.ok) {
       els.dataState.textContent = "Nessun dato";
       showWarning(data.detail || "Pre-Rottura non disponibile.");
-      renderRotations([]);
-      renderCompressioni([]);
+      renderAllineate([]);
       setStatus("In attesa cron", "idle");
       return;
     }
@@ -126,8 +115,7 @@ function render(data) {
   const ranking = (data.ranking_h4 || []);
   els.rankingH4.textContent = ranking.length ? ("Forza H4: " + ranking.join(" > ")) : "";
   renderChart(data.lines_h1 || {});
-  renderRotations(data.rotazioni || []);
-  renderCompressioni(data.compressioni || []);
+  renderAllineate(data.allineate || []);
 }
 
 function renderChart(lines) {
@@ -136,14 +124,8 @@ function renderChart(lines) {
   const datasets = (lines.currencies || []).map(function (c) {
     const color = CCY_COLOR[c.ccy] || "#888";
     return {
-      label: c.ccy,
-      data: c.series || [],
-      borderColor: color,
-      backgroundColor: color,
-      borderWidth: 1.6,
-      pointRadius: 0,
-      tension: 0.25,
-      spanGaps: true,
+      label: c.ccy, data: c.series || [], borderColor: color, backgroundColor: color,
+      borderWidth: 1.6, pointRadius: 0, tension: 0.25, spanGaps: true,
     };
   });
   if (chart) { chart.destroy(); chart = null; }
@@ -151,8 +133,7 @@ function renderChart(lines) {
     type: "line",
     data: { labels: times, datasets: datasets },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      responsive: true, maintainAspectRatio: false,
       interaction: { mode: "nearest", intersect: false },
       plugins: { legend: { labels: { color: "#cdd3cd", boxWidth: 12 } } },
       scales: {
@@ -163,45 +144,13 @@ function renderChart(lines) {
   });
 }
 
-function card(row) {
-  const isLong = String(row.dir).toUpperCase() === "LONG";
-  // ex-forte molla (giu', rosso), ex-debole recupera (su', verde)
-  const mollaSpan = '<span style="color:var(--red); font-weight:600;">'
-    + escapeHtml(row.forte) + " molla ↓</span>";
-  const recSpan = '<span style="color:var(--green); font-weight:600;">'
-    + escapeHtml(row.debole) + " recupera ↑</span>";
-  const phrase = mollaSpan + ", " + recSpan;
-  const pillTxt = "Rotazione · ora " + (isLong ? "long" : "short");
-  const pillBg = isLong ? "rgba(96,189,125,0.16)" : "rgba(239,109,114,0.16)";
-  const pillCol = isLong ? "var(--green)" : "var(--red)";
-  const pill = '<span style="display:inline-block; background:' + pillBg + "; color:" + pillCol
-    + '; font-size:12px; padding:3px 10px; border-radius:6px;">' + pillTxt + "</span>";
-  const detail = "Spread di forza H1 " + escapeHtml(row.spread_h1);
-  return '<article class="focus-card">'
-    + '<div class="focus-top"><div class="pair">' + escapeHtml(row.pair) + "</div>"
-    + dirBadge(String(row.dir).toUpperCase()) + "</div>"
-    + '<div class="focus-body">'
-    + '<div style="font-size:15px; line-height:1.6; margin:4px 0 10px;">' + phrase + "</div>"
-    + "<div>" + pill + "</div>"
-    + '<div class="note" style="margin-top:8px;">' + detail + "</div>"
-    + "</div>"
-    + '<p class="focus-action">Disegna le linee, metti un alert, entra a rottura o ritest.</p>'
-    + "</article>";
-}
-
-function renderRotations(rotazioni) {
-  els.rotazioniGrid.innerHTML = (rotazioni && rotazioni.length)
-    ? rotazioni.map(card).join("")
-    : '<div class="empty">Nessuna rotazione a questa ora</div>';
-}
-
-function compressionCard(row) {
+function alignedCard(row) {
   const isLong = String(row.dir).toUpperCase() === "LONG";
   const col = isLong ? "var(--green)" : "var(--red)";
   const arr = isLong ? "su ↑" : "giù ↓";
-  const phrase = '<span style="color:' + col + '; font-weight:600;">Compressione rotta '
-    + arr + "</span>";
-  const detail = "Range stretto rotto su H1. Guarda se coincide con una tua linea.";
+  const phrase = '<span style="color:' + col + '; font-weight:600;">Rottura H1 ' + arr
+    + "</span>, allineata a daily+weekly " + escapeHtml(String(row.dir).toUpperCase());
+  const detail = "Daily E weekly in compressione attiva nella stessa direzione: il segnale piu' selettivo.";
   return '<article class="focus-card">'
     + '<div class="focus-top"><div class="pair">' + escapeHtml(row.pair) + "</div>"
     + dirBadge(String(row.dir).toUpperCase()) + "</div>"
@@ -209,15 +158,15 @@ function compressionCard(row) {
     + '<div style="font-size:15px; line-height:1.6; margin:4px 0 10px;">' + phrase + "</div>"
     + '<div class="note">' + detail + "</div>"
     + "</div>"
-    + '<p class="focus-action">Se coincide con la tua linea: alert, entra a rottura o ritest.</p>'
+    + '<p class="focus-action">Incrocia con la tua linea: entra a rottura o ritest.</p>'
     + "</article>";
 }
 
-function renderCompressioni(compressioni) {
-  if (!els.compressioniGrid) return;
-  els.compressioniGrid.innerHTML = (compressioni && compressioni.length)
-    ? compressioni.map(compressionCard).join("")
-    : '<div class="empty">Nessuna compressione rotta a questa ora</div>';
+function renderAllineate(allineate) {
+  if (!els.allineateGrid) return;
+  els.allineateGrid.innerHTML = (allineate && allineate.length)
+    ? allineate.map(alignedCard).join("")
+    : '<div class="empty">Nessuna rottura allineata a daily + weekly a questa ora</div>';
 }
 
 els.saveToken.addEventListener("click", function () {
@@ -235,5 +184,5 @@ els.tokenInput.value = token();
 syncAuthUi();
 load();
 
-// Auto-aggiornamento: ricarica i dati ogni 5 minuti (il cron orario scrive il JSON).
+// Auto-aggiornamento ogni 5 minuti.
 setInterval(load, 300000);

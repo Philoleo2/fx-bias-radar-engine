@@ -96,3 +96,67 @@ def compressioni_from_candles(h1_by_pair, window=DEFAULT_WINDOW,
             base, quote = P.base_quote(pair)
             out.append({"pair": pair, "dir": d, "base": base, "quote": quote})
     return out
+
+
+def active_daily_dir(d1, k=10, window=DEFAULT_WINDOW, percentile=DEFAULT_PERCENTILE):
+    """Direzione 'attiva' all'ultima barra D1: da un breakout da compressione D1
+    avvenuto entro k barre. None se nessun breakout recente."""
+    last_dir, last_bar = None, -10 ** 9
+    for i in range(len(d1)):
+        d = compression_breakout(d1, i, window, percentile)
+        if d is not None:
+            last_dir, last_bar = d, i
+    if last_dir is not None and (len(d1) - 1 - last_bar) <= k:
+        return last_dir
+    return None
+
+
+def daily_aligned_breakouts(h1_by_pair, d1_by_pair, k=10, h1_window=DEFAULT_WINDOW):
+    """Rotture H1 (window 12) sull'ultima barra, ALLINEATE alla direzione daily attiva.
+    Segnale validato dal backtest (hit ~51%, ritorno medio positivo)."""
+    from . import pairs as P
+    out = []
+    for pair in P.PAIRS:
+        h1 = h1_by_pair.get(pair)
+        d1 = d1_by_pair.get(pair)
+        if not h1 or not d1 or len(d1) < DEFAULT_WINDOW + RANK_WINDOW + 1:
+            continue
+        adir = active_daily_dir(d1, k)
+        if adir is None:
+            continue
+        t = len(h1) - 1
+        if t < h1_window:
+            continue
+        d = is_new_breakout(h1, t, h1_window)
+        if d is not None and d == adir:
+            base, quote = P.base_quote(pair)
+            out.append({"pair": pair, "dir": d, "base": base, "quote": quote})
+    return out
+
+
+def daily_weekly_aligned_breakouts(h1_by_pair, d1_by_pair, w_by_pair,
+                                   k_d=10, k_w=8, h1_window=DEFAULT_WINDOW):
+    """Rotture H1 allineate SIA al daily SIA al weekly (coorte d1w del backtest:
+    hit ~53-55%, ritorno medio positivo e net-positivo dopo i costi). Il piu' selettivo."""
+    from . import pairs as P
+    out = []
+    for pair in P.PAIRS:
+        h1 = h1_by_pair.get(pair)
+        d1 = d1_by_pair.get(pair)
+        w1 = w_by_pair.get(pair)
+        if not h1 or not d1 or not w1:
+            continue
+        if len(d1) < DEFAULT_WINDOW + RANK_WINDOW + 1 or len(w1) < DEFAULT_WINDOW + RANK_WINDOW + 1:
+            continue
+        adir = active_daily_dir(d1, k_d)
+        wdir = active_daily_dir(w1, k_w)
+        if adir is None or wdir is None or adir != wdir:
+            continue
+        t = len(h1) - 1
+        if t < h1_window:
+            continue
+        d = is_new_breakout(h1, t, h1_window)
+        if d is not None and d == adir:
+            base, quote = P.base_quote(pair)
+            out.append({"pair": pair, "dir": d, "base": base, "quote": quote})
+    return out

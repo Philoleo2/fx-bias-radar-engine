@@ -26,6 +26,8 @@ DISCLAIMER = "Radar di attenzione: la decisione e' sulle linee manuali."
 
 def build_pre_rottura(h4_candles_by_pair: Dict[str, List[Candle]],
                       h1_candles_by_pair: Dict[str, List[Candle]],
+                      d1_candles_by_pair: Optional[Dict[str, List[Candle]]] = None,
+                      w_candles_by_pair: Optional[Dict[str, List[Candle]]] = None,
                       *, window: int = SH.DEFAULT_CHART_WINDOW,
                       n_rientro: int = 3, h4_dir_min: float = 1.0,
                       cluster_cap: int = 2,
@@ -43,6 +45,11 @@ def build_pre_rottura(h4_candles_by_pair: Dict[str, List[Candle]],
     rotazioni = ROT.rotations_from_strength(h1_strength, cluster_cap=cluster_cap)
     # COMPRESSIONI: rottura da squeeze sull'ultima barra H1 (profilo w12_p20).
     compressioni = COMP.compressioni_from_candles(h1_candles_by_pair)
+    # ALLINEATE DAILY+WEEKLY: rottura H1 nella direzione di una compressione D1 E W
+    # attive (coorte d1w del backtest: hit ~53-55%, ritorno medio positivo, net-positiva).
+    allineate = (COMP.daily_weekly_aligned_breakouts(
+                     h1_candles_by_pair, d1_candles_by_pair, w_candles_by_pair)
+                 if (d1_candles_by_pair and w_candles_by_pair) else [])
 
     stamp = run_time_utc or datetime.now(timezone.utc).isoformat(timespec="seconds")
     return {
@@ -55,8 +62,9 @@ def build_pre_rottura(h4_candles_by_pair: Dict[str, List[Candle]],
         "h1_last_bar_utc": h1_strength.get("last_bar_utc"),
         "params": {"n_rientro": n_rientro, "h4_dir_min": h4_dir_min,
                    "window": window, "cluster_cap": cluster_cap},
-        "rotazioni": rotazioni,             # M4: segnale primario (display)
-        "compressioni": compressioni,       # rottura da compressione (display)
+        "allineate": allineate,             # rottura H1 allineata a daily+weekly (PRIMARIO)
+        "rotazioni": rotazioni,             # M4: legacy (non mostrato)
+        "compressioni": compressioni,       # legacy (non mostrato)
         "riprese": conf["riprese"],
         "rientri": conf["rientri"],
         "lines_h1": h1_strength,            # 8 serie z H1 per il grafico sovrapposto
@@ -80,7 +88,9 @@ def run_from_oanda(*, token: Optional[str] = None, env: Optional[str] = None,
     env = env or "practice"
     h4 = fetch_all_pairs(token, env=env, count=h4_count)   # H4 complete
     h1 = SH.fetch_all_h1(token, env=env, count=h1_count)   # H1 complete
-    return build_pre_rottura(h4, h1, window=window, n_rientro=n_rientro,
+    d1 = SH.fetch_all_daily(token, env=env, count=300)     # D1 per allineamento
+    w1 = SH.fetch_all_weekly(token, env=env, count=200)    # Weekly per allineamento
+    return build_pre_rottura(h4, h1, d1, w1, window=window, n_rientro=n_rientro,
                              h4_dir_min=h4_dir_min, cluster_cap=cluster_cap)
 
 
