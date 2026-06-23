@@ -25,3 +25,6 @@ reports/
 !reports/crossover/
 !reports/crossover/crossover_edge.md
 !reports/crossover/crossover_edge.json
+!reports/rotbreak/
+!reports/rotbreak/rotbreak_edge.md
+!reports/rotbreak/rotbreak_edge.json
