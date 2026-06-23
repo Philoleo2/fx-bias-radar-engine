@@ -19,3 +19,6 @@ reports/
 !reports/rotation/
 !reports/rotation/rotation_backtest.md
 !reports/rotation/rotation_backtest.json
+!reports/h4events/
+!reports/h4events/h4_events_edge.md
+!reports/h4events/h4_events_edge.json
