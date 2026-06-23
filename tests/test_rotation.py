@@ -102,3 +102,18 @@ def test_rotations_from_strength_top_short():
     assert "AUDNZD" in by, by
     assert by["AUDNZD"]["dir"] == "SHORT"
     assert by["AUDNZD"]["forte"] == "AUD" and by["AUDNZD"]["debole"] == "NZD"
+
+
+def test_detect_crossovers_up_and_down():
+    from fx_bias_radar.rotation import detect_crossovers
+    sp = _ramp(-2.0, 2.0, 20) + _ramp(2.0, -2.0, 20)[1:]
+    cx = detect_crossovers(sp, cooldown=3)
+    dirs = [c["dir"] for c in cx]
+    assert "LONG" in dirs and "SHORT" in dirs
+    # primo incrocio e' LONG (da negativo a positivo)
+    assert cx[0]["dir"] == "LONG" and cx[0]["slope"] > 0
+
+
+def test_no_crossover_if_no_sign_change():
+    from fx_bias_radar.rotation import detect_crossovers
+    assert detect_crossovers([0.5, 0.6, 0.7, 0.8]) == []

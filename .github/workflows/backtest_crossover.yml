@@ -1,0 +1,36 @@
+# M4 Test #3 - edge prezzo incrocio linee di forza (on-demand, H1 reale).
+name: backtest-crossover
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check OANDA secret
+        env:
+          OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$OANDA_ACCESS_TOKEN" ]; then
+            echo "OANDA_ACCESS_TOKEN secret is missing or empty"; exit 1
+          fi
+      - name: Run crossover edge backtest (H1)
+        env:
+          OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
+          OANDA_ENV: practice
+        run: python scripts/backtest_crossover.py --oanda --count 4000 --out reports/crossover
+      - name: Commit report
+        run: |
+          git config user.name "fx-bias-radar-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f reports/crossover/crossover_edge.md reports/crossover/crossover_edge.json
+          git diff --cached --quiet || git commit -m "Crossover edge report [skip ci]"
+          git push

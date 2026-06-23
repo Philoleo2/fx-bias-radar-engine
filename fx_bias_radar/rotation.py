@@ -214,3 +214,24 @@ def rotations_from_strength(h1_payload: dict,
         cnt[q] = cnt.get(q, 0) + 1
         out.append(r)
     return out
+
+
+def detect_crossovers(sp: List[Num], cooldown: int = 6) -> List[dict]:
+    """Incroci dello spread di forza attraverso lo ZERO (cambio di leadership).
+    LONG = sp passa da <=0 a >0 (base supera quote); SHORT = viceversa.
+    'slope' = |variazione| al cross = quanto e' deciso l'incrocio."""
+    out: List[dict] = []
+    last = -10 ** 9
+    for t in range(1, len(sp)):
+        a, b = _val(sp[t - 1]), _val(sp[t])
+        if a is None or b is None:
+            continue
+        d = None
+        if a <= 0 and b > 0:
+            d = "LONG"
+        elif a >= 0 and b < 0:
+            d = "SHORT"
+        if d and (t - last) >= cooldown:
+            out.append({"bar": t, "dir": d, "slope": abs(b - a), "spread": b})
+            last = t
+    return out

@@ -22,3 +22,6 @@ reports/
 !reports/h4events/
 !reports/h4events/h4_events_edge.md
 !reports/h4events/h4_events_edge.json
+!reports/crossover/
+!reports/crossover/crossover_edge.md
+!reports/crossover/crossover_edge.json
