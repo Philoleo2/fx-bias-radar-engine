@@ -1,0 +1,43 @@
+{
+  "source": "OANDA H1",
+  "n_bars": 3999,
+  "lookback": 9,
+  "window": 12,
+  "n_rotations": 6439,
+  "n_confirmed": 3956,
+  "confirm_rate": 0.614,
+  "rotation_breakout": {
+    "4": {
+      "n": 3956,
+      "hit": 0.478,
+      "mean_pct": -0.0099
+    },
+    "12": {
+      "n": 3950,
+      "hit": 0.489,
+      "mean_pct": -0.0063
+    },
+    "24": {
+      "n": 3941,
+      "hit": 0.485,
+      "mean_pct": -0.0124
+    }
+  },
+  "breakout_only": {
+    "4": {
+      "n": 38346,
+      "hit": 0.477,
+      "mean_pct": -0.0045
+    },
+    "12": {
+      "n": 38222,
+      "hit": 0.491,
+      "mean_pct": -0.001
+    },
+    "24": {
+      "n": 38126,
+      "hit": 0.49,
+      "mean_pct": -0.0094
+    }
+  }
+}
