@@ -12,6 +12,7 @@ const els = {
   warnings: document.getElementById("warnings"),
   rankingH4: document.getElementById("rankingH4"),
   rotazioniGrid: document.getElementById("rotazioniGrid"),
+  compressioniGrid: document.getElementById("compressioniGrid"),
   canvas: document.getElementById("linesChart"),
 };
 
@@ -104,6 +105,7 @@ async function load() {
       els.dataState.textContent = "Nessun dato";
       showWarning(data.detail || "Pre-Rottura non disponibile.");
       renderRotations([]);
+      renderCompressioni([]);
       setStatus("In attesa cron", "idle");
       return;
     }
@@ -125,6 +127,7 @@ function render(data) {
   els.rankingH4.textContent = ranking.length ? ("Forza H4: " + ranking.join(" > ")) : "";
   renderChart(data.lines_h1 || {});
   renderRotations(data.rotazioni || []);
+  renderCompressioni(data.compressioni || []);
 }
 
 function renderChart(lines) {
@@ -190,6 +193,31 @@ function renderRotations(rotazioni) {
   els.rotazioniGrid.innerHTML = (rotazioni && rotazioni.length)
     ? rotazioni.map(card).join("")
     : '<div class="empty">Nessuna rotazione a questa ora</div>';
+}
+
+function compressionCard(row) {
+  const isLong = String(row.dir).toUpperCase() === "LONG";
+  const col = isLong ? "var(--green)" : "var(--red)";
+  const arr = isLong ? "su ↑" : "giù ↓";
+  const phrase = '<span style="color:' + col + '; font-weight:600;">Compressione rotta '
+    + arr + "</span>";
+  const detail = "Range stretto rotto su H1. Guarda se coincide con una tua linea.";
+  return '<article class="focus-card">'
+    + '<div class="focus-top"><div class="pair">' + escapeHtml(row.pair) + "</div>"
+    + dirBadge(String(row.dir).toUpperCase()) + "</div>"
+    + '<div class="focus-body">'
+    + '<div style="font-size:15px; line-height:1.6; margin:4px 0 10px;">' + phrase + "</div>"
+    + '<div class="note">' + detail + "</div>"
+    + "</div>"
+    + '<p class="focus-action">Se coincide con la tua linea: alert, entra a rottura o ritest.</p>'
+    + "</article>";
+}
+
+function renderCompressioni(compressioni) {
+  if (!els.compressioniGrid) return;
+  els.compressioniGrid.innerHTML = (compressioni && compressioni.length)
+    ? compressioni.map(compressionCard).join("")
+    : '<div class="empty">Nessuna compressione rotta a questa ora</div>';
 }
 
 els.saveToken.addEventListener("click", function () {

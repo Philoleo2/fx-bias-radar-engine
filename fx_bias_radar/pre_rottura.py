@@ -14,6 +14,7 @@ import json
 from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
+from . import compression as COMP
 from . import confluence as CF
 from . import rotation as ROT
 from . import strength_h1 as SH
@@ -40,6 +41,8 @@ def build_pre_rottura(h4_candles_by_pair: Dict[str, List[Candle]],
 
     # ROTAZIONI (M4): segnale primario H1, rilevatore calibrato dal backtest.
     rotazioni = ROT.rotations_from_strength(h1_strength, cluster_cap=cluster_cap)
+    # COMPRESSIONI: rottura da squeeze sull'ultima barra H1 (profilo w12_p20).
+    compressioni = COMP.compressioni_from_candles(h1_candles_by_pair)
 
     stamp = run_time_utc or datetime.now(timezone.utc).isoformat(timespec="seconds")
     return {
@@ -53,6 +56,7 @@ def build_pre_rottura(h4_candles_by_pair: Dict[str, List[Candle]],
         "params": {"n_rientro": n_rientro, "h4_dir_min": h4_dir_min,
                    "window": window, "cluster_cap": cluster_cap},
         "rotazioni": rotazioni,             # M4: segnale primario (display)
+        "compressioni": compressioni,       # rottura da compressione (display)
         "riprese": conf["riprese"],
         "rientri": conf["rientri"],
         "lines_h1": h1_strength,            # 8 serie z H1 per il grafico sovrapposto
