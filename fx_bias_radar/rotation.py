@@ -145,7 +145,9 @@ def detect_rotations(sp: List[Num], zb: List[Num], zq: List[Num],
         if t - last_bar[d] < p.cooldown:
             continue
         last_bar[d] = t
-        out.append({"bar": t, "dir": d, "spread": _val(sp[t])})
+        sign = 1 if d == "SHORT" else -1
+        peak, _pk = _peak_recent(sp, t, p.k_window, p.recent, sign)
+        out.append({"bar": t, "dir": d, "spread": _val(sp[t]), "peak": peak})
     return out
 
 

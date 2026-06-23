@@ -35,6 +35,7 @@ PIVOT_SWING = 6
 PIVOT_EXT = 1.5
 MATCH_TOL = 6
 PF_HORIZONS = [4, 12, 24]   # barre H1 di follow-through prezzo
+PF_BUCKETS = [1.5, 2.0, 2.5, 3.0, 3.5]   # fasce |estremo| dello spread
 
 GRID = {
     "ext_min": [1.5, 2.0, 2.5],
@@ -143,13 +144,60 @@ def price_followthrough(sp_by_pair, closes, params: RotParams, horizons=PF_HORIZ
     return out
 
 
-def write_report(rows, split, n_bars, out_dir, source, pf=None):
+def price_followthrough_by_strength(sp_by_pair, closes, params, horizons=PF_HORIZONS):
+    """Follow-through del prezzo separato per FASCIA di forza (|estremo| dello spread)."""
+    edges = PF_BUCKETS
+
+    def bname(a):
+        for i in range(len(edges) - 1):
+            if edges[i] <= a < edges[i + 1]:
+                return f"{edges[i]}-{edges[i + 1]}"
+        if a >= edges[-1]:
+            return f"{edges[-1]}+"
+        return None
+
+    res = {}
+    for pair, (sp, zb, zq) in sp_by_pair.items():
+        prices = closes.get(pair) if isinstance(closes, dict) else None
+        if not prices:
+            continue
+        for sg in ROT.detect_rotations(sp, zb, zq, params):
+            peak = sg.get("peak")
+            if peak is None:
+                continue
+            b = bname(abs(peak))
+            if b is None:
+                continue
+            t, d = sg["bar"], sg["dir"]
+            res.setdefault(b, {h: [] for h in horizons})
+            for h in horizons:
+                if t + h < len(prices):
+                    p0, p1 = prices[t], prices[t + h]
+                    if p0 is None or p1 is None or p0 == 0:
+                        continue
+                    r = (p1 - p0) / p0
+                    res[b][h].append(r if d == "LONG" else -r)
+    out = {}
+    for b, hd in res.items():
+        out[b] = {}
+        for h, vals in hd.items():
+            if vals:
+                out[b][h] = {"n": len(vals),
+                             "mean_pct": round(100 * sum(vals) / len(vals), 4),
+                             "hit_rate": round(sum(1 for v in vals if v > 0) / len(vals), 3)}
+            else:
+                out[b][h] = {"n": 0}
+    return out
+
+
+def write_report(rows, split, n_bars, out_dir, source, pf=None, pf_str=None):
     os.makedirs(out_dir, exist_ok=True)
     best = rows[0]
     with open(os.path.join(out_dir, "rotation_backtest.json"), "w", encoding="utf-8") as f:
         json.dump({"source": source, "n_bars": n_bars, "split": split,
                    "match_tol": MATCH_TOL, "pivot_swing": PIVOT_SWING,
                    "pivot_ext": PIVOT_EXT, "price_followthrough": pf,
+                   "price_followthrough_by_strength": pf_str,
                    "ranking": rows[:15]}, f, indent=2)
     L = ["# Backtest rotazione H1 - calibrazione + edge prezzo", ""]
     L.append(f"Fonte: {source} | barre: {n_bars} | split train/test @ {split} | "
@@ -176,6 +224,22 @@ def write_report(rows, split, n_bars, out_dir, source, pf=None):
                 L.append(f"| +{h} | {s['n']} | {s['mean_pct']} | {s['median_pct']} | {s['hit_rate']} |")
             else:
                 L.append(f"| +{h} | 0 | - | - | - |")
+        L.append("")
+    if pf_str:
+        L.append("## Edge per FORZA della rotazione (|estremo| dello spread)")
+        L.append("Le rotazioni piu' forti hanno piu' follow-through? hit rate per orizzonte.")
+        L.append("")
+        L.append("| fascia estremo | n(+12) | hit +4 | hit +12 | hit +24 | medio % +24 |")
+        L.append("|---|---|---|---|---|---|")
+        def _lo(b):
+            return float(b.replace("+", "").split("-")[0])
+        for b in sorted(pf_str.keys(), key=_lo):
+            hd = pf_str[b]
+            def gv(h, k):
+                s2 = hd.get(h) or hd.get(str(h)) or {}
+                return s2.get(k, "-")
+            n12 = (hd.get(12) or hd.get("12") or {}).get("n", "-")
+            L.append(f"| {b} | {n12} | {gv(4,'hit_rate')} | {gv(12,'hit_rate')} | {gv(24,'hit_rate')} | {gv(24,'mean_pct')} |")
         L.append("")
     L.append("## Top 10 (per score out-of-sample)")
     L.append("")
@@ -241,8 +305,9 @@ def main() -> int:
     rows, split = grid_search(sp_by_pair, n)
     best_params = RotParams(**rows[0]["params"])
     pf = price_followthrough(sp_by_pair, closes, best_params)
+    pf_str = price_followthrough_by_strength(sp_by_pair, closes, best_params)
     src = "OANDA H1" if args.oanda else f"fixtures {args.fixtures_h1}"
-    path = write_report(rows, split, n, args.out, src, pf=pf)
+    path = write_report(rows, split, n, args.out, src, pf=pf, pf_str=pf_str)
     print(f"Backtest rotazione -> {path}")
     print("best:", rows[0]["params"], "| test:", rows[0]["test"])
     print("price follow-through:", pf)
