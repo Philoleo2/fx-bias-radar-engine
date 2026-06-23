@@ -28,3 +28,6 @@ reports/
 !reports/rotbreak/
 !reports/rotbreak/rotbreak_edge.md
 !reports/rotbreak/rotbreak_edge.json
+!reports/compexp/
+!reports/compexp/compression_expansion_edge.md
+!reports/compexp/compression_expansion_edge.json
