@@ -31,3 +31,6 @@ reports/
 !reports/compexp/
 !reports/compexp/compression_expansion_edge.md
 !reports/compexp/compression_expansion_edge.json
+!reports/compexp_long/
+!reports/compexp_long/compression_expansion_long.md
+!reports/compexp_long/compression_expansion_long.json
