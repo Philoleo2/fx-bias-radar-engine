@@ -1,0 +1,39 @@
+# M4 - Backtest di calibrazione del rilevatore di ROTAZIONE (on-demand).
+# Esegue scripts/backtest_rotation.py con il secret OANDA gia' presente e committa
+# il report. NON ha schedule: si lancia a mano (Run workflow) quando serve ricalibrare.
+name: backtest-rotation
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check OANDA secret
+        env:
+          OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$OANDA_ACCESS_TOKEN" ]; then
+            echo "OANDA_ACCESS_TOKEN secret is missing or empty"
+            exit 1
+          fi
+      - name: Run rotation backtest
+        env:
+          OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
+          OANDA_ENV: practice
+        run: python scripts/backtest_rotation.py --oanda --count 4000 --out reports/rotation
+      - name: Commit report
+        run: |
+          git config user.name "fx-bias-radar-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f reports/rotation/rotation_backtest.md reports/rotation/rotation_backtest.json
+          git diff --cached --quiet || git commit -m "Rotation backtest report [skip ci]"
+          git push

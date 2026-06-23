@@ -16,3 +16,6 @@ reports/
 .codex_tmp_*/
 
 .vercel
+!reports/rotation/
+!reports/rotation/rotation_backtest.md
+!reports/rotation/rotation_backtest.json
