@@ -1,0 +1,320 @@
+{
+  "source": "OANDA H1/H4/D/W",
+  "counts_requested": {
+    "h1": 20000,
+    "h4": 5000,
+    "d1": 1500,
+    "w": 800
+  },
+  "split_frac": 0.6,
+  "horizons_hours": [
+    4,
+    12,
+    24,
+    48
+  ],
+  "params": {
+    "h1_window": 12,
+    "h4_window": 12,
+    "d1_active_bars": 10,
+    "w_active_bars": 8,
+    "h4_active_bars": 12
+  },
+  "cohort_labels": {
+    "h1_breakout_d1w": "Baseline H1 breakout + D + W",
+    "h4_compression_d1w": "H4 compressione + D + W",
+    "h1_compression_h4d": "H1 compressione + H4 + D",
+    "h1_breakout_all": "H1 breakout tutti",
+    "h4_compression_all": "H4 compressioni tutte",
+    "h1_compression_all": "H1 compressioni tutte"
+  },
+  "agg": {
+    "h1_breakout_d1w": {
+      "train": {
+        "4": {
+          "n": 1117,
+          "hit": 0.491,
+          "mean_pct": -0.007
+        },
+        "12": {
+          "n": 1117,
+          "hit": 0.524,
+          "mean_pct": 0.0014
+        },
+        "24": {
+          "n": 1117,
+          "hit": 0.525,
+          "mean_pct": 0.0135
+        },
+        "48": {
+          "n": 1117,
+          "hit": 0.494,
+          "mean_pct": -0.0233
+        }
+      },
+      "test": {
+        "4": {
+          "n": 815,
+          "hit": 0.485,
+          "mean_pct": 0.0148
+        },
+        "12": {
+          "n": 814,
+          "hit": 0.482,
+          "mean_pct": 0.0203
+        },
+        "24": {
+          "n": 814,
+          "hit": 0.491,
+          "mean_pct": -0.0117
+        },
+        "48": {
+          "n": 811,
+          "hit": 0.461,
+          "mean_pct": -0.0025
+        }
+      }
+    },
+    "h4_compression_d1w": {
+      "train": {
+        "4": {
+          "n": 80,
+          "hit": 0.537,
+          "mean_pct": 0.02
+        },
+        "12": {
+          "n": 80,
+          "hit": 0.5,
+          "mean_pct": 0.0062
+        },
+        "24": {
+          "n": 80,
+          "hit": 0.4,
+          "mean_pct": -0.0566
+        },
+        "48": {
+          "n": 80,
+          "hit": 0.5,
+          "mean_pct": -0.0706
+        }
+      },
+      "test": {
+        "4": {
+          "n": 40,
+          "hit": 0.65,
+          "mean_pct": 0.0205
+        },
+        "12": {
+          "n": 40,
+          "hit": 0.525,
+          "mean_pct": 0.053
+        },
+        "24": {
+          "n": 40,
+          "hit": 0.525,
+          "mean_pct": -0.0691
+        },
+        "48": {
+          "n": 40,
+          "hit": 0.425,
+          "mean_pct": 0.0214
+        }
+      }
+    },
+    "h1_compression_h4d": {
+      "train": {
+        "4": {
+          "n": 354,
+          "hit": 0.508,
+          "mean_pct": 0.0236
+        },
+        "12": {
+          "n": 354,
+          "hit": 0.511,
+          "mean_pct": 0.0336
+        },
+        "24": {
+          "n": 354,
+          "hit": 0.517,
+          "mean_pct": 0.0359
+        },
+        "48": {
+          "n": 354,
+          "hit": 0.542,
+          "mean_pct": 0.0145
+        }
+      },
+      "test": {
+        "4": {
+          "n": 193,
+          "hit": 0.456,
+          "mean_pct": -0.0108
+        },
+        "12": {
+          "n": 193,
+          "hit": 0.435,
+          "mean_pct": -0.0065
+        },
+        "24": {
+          "n": 192,
+          "hit": 0.453,
+          "mean_pct": -0.024
+        },
+        "48": {
+          "n": 192,
+          "hit": 0.448,
+          "mean_pct": -0.0194
+        }
+      }
+    },
+    "h1_breakout_all": {
+      "train": {
+        "4": {
+          "n": 33561,
+          "hit": 0.487,
+          "mean_pct": -0.0025
+        },
+        "12": {
+          "n": 33561,
+          "hit": 0.498,
+          "mean_pct": 0.0015
+        },
+        "24": {
+          "n": 33561,
+          "hit": 0.498,
+          "mean_pct": -0.0003
+        },
+        "48": {
+          "n": 33561,
+          "hit": 0.5,
+          "mean_pct": -0.0016
+        }
+      },
+      "test": {
+        "4": {
+          "n": 21852,
+          "hit": 0.475,
+          "mean_pct": -0.0046
+        },
+        "12": {
+          "n": 21844,
+          "hit": 0.486,
+          "mean_pct": -0.0016
+        },
+        "24": {
+          "n": 21791,
+          "hit": 0.484,
+          "mean_pct": -0.0149
+        },
+        "48": {
+          "n": 21719,
+          "hit": 0.482,
+          "mean_pct": -0.0223
+        }
+      }
+    },
+    "h4_compression_all": {
+      "train": {
+        "4": {
+          "n": 2647,
+          "hit": 0.472,
+          "mean_pct": -0.008
+        },
+        "12": {
+          "n": 2647,
+          "hit": 0.487,
+          "mean_pct": -0.0113
+        },
+        "24": {
+          "n": 2647,
+          "hit": 0.474,
+          "mean_pct": -0.0286
+        },
+        "48": {
+          "n": 2647,
+          "hit": 0.471,
+          "mean_pct": -0.0489
+        }
+      },
+      "test": {
+        "4": {
+          "n": 1886,
+          "hit": 0.487,
+          "mean_pct": -0.0038
+        },
+        "12": {
+          "n": 1886,
+          "hit": 0.482,
+          "mean_pct": -0.0037
+        },
+        "24": {
+          "n": 1882,
+          "hit": 0.464,
+          "mean_pct": -0.026
+        },
+        "48": {
+          "n": 1873,
+          "hit": 0.468,
+          "mean_pct": -0.041
+        }
+      }
+    },
+    "h1_compression_all": {
+      "train": {
+        "4": {
+          "n": 11741,
+          "hit": 0.491,
+          "mean_pct": -0.001
+        },
+        "12": {
+          "n": 11741,
+          "hit": 0.506,
+          "mean_pct": 0.005
+        },
+        "24": {
+          "n": 11741,
+          "hit": 0.51,
+          "mean_pct": 0.0049
+        },
+        "48": {
+          "n": 11741,
+          "hit": 0.51,
+          "mean_pct": 0.0089
+        }
+      },
+      "test": {
+        "4": {
+          "n": 7795,
+          "hit": 0.483,
+          "mean_pct": -0.004
+        },
+        "12": {
+          "n": 7794,
+          "hit": 0.501,
+          "mean_pct": 0.0033
+        },
+        "24": {
+          "n": 7780,
+          "hit": 0.49,
+          "mean_pct": 0.001
+        },
+        "48": {
+          "n": 7755,
+          "hit": 0.488,
+          "mean_pct": -0.0132
+        }
+      }
+    }
+  },
+  "verdict": {
+    "baseline_hit_12": 0.482,
+    "baseline_mean_12": 0.0203,
+    "h4_d1w_hit_12": 0.525,
+    "h4_d1w_mean_12": 0.053,
+    "h1_h4d_hit_12": 0.435,
+    "h1_h4d_mean_12": -0.0065,
+    "h4_improves_baseline": true,
+    "h1_improves_baseline": false,
+    "text": "Solo H4 compressione + D + W migliora la baseline H1+D+W."
+  }
+}
