@@ -46,6 +46,17 @@ class TestPreRottura(unittest.TestCase):
         rie = {r["pair"] for r in payload["rientri"]}
         self.assertEqual(rip & rie, set())
 
+    def test_build_without_h4_skips_legacy_h4_outputs(self):
+        candles = C.load_fixture_dir(FIX)
+        payload = PR.build_pre_rottura(None, candles, window=80, n_rientro=3)
+        self.assertTrue(payload["ok"])
+        self.assertEqual(payload["h4_strength"], {})
+        self.assertEqual(payload["ranking_h4"], [])
+        self.assertIsNone(payload["h4_last_bar_utc"])
+        self.assertEqual(payload["riprese"], [])
+        self.assertEqual(payload["rientri"], [])
+        self.assertEqual(len(payload["lines_h1"]["currencies"]), 8)
+
 
 if __name__ == "__main__":
     unittest.main()

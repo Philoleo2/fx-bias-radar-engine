@@ -7,10 +7,8 @@ const els = {
   saveToken: document.getElementById("saveTokenBtn"),
   generatedAt: document.getElementById("generatedAt"),
   h1Bar: document.getElementById("h1Bar"),
-  h4Bar: document.getElementById("h4Bar"),
   dataState: document.getElementById("dataState"),
   warnings: document.getElementById("warnings"),
-  rankingH4: document.getElementById("rankingH4"),
   allineateGrid: document.getElementById("allineateGrid"),
   canvas: document.getElementById("linesChart"),
 };
@@ -110,10 +108,7 @@ async function load() {
 function render(data) {
   els.generatedAt.textContent = fmtDateTime(data.generated_at_utc);
   els.h1Bar.textContent = fmtDateTime(shiftHours(data.h1_last_bar_utc, 1));
-  els.h4Bar.textContent = "H4 " + fmtDateTime(shiftHours(data.h4_last_bar_utc, 4));
   els.dataState.textContent = "Aggiornato (orario)";
-  const ranking = (data.ranking_h4 || []);
-  els.rankingH4.textContent = ranking.length ? ("Forza H4: " + ranking.join(" > ")) : "";
   renderChart(data.lines_h1 || {});
   renderAllineate(data.allineate || []);
 }

@@ -1,11 +1,11 @@
-"""M3 Fase 0 - Orchestrazione "Pre-Rottura" (H4 direzione + H1 timing).
+"""M3 Fase 0 - Orchestrazione "Pre-Rottura" (H1 timing + D/W filter).
 
-Display/selezione, NON tocca il motore H4. Pensato per girare ORARIO (cron):
-- fetch H4 (chiuse) e H1 (chiuse) delle 28 coppie;
-- calcola la forza valutaria su entrambi i timeframe (compute_strength, math
-  validata currency_index);
-- classifica la confluenza (RIPRESA / RIENTRO, N=3, gated dalla direzione H4);
-- impacchetta un payload JSON pronto per la dashboard (8 linee H1 + liste).
+Display/selezione, NON tocca il motore H4 legacy. Pensato per girare ORARIO:
+- fetch H1, D1 e W chiuse delle 28 coppie;
+- calcola la forza valutaria H1 per il grafico a 8 linee;
+- seleziona rotture H1 allineate a compressioni daily + weekly.
+Il calcolo H4 resta disponibile solo se le candele H4 sono passate esplicitamente
+da test/logger legacy.
 """
 
 from __future__ import annotations
@@ -24,7 +24,7 @@ DEFAULT_H4_COUNT = 500
 DISCLAIMER = "Radar di attenzione: la decisione e' sulle linee manuali."
 
 
-def build_pre_rottura(h4_candles_by_pair: Dict[str, List[Candle]],
+def build_pre_rottura(h4_candles_by_pair: Optional[Dict[str, List[Candle]]],
                       h1_candles_by_pair: Dict[str, List[Candle]],
                       d1_candles_by_pair: Optional[Dict[str, List[Candle]]] = None,
                       w_candles_by_pair: Optional[Dict[str, List[Candle]]] = None,
@@ -33,13 +33,19 @@ def build_pre_rottura(h4_candles_by_pair: Dict[str, List[Candle]],
                       cluster_cap: int = 2,
                       run_time_utc: Optional[str] = None) -> dict:
     """Builder PURO: dai due panieri di candele al payload Pre-Rottura."""
-    h4_strength = SH.compute_strength(h4_candles_by_pair, window=window)
-    h4_strength["timeframe"] = "H4"
     h1_strength = SH.compute_strength(h1_candles_by_pair, window=window)
 
-    conf = CF.from_strength_payloads(
-        h4_strength, h1_strength,
-        h4_dir_min=h4_dir_min, n_rientro=n_rientro, cluster_cap=cluster_cap)
+    # Direzione/Forza H4 rimosse dalla UI: H4 si calcola solo se le candele
+    # vengono fornite da test/logger legacy. La pipeline live non lo scarica piu'.
+    if h4_candles_by_pair:
+        h4_strength = SH.compute_strength(h4_candles_by_pair, window=window)
+        h4_strength["timeframe"] = "H4"
+        conf = CF.from_strength_payloads(
+            h4_strength, h1_strength,
+            h4_dir_min=h4_dir_min, n_rientro=n_rientro, cluster_cap=cluster_cap)
+    else:
+        h4_strength = {}
+        conf = {"riprese": [], "rientri": []}
 
     # ROTAZIONI (M4): segnale primario H1, rilevatore calibrato dal backtest.
     rotazioni = ROT.rotations_from_strength(h1_strength, cluster_cap=cluster_cap)
@@ -80,17 +86,16 @@ def run_from_oanda(*, token: Optional[str] = None, env: Optional[str] = None,
                    window: int = SH.DEFAULT_CHART_WINDOW,
                    n_rientro: int = 3, h4_dir_min: float = 1.0,
                    cluster_cap: int = 2) -> dict:
-    """Pipeline live: fetch H4+H1 da OANDA -> payload Pre-Rottura."""
-    from .oanda_fetch import env_credentials, fetch_all_pairs
+    """Pipeline live: fetch H1+D1+W da OANDA -> payload Pre-Rottura."""
+    from .oanda_fetch import env_credentials
     if token is None:
         token, resolved_env = env_credentials()
         env = env or resolved_env
     env = env or "practice"
-    h4 = fetch_all_pairs(token, env=env, count=h4_count)   # H4 complete
     h1 = SH.fetch_all_h1(token, env=env, count=h1_count)   # H1 complete
     d1 = SH.fetch_all_daily(token, env=env, count=300)     # D1 per allineamento
     w1 = SH.fetch_all_weekly(token, env=env, count=200)    # Weekly per allineamento
-    return build_pre_rottura(h4, h1, d1, w1, window=window, n_rientro=n_rientro,
+    return build_pre_rottura(None, h1, d1, w1, window=window, n_rientro=n_rientro,
                              h4_dir_min=h4_dir_min, cluster_cap=cluster_cap)
 
 
