@@ -308,6 +308,18 @@ h2 {
   color: #e4d2ff;
 }
 
+.note-block {
+  display: block;
+  white-space: normal;
+  text-align: left;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-height: 0;
+  padding: 8px 11px;
+  line-height: 1.45;
+  font-weight: 700;
+}
+
 .state {
   background: #29384a;
   color: #d7e7ff;

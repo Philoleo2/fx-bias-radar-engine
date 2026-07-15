@@ -155,7 +155,7 @@ function alignedCard(row) {
     + dirBadge(String(row.dir).toUpperCase()) + "</div>"
     + '<div class="focus-body">'
     + '<div style="font-size:15px; line-height:1.6; margin:4px 0 10px;">' + phrase + "</div>"
-    + '<div class="note">' + detail + "</div>"
+    + '<div class="note note-block">' + detail + "</div>"
     + "</div>"
     + '<p class="focus-action">Incrocia con la tua linea: entra a rottura o ritest.</p>'
     + "</article>";
