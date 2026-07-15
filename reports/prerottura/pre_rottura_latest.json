@@ -1218,5 +1218,67 @@
   },
   "ranking_h4": [],
   "h4_strength": {},
-  "disclaimer": "Radar di attenzione: la decisione e' sulle linee manuali."
+  "disclaimer": "Radar di attenzione: la decisione e' sulle linee manuali.",
+  "classifica_chiamate": {
+    "window_days": 20,
+    "nuove": [],
+    "classifica": [
+      {
+        "pair": "GBPCHF",
+        "count": 23,
+        "dir": "LONG",
+        "first_call_utc": "2026-06-28T21:00:00+00:00",
+        "last_call_utc": "2026-07-15T14:00:00+00:00"
+      },
+      {
+        "pair": "GBPCAD",
+        "count": 23,
+        "dir": "LONG",
+        "first_call_utc": "2026-06-29T06:00:00+00:00",
+        "last_call_utc": "2026-07-15T13:00:00+00:00"
+      },
+      {
+        "pair": "USDJPY",
+        "count": 22,
+        "dir": "LONG",
+        "first_call_utc": "2026-06-26T16:00:00+00:00",
+        "last_call_utc": "2026-07-15T09:00:00+00:00"
+      },
+      {
+        "pair": "NZDJPY",
+        "count": 15,
+        "dir": "LONG",
+        "first_call_utc": "2026-07-09T08:00:00+00:00",
+        "last_call_utc": "2026-07-15T14:00:00+00:00"
+      },
+      {
+        "pair": "NZDCHF",
+        "count": 14,
+        "dir": "LONG",
+        "first_call_utc": "2026-07-09T08:00:00+00:00",
+        "last_call_utc": "2026-07-15T11:00:00+00:00"
+      },
+      {
+        "pair": "GBPJPY",
+        "count": 12,
+        "dir": "LONG",
+        "first_call_utc": "2026-07-06T00:00:00+00:00",
+        "last_call_utc": "2026-07-15T13:00:00+00:00"
+      },
+      {
+        "pair": "NZDCAD",
+        "count": 8,
+        "dir": "LONG",
+        "first_call_utc": "2026-07-09T06:00:00+00:00",
+        "last_call_utc": "2026-07-15T11:00:00+00:00"
+      },
+      {
+        "pair": "USDCHF",
+        "count": 4,
+        "dir": "LONG",
+        "first_call_utc": "2026-07-13T14:00:00+00:00",
+        "last_call_utc": "2026-07-15T08:00:00+00:00"
+      }
+    ]
+  }
 }

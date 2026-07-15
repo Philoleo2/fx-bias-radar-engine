@@ -38,11 +38,13 @@ jobs:
           OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
           OANDA_ENV: practice
         run: python scripts/log_fase4.py --oanda --out reports/prerottura/fase4_log.csv
+      - name: Aggiorna registro chiamate + classifica 20gg
+        run: python scripts/update_calls.py
       - name: Commit result
         run: |
           git config user.name "fx-bias-radar-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add -f reports/prerottura/pre_rottura_latest.json reports/prerottura/fase4_log.csv
+          git add -f reports/prerottura/pre_rottura_latest.json reports/prerottura/fase4_log.csv reports/prerottura/calls_log.csv
           git diff --cached --quiet || git commit -m "Pre-Rottura H1 scan + Fase4 log [skip ci]"
           git push
       - name: Digest email allineate daily+weekly

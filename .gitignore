@@ -12,6 +12,7 @@ reports/
 !reports/prerottura/
 !reports/prerottura/pre_rottura_latest.json
 !reports/prerottura/fase4_log.csv
+!reports/prerottura/calls_log.csv
 *.log
 .codex_tmp_*/
 

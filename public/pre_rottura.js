@@ -10,6 +10,8 @@ const els = {
   dataState: document.getElementById("dataState"),
   warnings: document.getElementById("warnings"),
   allineateGrid: document.getElementById("allineateGrid"),
+  nuoveChiamate: document.getElementById("nuoveChiamate"),
+  classificaBody: document.getElementById("classificaBody"),
   canvas: document.getElementById("linesChart"),
 };
 
@@ -93,6 +95,7 @@ async function load() {
       els.dataState.textContent = "Nessun dato";
       showWarning(data.detail || "Pre-Rottura non disponibile.");
       renderAllineate([]);
+      renderChiamate({});
       setStatus("In attesa cron", "idle");
       return;
     }
@@ -111,6 +114,7 @@ function render(data) {
   els.dataState.textContent = "Aggiornato (orario)";
   renderChart(data.lines_h1 || {});
   renderAllineate(data.allineate || []);
+  renderChiamate(data.classifica_chiamate || {});
 }
 
 function renderChart(lines) {
@@ -162,6 +166,37 @@ function renderAllineate(allineate) {
   els.allineateGrid.innerHTML = (allineate && allineate.length)
     ? allineate.map(alignedCard).join("")
     : '<div class="empty">Nessuna rottura allineata a daily + weekly a questa ora</div>';
+}
+
+function nuovaCard(e) {
+  const dir = String(e.dir || "").toUpperCase();
+  const newBadge = '<span style="display:inline-block; background:#f2b95d; color:#111;'
+    + ' font-weight:700; font-size:11px; padding:2px 8px; border-radius:5px;">NEW</span>';
+  return '<article class="focus-card">'
+    + '<div class="focus-top"><div class="pair">' + escapeHtml(e.pair) + "</div>" + newBadge + "</div>"
+    + '<div class="focus-body">'
+    + '<div style="font-size:14px; margin:4px 0 8px;">Prima chiamata ' + dirBadge(dir) + "</div>"
+    + '<div class="note">Debutto: ' + fmtDateTime(shiftHours(e.first_call_utc, 1)) + "</div>"
+    + "</div></article>";
+}
+
+function renderChiamate(cc) {
+  const nuove = (cc && cc.nuove) || [];
+  const classifica = (cc && cc.classifica) || [];
+  if (els.nuoveChiamate) {
+    els.nuoveChiamate.innerHTML = nuove.length
+      ? nuove.map(nuovaCard).join("")
+      : '<div class="empty">Nessuna nuova chiamata negli ultimi 20 giorni</div>';
+  }
+  if (els.classificaBody) {
+    els.classificaBody.innerHTML = classifica.length
+      ? classifica.map(function (e, i) {
+          return "<tr><td>" + (i + 1) + "</td><td>" + escapeHtml(e.pair) + "</td><td>"
+            + dirBadge(String(e.dir || "").toUpperCase()) + "</td><td>" + escapeHtml(e.count)
+            + "</td><td>" + fmtDateTime(shiftHours(e.last_call_utc, 1)) + "</td></tr>";
+        }).join("")
+      : '<tr><td colspan="5" class="empty-cell">Nessuna coppia con 2+ chiamate</td></tr>';
+  }
 }
 
 els.saveToken.addEventListener("click", function () {
