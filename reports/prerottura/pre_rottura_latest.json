@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-07-19T17:11:00+00:00",
+  "generated_at_utc": "2026-07-19T18:05:25+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1217,18 +1217,18 @@
         "last_call_utc": "2026-07-17T15:00:00+00:00"
       },
       {
-        "pair": "USDJPY",
-        "count": 18,
-        "dir": "LONG",
-        "first_call_utc": "2026-06-29T18:00:00+00:00",
-        "last_call_utc": "2026-07-15T09:00:00+00:00"
-      },
-      {
         "pair": "NZDCHF",
         "count": 17,
         "dir": "LONG",
         "first_call_utc": "2026-07-09T08:00:00+00:00",
         "last_call_utc": "2026-07-16T14:00:00+00:00"
+      },
+      {
+        "pair": "USDJPY",
+        "count": 17,
+        "dir": "LONG",
+        "first_call_utc": "2026-06-30T00:00:00+00:00",
+        "last_call_utc": "2026-07-15T09:00:00+00:00"
       },
       {
         "pair": "GBPJPY",
