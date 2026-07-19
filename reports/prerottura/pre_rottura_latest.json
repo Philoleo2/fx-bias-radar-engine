@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-07-19T05:05:25+00:00",
+  "generated_at_utc": "2026-07-19T06:40:10+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1204,9 +1204,9 @@
       },
       {
         "pair": "GBPCAD",
-        "count": 23,
+        "count": 22,
         "dir": "LONG",
-        "first_call_utc": "2026-06-29T06:00:00+00:00",
+        "first_call_utc": "2026-06-29T10:00:00+00:00",
         "last_call_utc": "2026-07-15T13:00:00+00:00"
       },
       {
