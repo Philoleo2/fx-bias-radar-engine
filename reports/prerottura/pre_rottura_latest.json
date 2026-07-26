@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-07-26T18:05:24+00:00",
+  "generated_at_utc": "2026-07-26T19:05:25+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1235,9 +1235,9 @@
       },
       {
         "pair": "GBPCHF",
-        "count": 13,
+        "count": 12,
         "dir": "LONG",
-        "first_call_utc": "2026-07-06T19:00:00+00:00",
+        "first_call_utc": "2026-07-07T00:00:00+00:00",
         "last_call_utc": "2026-07-15T16:00:00+00:00"
       },
       {
