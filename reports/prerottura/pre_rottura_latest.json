@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-07-25T23:06:22+00:00",
+  "generated_at_utc": "2026-07-26T00:05:26+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1242,23 +1242,23 @@
       },
       {
         "pair": "USDJPY",
-        "count": 14,
+        "count": 13,
         "dir": "LONG",
-        "first_call_utc": "2026-07-06T00:00:00+00:00",
+        "first_call_utc": "2026-07-06T04:00:00+00:00",
         "last_call_utc": "2026-07-23T11:00:00+00:00"
-      },
-      {
-        "pair": "GBPJPY",
-        "count": 12,
-        "dir": "LONG",
-        "first_call_utc": "2026-07-06T00:00:00+00:00",
-        "last_call_utc": "2026-07-15T13:00:00+00:00"
       },
       {
         "pair": "GBPCAD",
         "count": 11,
         "dir": "LONG",
         "first_call_utc": "2026-07-06T07:00:00+00:00",
+        "last_call_utc": "2026-07-15T13:00:00+00:00"
+      },
+      {
+        "pair": "GBPJPY",
+        "count": 11,
+        "dir": "LONG",
+        "first_call_utc": "2026-07-06T12:00:00+00:00",
         "last_call_utc": "2026-07-15T13:00:00+00:00"
       }
     ]
