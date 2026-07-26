@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-07-26T08:05:23+00:00",
+  "generated_at_utc": "2026-07-26T09:05:26+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1242,9 +1242,9 @@
       },
       {
         "pair": "USDJPY",
-        "count": 12,
+        "count": 11,
         "dir": "LONG",
-        "first_call_utc": "2026-07-06T09:00:00+00:00",
+        "first_call_utc": "2026-07-07T21:00:00+00:00",
         "last_call_utc": "2026-07-23T11:00:00+00:00"
       },
       {
