@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-08-01T07:35:24+00:00",
+  "generated_at_utc": "2026-08-01T07:56:04+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1198,6 +1198,7 @@
   "ranking_h4": [],
   "h4_strength": {},
   "disclaimer": "Radar di attenzione: la decisione e' sulle linee manuali.",
+  "nuove_allineate": [],
   "classifica_chiamate": {
     "window_days": 20,
     "nuove": [
