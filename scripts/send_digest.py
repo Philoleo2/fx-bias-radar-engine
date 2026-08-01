@@ -1,8 +1,8 @@
 """Avviso email EVENT-DRIVEN: invia quando compaiono rotture H1 ALLINEATE a daily+weekly.
 
 Gira dentro il workflow orario (trigger affidabile cron-job.org): a ogni ciclo legge
-lo snapshot committato e, se ci sono rotture allineate a daily+weekly, manda una mail con le
-coppie. Niente orari fissi: avviso a ogni comparsa. Tollerante (snapshot/credenziali
+lo snapshot aggiornato e, se ci sono nuove rotture allineate a daily+weekly, manda una mail
+con le coppie. Niente orari fissi: avviso a ogni nuova barra. Tollerante (snapshot/credenziali
 mancanti -> salta senza far fallire il job).
 
 Il segnale (rottura H1 nella direzione di compressioni daily E weekly attive) e' un FILTRO di
@@ -70,8 +70,14 @@ def main() -> int:
         print(f"Avviso: snapshot illeggibile ({exc}), niente invio.")
         return 0
     al = payload.get("allineate", []) or []
-    if not al and not force:
-        print("Avviso: nessuna rottura allineata a daily+weekly, niente invio.")
+    nuove = payload.get("nuove_allineate")  # None sugli snapshot vecchi
+    # Event-driven vero: invia solo se in QUESTO ciclo e' comparsa una barra H1 nuova
+    # con rotture allineate. A mercato chiuso la barra e' ferma -> nuove vuoto -> niente
+    # email ripetute a ogni ora. Con --force (test) si invia comunque.
+    trigger = al if force else (nuove if nuove is not None else al)
+    if not trigger and not force:
+        print("Avviso: nessuna nuova rottura allineata in questo ciclo "
+              "(barra gia' notificata o mercato chiuso), niente invio.")
         return 0
     subject, body = compose(payload)
     send_email(subject, body)

@@ -31,6 +31,9 @@ def main() -> int:
     allineate = payload.get("allineate", []) or []
     ts = payload.get("generated_at_utc")
     n = CALLS.append_calls(CALLS_LOG, h1_bar, allineate, ts)
+    # Solo le allineate di una barra H1 NUOVA (n>0) valgono come evento email.
+    # Barra gia' registrata (es. mercato chiuso, barra ferma) -> lista vuota.
+    payload["nuove_allineate"] = allineate if n > 0 else []
     classifica = CALLS.build_classifica(CALLS_LOG)
     payload["classifica_chiamate"] = classifica
     with open(SNAPSHOT, "w", encoding="utf-8") as f:
