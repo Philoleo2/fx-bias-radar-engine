@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-08-02T10:05:29+00:00",
+  "generated_at_utc": "2026-08-02T11:05:26+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1220,9 +1220,9 @@
       },
       {
         "pair": "NZDCHF",
-        "count": 18,
+        "count": 17,
         "dir": "LONG",
-        "first_call_utc": "2026-07-13T11:00:00+00:00",
+        "first_call_utc": "2026-07-13T22:00:00+00:00",
         "last_call_utc": "2026-07-24T14:00:00+00:00"
       },
       {
