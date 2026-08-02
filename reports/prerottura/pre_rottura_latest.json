@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-08-02T13:05:26+00:00",
+  "generated_at_utc": "2026-08-02T14:05:26+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1213,9 +1213,9 @@
     "classifica": [
       {
         "pair": "USDCHF",
-        "count": 23,
+        "count": 22,
         "dir": "LONG",
-        "first_call_utc": "2026-07-13T14:00:00+00:00",
+        "first_call_utc": "2026-07-13T16:00:00+00:00",
         "last_call_utc": "2026-07-31T09:00:00+00:00"
       },
       {
@@ -1248,9 +1248,9 @@
       },
       {
         "pair": "GBPCHF",
-        "count": 6,
+        "count": 5,
         "dir": "LONG",
-        "first_call_utc": "2026-07-13T14:00:00+00:00",
+        "first_call_utc": "2026-07-15T03:00:00+00:00",
         "last_call_utc": "2026-07-15T16:00:00+00:00"
       },
       {
