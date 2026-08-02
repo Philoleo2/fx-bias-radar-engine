@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-08-02T06:05:35+00:00",
+  "generated_at_utc": "2026-08-02T07:05:27+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1227,9 +1227,9 @@
       },
       {
         "pair": "NZDJPY",
-        "count": 17,
+        "count": 16,
         "dir": "LONG",
-        "first_call_utc": "2026-07-13T07:00:00+00:00",
+        "first_call_utc": "2026-07-13T12:00:00+00:00",
         "last_call_utc": "2026-07-24T14:00:00+00:00"
       },
       {
