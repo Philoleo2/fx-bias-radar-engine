@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-08-08T22:41:13+00:00",
+  "generated_at_utc": "2026-08-08T23:05:33+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1228,18 +1228,18 @@
         "last_call_utc": "2026-08-06T14:00:00+00:00"
       },
       {
-        "pair": "NZDCHF",
-        "count": 8,
-        "dir": "LONG",
-        "first_call_utc": "2026-07-19T23:00:00+00:00",
-        "last_call_utc": "2026-07-24T14:00:00+00:00"
-      },
-      {
         "pair": "NZDCAD",
         "count": 7,
         "dir": "LONG",
         "first_call_utc": "2026-07-20T02:00:00+00:00",
         "last_call_utc": "2026-07-24T15:00:00+00:00"
+      },
+      {
+        "pair": "NZDCHF",
+        "count": 7,
+        "dir": "LONG",
+        "first_call_utc": "2026-07-20T02:00:00+00:00",
+        "last_call_utc": "2026-07-24T14:00:00+00:00"
       },
       {
         "pair": "NZDJPY",
