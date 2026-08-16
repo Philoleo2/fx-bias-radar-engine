@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-08-16T11:30:08+00:00",
+  "generated_at_utc": "2026-08-16T12:05:26+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1201,20 +1201,28 @@
   "nuove_allineate": [],
   "classifica_chiamate": {
     "window_days": 20,
-    "nuove": [],
+    "nuove": [
+      {
+        "pair": "AUDCHF",
+        "count": 1,
+        "dir": "LONG",
+        "first_call_utc": "2026-07-27T19:00:00+00:00",
+        "last_call_utc": "2026-07-27T19:00:00+00:00"
+      }
+    ],
     "classifica": [
       {
         "pair": "USDJPY",
-        "count": 14,
+        "count": 13,
         "dir": "LONG",
-        "first_call_utc": "2026-07-27T12:00:00+00:00",
+        "first_call_utc": "2026-07-27T18:00:00+00:00",
         "last_call_utc": "2026-08-06T14:00:00+00:00"
       },
       {
         "pair": "USDCHF",
-        "count": 12,
+        "count": 11,
         "dir": "LONG",
-        "first_call_utc": "2026-07-27T12:00:00+00:00",
+        "first_call_utc": "2026-07-27T23:00:00+00:00",
         "last_call_utc": "2026-08-06T09:00:00+00:00"
       },
       {
@@ -1244,13 +1252,6 @@
         "dir": "LONG",
         "first_call_utc": "2026-07-27T13:00:00+00:00",
         "last_call_utc": "2026-07-28T09:00:00+00:00"
-      },
-      {
-        "pair": "AUDCHF",
-        "count": 2,
-        "dir": "LONG",
-        "first_call_utc": "2026-07-27T12:00:00+00:00",
-        "last_call_utc": "2026-07-27T19:00:00+00:00"
       }
     ]
   }
