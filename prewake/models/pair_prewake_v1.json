@@ -1,0 +1,131 @@
+{
+  "model_name": "PAIR_PREWAKE_V1",
+  "model_version": "pair-prewake-v1",
+  "research_source_commit": "bfadfc98b2bed21377287d16b2eab5745f0fe8c3",
+  "research_parent_commit": "5ef88c454eb8bd89f8fab37623ab94c21cb41f1c",
+  "research_branch": "research/prewake-phase2",
+  "research_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
+  "research_fingerprint_components": {
+    "model_sha256": "b02ba52723c9511acf1ef63f4954224741e47468e4a894b25e7de1f51382518f",
+    "engine_sha256": "b1a76be38b468bdecc5ca180c33c271cdc2c99753f768f693551ebcb1249bed6",
+    "evaluation_sha256": "58604fd2094ff7519360668425359efc3d6fe39c4901e6c282e5fb35fda329ab",
+    "phase1_runner_sha256": "71fab1639a022c010d405e27f3335e1e3452a76c212c341041b5dd128f9854b7"
+  },
+  "training_cutoff": {
+    "development_end_exclusive_index": 40084,
+    "development_end_utc": "2025-01-06T22:00:00+00:00",
+    "purge_embargo_h1": 24,
+    "refit_rule": "single refit on development through dev_end-24 with the modal fold C"
+  },
+  "estimator": {
+    "kind": "logistic_regression",
+    "penalty": "l2",
+    "C": 1.0,
+    "solver": "lbfgs",
+    "max_iter": 400,
+    "random_state": 20260817
+  },
+  "feature_order": [
+    "dir_ret1",
+    "dir_ret4",
+    "dir_ret12",
+    "dir_ret24",
+    "abs_pair_z",
+    "compression_ratio",
+    "pair_vol120",
+    "fx_bias_same"
+  ],
+  "feature_transformations": {
+    "dir_ret1": "sign(EWMA4) * log_return(close, 1)",
+    "dir_ret4": "sign(EWMA4) * log_return(close, 4)",
+    "dir_ret12": "sign(EWMA4) * log_return(close, 12)",
+    "dir_ret24": "sign(EWMA4) * log_return(close, 24)",
+    "abs_pair_z": "abs(zscore_prior(log_return(close,1), 120))",
+    "compression_ratio": "prior_12bar_range / rolling_quantile_prior(prior_12bar_range, 120, 0.20)",
+    "pair_vol120": "rolling_std_prior(log_return(close,1), 120)",
+    "fx_bias_same": "1.0 if (compressed AND fresh_breakout(12)) == sign(EWMA4) else 0.0",
+    "standardization": "(x - mean) / scale, then logit = coef @ z + intercept, logit clipped to [-40,40], p = sigmoid(logit)"
+  },
+  "coefficients": [
+    0.051604560629671614,
+    0.05034963105991608,
+    -0.019571076813581632,
+    -0.037044063019750106,
+    -0.3418590625330801,
+    -0.12683265090905885,
+    -0.01759440099152592,
+    -1.8776544528192427
+  ],
+  "intercept": -0.4159863092887988,
+  "scaler_parameters": {
+    "kind": "explicit_mean_scale",
+    "mean": [
+      0.000385306363172266,
+      0.0012009420984836951,
+      0.0022207654823299624,
+      0.0024631869260563592,
+      0.7290419960301107,
+      1.5434626821109416,
+      0.001016408560015777,
+      0.035517884295127075
+    ],
+    "scale": [
+      0.0010566876799695407,
+      0.001838927624150136,
+      0.0030345184098213352,
+      0.004659375344634228,
+      0.7737243883617676,
+      0.792451217475696,
+      0.00047175373964724573,
+      0.18508474867049796
+    ]
+  },
+  "threshold": 0.5965942096795052,
+  "threshold_provenance": "development OOS quantile 0.996",
+  "direction": {
+    "source": "sign(EWMA_half_life_4(robust_z_prior_240(OLS_LOPO_target_pair_gap_1H)))",
+    "ewma_half_life": 4,
+    "robust_z_window": 240,
+    "robust_z_scale": "1.4826 * MAD, floored at 1e-12"
+  },
+  "ewma_parameters": {
+    "half_life": 4,
+    "alpha": "1 - exp(ln(0.5)/half_life)",
+    "seed": "first finite observation of the series",
+    "reset": "never"
+  },
+  "lifecycle_parameters": {
+    "events": [
+      "NEW_WAKE",
+      "REAWAKENING"
+    ],
+    "new_wake_semantics": "first lifecycle start ever observed for a (pair, direction) over the whole scored series; every later start is REAWAKENING",
+    "emit_rule": "score >= threshold AND direction == sign AND armed"
+  },
+  "reset_parameters": {
+    "reset_ratio": 0.7,
+    "reset_bars": 4,
+    "rule": "direction change OR four consecutive H1 with score < 0.70 * threshold OR non-finite score"
+  },
+  "feature_windows": {
+    "robust_z": 240,
+    "pair_z": 120,
+    "pair_vol": 120,
+    "compression_window": 12,
+    "compression_rank_window": 120,
+    "compression_quantile": 0.2,
+    "breakout_window": 12,
+    "max_return_lag": 24,
+    "minimum_bars_for_valid_score": 241
+  },
+  "data_source": {
+    "provider": "OANDA",
+    "granularity": "H1",
+    "price": "M",
+    "complete_bars_only": true,
+    "universe": "fx_bias_radar.pairs.PAIRS (28) / CURRENCIES (8)",
+    "research_grid": "intersection of MID and BID/ASK timestamps across all 28 pairs"
+  },
+  "training_status": "FROZEN — production performs predict/score only; fitting is forbidden",
+  "artifact_hash": "sha256:c90c95fca01a7028880ce28fbea4a49976bbc33564dd6fbc447794ff410f7b94"
+}
