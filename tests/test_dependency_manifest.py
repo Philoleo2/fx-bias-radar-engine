@@ -127,7 +127,7 @@ if __name__ == "__main__":
 
 
 class TestRuntimeVersionParity(unittest.TestCase):
-    """Un solo runtime canonico. Il CI deve eseguire cio' che esegue produzione."""
+    """PREWAKE resta frozen; Vercel usa una patch disponibile della stessa famiglia."""
 
     @staticmethod
     def _python_version(workflow: str) -> str:
@@ -144,10 +144,12 @@ class TestRuntimeVersionParity(unittest.TestCase):
                          "il CI che protegge il modello deve girare sullo stesso "
                          "Python della produzione PREWAKE")
 
-    def test_python_version_file_matches_the_workflows(self):
+    def test_python_version_file_matches_the_frozen_runtime_family(self):
         declared = open(os.path.join(ROOT, ".python-version"), encoding="utf-8").read().strip()
-        self.assertEqual(declared, self._python_version("prewake.yml"))
-        self.assertEqual(declared, self._python_version("ci.yml"))
+        prewake_family = ".".join(self._python_version("prewake.yml").split(".")[:2])
+        ci_family = ".".join(self._python_version("ci.yml").split(".")[:2])
+        self.assertEqual(declared, prewake_family)
+        self.assertEqual(declared, ci_family)
 
     RESEARCH_PYTHON = "3.12.10"     # provenance.python della ricerca congelata
 
@@ -164,9 +166,10 @@ class TestRuntimeVersionParity(unittest.TestCase):
                              f"{workflow} deve pinnare il patch esatto della ricerca")
             self.assertEqual(version.count("."), 2, f"{workflow}: patch mancante")
 
-    def test_python_version_file_pins_the_same_patch(self):
+    def test_python_version_file_leaves_the_vercel_patch_resolvable(self):
         declared = open(os.path.join(ROOT, ".python-version"), encoding="utf-8").read().strip()
-        self.assertEqual(declared, self.RESEARCH_PYTHON)
+        self.assertEqual(declared, ".".join(self.RESEARCH_PYTHON.split(".")[:2]))
+        self.assertEqual(declared.count("."), 1, "Vercel non deve pinnare il patch")
 
     def test_fx_bias_workflows_are_not_repinned(self):
         """Solo CI e PREWAKE sono allineati al runtime frozen.
