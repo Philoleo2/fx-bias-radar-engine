@@ -33,7 +33,40 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": -4.456099056480086e-05,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": null,
+        "fresh_breakout_same_direction": false,
+        "horizons": {
+          "1": {
+            "directional_return": -0.00040374910425907545,
+            "mae": -0.00041087299699416047,
+            "mfe": 5.7693417180981754e-05,
+            "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": -0.000562320234554673,
+            "mae": -0.0007782101167315147,
+            "mfe": 5.7693417180981754e-05,
+            "raw_breakout_by_horizon": false
+          },
+          "3": {
+            "directional_return": -0.000533490990167296,
+            "mae": -0.0007782101167315147,
+            "mfe": 5.7693417180981754e-05,
+            "raw_breakout_by_horizon": false
+          },
+          "4": {
+            "directional_return": -0.0005190760562955067,
+            "mae": -0.0010085583378959262,
+            "mfe": 5.7693417180981754e-05,
+            "raw_breakout_by_horizon": false
+          }
+        },
+        "matured_through_h1": 4,
+        "primary_hit_plus1_plus12": false,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": null
+      },
       "pair": "USDCAD",
       "same_bar_raw_breakout": false,
       "score": 0.6000423890595445,
@@ -72,7 +105,52 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": -4.3881662617315836e-05,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": "2026-08-18T14:00:00+00:00",
+        "fresh_breakout_same_direction": true,
+        "horizons": {
+          "1": {
+            "directional_return": -0.0002450609421163217,
+            "mae": -0.0005333025843554662,
+            "mfe": 0.00011530866688769237,
+            "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": -0.0007281509973328146,
+            "mae": -0.0008792285850185433,
+            "mfe": 0.00011530866688769237,
+            "raw_breakout_by_horizon": false
+          },
+          "3": {
+            "directional_return": -0.0005911316016624749,
+            "mae": -0.0008792285850185433,
+            "mfe": 0.00011530866688769237,
+            "raw_breakout_by_horizon": false
+          },
+          "4": {
+            "directional_return": -0.0006343988562898136,
+            "mae": -0.0010089508352671972,
+            "mfe": 0.00011530866688769237,
+            "raw_breakout_by_horizon": false
+          },
+          "6": {
+            "directional_return": -5.76559955188128e-05,
+            "mae": -0.0010089508352671972,
+            "mfe": 0.00015854941697046598,
+            "raw_breakout_by_horizon": false
+          },
+          "8": {
+            "directional_return": -0.0001009001737780612,
+            "mae": -0.0010089508352671972,
+            "mfe": 0.0003891667507458507,
+            "raw_breakout_by_horizon": false
+          }
+        },
+        "matured_through_h1": 8,
+        "primary_hit_plus1_plus12": true,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": 9
+      },
       "pair": "USDCAD",
       "same_bar_raw_breakout": false,
       "score": 0.5977688163812078,
@@ -81,8 +159,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-18T15:32:19+00:00",
-  "last_complete_h1_utc": "2026-08-18T14:00:00+00:00",
+  "generated_at_utc": "2026-08-18T16:10:49+00:00",
+  "last_complete_h1_utc": "2026-08-18T15:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
