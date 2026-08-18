@@ -31,6 +31,27 @@ jobs:
           python-version: "3.12"
       - name: Install deps
         run: pip install -r requirements.txt
+      # Il ledger PREWAKE vive su un branch dati DEDICATO (prewake-data), non su
+      # main. Motivo: main e' gia' scritto ogni ora da pre_rottura.yml con un
+      # `git push` nudo, senza pull ne' retry. Se PREWAKE pushasse anche lui su
+      # main, una collisione farebbe fallire il push di FX BIAS e gli farebbe
+      # PERDERE il report di quel ciclo. Con due ref distinti la contesa e'
+      # impossibile per costruzione e FX Bias resta esattamente com'e' (SS48).
+      - name: Restore PREWAKE ledger from the data branch
+        run: |
+          set -e
+          if git ls-remote --exit-code --heads origin prewake-data >/dev/null 2>&1; then
+            rm -rf /tmp/ledger
+            git clone -q --depth 1 --branch prewake-data \
+              "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/ledger
+            mkdir -p reports
+            rm -rf reports/prewake
+            cp -r /tmp/ledger/reports/prewake reports/prewake
+            echo "ledger ripristinato da prewake-data ($(git -C /tmp/ledger rev-parse --short HEAD))"
+          else
+            echo "prewake-data non esiste ancora: bootstrap dal seed committato sul branch codice"
+            ls -la reports/prewake/ || echo "NESSUN SEED: il run si fermera' con NOT_SEEDED"
+          fi
       - name: Check OANDA secret
         env:
           OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
@@ -55,11 +76,44 @@ jobs:
           OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
           OANDA_ENV: practice
         run: python scripts/prewake_outcomes.py --oanda
-      - name: Commit PREWAKE ledger
+      # Pubblicazione su prewake-data. Mai su main, mai force-push.
+      # `if: always()` perche' anche un run fallito deve lasciare il proprio
+      # record in prewake_runs.jsonl: un fallimento silenzioso e' peggio di uno
+      # registrato.
+      - name: Publish PREWAKE ledger to the data branch
+        if: always()
         run: |
+          set -e
+          test -d reports/prewake || { echo "nessun ledger da pubblicare"; exit 0; }
+          rm -rf /tmp/publish
+          REMOTE="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          if git ls-remote --exit-code --heads origin prewake-data >/dev/null 2>&1; then
+            git clone -q --depth 1 --branch prewake-data "$REMOTE" /tmp/publish
+          else
+            mkdir -p /tmp/publish && cd /tmp/publish
+            git init -q && git remote add origin "$REMOTE" && git checkout -q --orphan prewake-data
+            cd "$GITHUB_WORKSPACE"
+          fi
+          mkdir -p /tmp/publish/reports
+          rm -rf /tmp/publish/reports/prewake
+          cp -r reports/prewake /tmp/publish/reports/prewake
+          cd /tmp/publish
           git config user.name "fx-bias-radar-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add -f reports/prewake/ 2>/dev/null || true
-          git diff --cached --quiet || git commit -m "PREWAKE H1 run [skip ci]"
-          git pull --rebase --autostash origin main || true
-          git push
+          git add -A reports/prewake
+          if git diff --cached --quiet; then echo "nessuna modifica al ledger"; exit 0; fi
+          git commit -q -m "PREWAKE H1 run ${GITHUB_RUN_ID} [skip ci]"
+          # Retry con backoff: nessun force-push, il commit degli eventi non si
+          # perde mai. Un solo scrittore su questo ref, quindi il rebase e'
+          # sempre banale; il loop copre solo run PREWAKE sovrapposti.
+          for attempt in 1 2 3 4 5; do
+            if git push origin prewake-data; then
+              echo "ledger pubblicato al tentativo $attempt: $(git rev-parse HEAD)"
+              exit 0
+            fi
+            echo "push respinto (non-fast-forward), tentativo $attempt"
+            sleep $((attempt * 5))
+            git pull --rebase --no-edit origin prewake-data || {
+              echo "rebase fallito: STOP, nessun force-push, nessun evento perso nel remoto"; exit 1; }
+          done
+          echo "push non riuscito dopo 5 tentativi"; exit 1

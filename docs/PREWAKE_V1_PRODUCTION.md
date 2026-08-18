@@ -253,7 +253,7 @@ OANDA H1 fetch
   ↓ persiste run + eventi (append-only, idempotente)
   ↓ notifiche
   ↓ outcome tracking prospettico
-  ↓ commit del ledger
+  ↓ pubblicazione del ledger su prewake-data (mai su main)
 ```
 
 ---
@@ -282,6 +282,33 @@ proprio. Le correzioni tecniche sono append-only.
 
 **Idempotenza:** `event_id = sha256(model_version | pair | bar_time_utc |
 event_type | direction)[:32]`. Lo stesso H1 non può produrre due eventi identici.
+
+### Concorrenza fra i due workflow — branch dati dedicato
+
+`pre_rottura.yml` scrive su `main` ogni ora con un `git push` **nudo**, senza
+`pull` e senza retry. Se anche PREWAKE pushasse su `main`, una collisione
+farebbe fallire il push di FX Bias e gli farebbe **perdere il report di quel
+ciclo**. Inaccettabile, e non risolvibile modificando FX Bias (che non va
+toccato).
+
+Soluzione: il ledger PREWAKE vive su un branch dati dedicato **`prewake-data`**.
+I due workflow scrivono su **ref distinti**, quindi la contesa è impossibile per
+costruzione.
+
+| Rischio | Come è evitato |
+|---|---|
+| Due workflow che pushano insieme | ref distinti: `main` (FX Bias) vs `prewake-data` (PREWAKE). Nessuna intersezione |
+| Non-fast-forward | unico scrittore su `prewake-data`; in più retry con backoff 5×, `pull --rebase`, **mai** force-push |
+| Perdita di eventi | il push non è mai in `\|\| true`: se dopo 5 tentativi non passa, il job **fallisce rumorosamente** e il ledger remoto resta intatto. Il run successivo ricalcola dalla stessa barra, e l'`event_id` garantisce che non nascano duplicati |
+| Sovrascrittura dello state | `prewake_state.json` è scritto solo da PREWAKE, su un ref che solo PREWAKE tocca. Il job lo **ripristina** da `prewake-data` prima di girare e lo ripubblica dopo |
+| Fallimento del motore | la pubblicazione è `if: always()`: anche un run fallito lascia il proprio record in `prewake_runs.jsonl`. Un guasto silenzioso è peggio di uno registrato |
+
+Bootstrap: al primo run `prewake-data` non esiste, quindi il job parte dal seed
+committato sul branch codice; da lì in poi il ledger vive sul branch dati.
+`api/prewake.py` legge da `FXBR_PREWAKE_GH_REF`, default `prewake-data`.
+
+Queste proprietà sono verificate da `tests/test_prewake_workflow.py`, non
+lasciate alla buona volontà dello YAML.
 
 ---
 

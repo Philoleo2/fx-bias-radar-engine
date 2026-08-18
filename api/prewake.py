@@ -10,7 +10,7 @@ in memoria; in mancanza di token/rete, fallback al file incluso nel bundle.
 ENV (Vercel, opzionali ma necessarie per la freschezza oraria):
   FXBR_GH_REPO   = "Philoleo2/fx-bias-radar-engine"
   FXBR_GH_TOKEN  = <PAT fine-grained, sola lettura "contents" su quel repo>
-  FXBR_GH_REF    = "main"   (branch su cui il cron committa; default "main")
+  FXBR_PREWAKE_GH_REF = "prewake-data" (branch dati dedicato PREWAKE)
   FXBR_PREWAKE_GH_PATH = "reports/prewake/prewake_latest.json" (default)
   FXBR_GH_TTL    = "120"    (secondi di cache, default 120)
 Il token resta SOLO lato server, mai esposto al client.
@@ -49,7 +49,7 @@ def _gh_fetch():
     now = time.time()
     if _GH_CACHE["payload"] is not None and now - float(_GH_CACHE["ts"]) <= ttl:
         return _GH_CACHE["payload"]
-    ref = os.environ.get("FXBR_GH_REF", "main").strip() or "main"
+    ref = os.environ.get("FXBR_PREWAKE_GH_REF", "prewake-data").strip() or "main"
     path = os.environ.get("FXBR_PREWAKE_GH_PATH", REL_PATH.replace(os.sep, "/")).strip()
     url = f"https://api.github.com/repos/{repo}/contents/{path}?ref={ref}"
     req = urllib.request.Request(url, headers={
