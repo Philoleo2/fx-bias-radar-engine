@@ -55,3 +55,6 @@ reports/prerottura/*
 !reports/ichimoku_align/
 !reports/ichimoku_align/ichimoku_align.md
 !reports/ichimoku_align/ichimoku_align.json
+
+# PREWAKE: the ledger is committed by the hourly job; local scratch is not
+reports/prewake/*.tmp

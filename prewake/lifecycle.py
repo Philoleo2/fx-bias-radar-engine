@@ -114,18 +114,23 @@ class LifecycleState:
 
 
 def advance(state: LifecycleState, score: np.ndarray, direction: np.ndarray, threshold: float,
-            breakout: np.ndarray, emit_from: int = 0,
+            breakout: np.ndarray, emit_from: int = 0, start: int = 0,
             reset_ratio: float = 0.70, reset_bars: int = 4) -> list[dict]:
     """Advance the lifecycle bar by bar, emitting starts at index >= emit_from.
 
-    State is mutated in place. Bars before ``emit_from`` still update state (so
-    seeding a warm-up consumes NEW_WAKE exactly as the frozen research does)
-    but produce no events.
+    State is mutated in place. Bars in [start, emit_from) still update state (so
+    seeding a warm-up consumes NEW_WAKE exactly as the frozen research does) but
+    produce no events.
+
+    ``start`` is the first bar not yet folded into ``state``. In a full replay it
+    is 0. In an incremental production run it equals ``emit_from``: the earlier
+    bars of the fetched window are lookback for the windowed features only and
+    were already consumed by a previous run.
     """
     reset_threshold = threshold * reset_ratio
     events: list[dict] = []
     n = len(score)
-    for t in range(n):
+    for t in range(start, n):
         for pair_index, pair in enumerate(P.PAIRS):
             s = float(score[t, pair_index])
             d = int(direction[t, pair_index])

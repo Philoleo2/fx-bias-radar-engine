@@ -51,13 +51,20 @@ class FeatureBundle:
 
 def build_features(close: np.ndarray, high: np.ndarray, low: np.ndarray,
                    ewma_state: np.ndarray | None = None,
-                   ewma_ready: np.ndarray | None = None) -> FeatureBundle:
+                   ewma_ready: np.ndarray | None = None,
+                   ewma_from: int = 0) -> FeatureBundle:
     """Build the frozen feature cube.
 
     ``ewma_state``/``ewma_ready`` continue a previously persisted recursive EWMA
     so that an incremental production run is numerically identical to a full
     replay from the series origin. When omitted the EWMA is seeded from this
     window's first finite observation (full-replay / seeding mode).
+
+    ``ewma_from`` is the first index whose bar has NOT yet been folded into the
+    persisted state. Bars before it are lookback only: they must never be fed
+    to the recursive EWMA a second time, so their ewma4 stays NaN and they are
+    never scored. Windowed features (returns, z-scores, compression, breakout)
+    still use the full window, which is exactly what they need.
     """
     close = np.asarray(close, dtype=np.float64)
     high = np.asarray(high, dtype=np.float64)
@@ -83,7 +90,7 @@ def build_features(close: np.ndarray, high: np.ndarray, low: np.ndarray,
                 state[j] = col[finite[-1]]
     else:
         ewma4, state, ready = _ewma_continued(gap_z, np.asarray(ewma_state, dtype=np.float64),
-                                              np.asarray(ewma_ready, dtype=bool))
+                                              np.asarray(ewma_ready, dtype=bool), ewma_from)
 
     breakout = fresh_breakouts(close, high, low, BREAKOUT_WINDOW)
     raw_state = raw_breakout_state(close, high, low, BREAKOUT_WINDOW)
@@ -112,14 +119,17 @@ def build_features(close: np.ndarray, high: np.ndarray, low: np.ndarray,
                          compression_ratio=compression_ratio, ewma_state=state, ewma_ready=ready)
 
 
-def _ewma_continued(x: np.ndarray, state: np.ndarray, ready: np.ndarray):
+def _ewma_continued(x: np.ndarray, state: np.ndarray, ready: np.ndarray, start: int = 0):
     """Recursive EWMA continuing from a persisted state, step-for-step identical
-    to primitives.ewma over the concatenated history."""
+    to primitives.ewma over the concatenated history.
+
+    Only bars at index >= ``start`` are folded in; earlier bars were already
+    consumed by a previous run and must not be replayed."""
     alpha = ewma_alpha(EWMA_HALF_LIFE)
     state = state.copy()
     ready = ready.copy()
     out = np.full_like(x, np.nan, dtype=np.float64)
-    for t in range(len(x)):
+    for t in range(start, len(x)):
         valid = np.isfinite(x[t])
         init = valid & ~ready
         state[init] = x[t, init]

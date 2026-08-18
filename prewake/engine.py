@@ -81,12 +81,21 @@ def evaluate(bar_times, close, high, low,
             skipped_reason=f"SKIPPED_INCOMPLETE_INPUT: {n} bars < {model.minimum_bars} required",
         )
 
-    features = build_features(close, high, low, ewma_state=ewma_state, ewma_ready=ewma_ready)
+    # Two modes. Full replay (seed / parity): the window IS the whole history,
+    # so every bar feeds the recursive EWMA and the lifecycle from index 0.
+    # Incremental (hourly production): the leading bars of the window were
+    # already consumed by an earlier run and are lookback only.
+    incremental = ewma_state is not None
+    consumed_from = emit_from if incremental else 0
+
+    features = build_features(close, high, low, ewma_state=ewma_state, ewma_ready=ewma_ready,
+                              ewma_from=consumed_from)
     score = score_cube(model, features.cube, features.direction)
 
     before = {k: dict(armed=state.armed[k], seen=state.seen[k]) for k in state.armed}
     events = advance(state, score, features.direction, model.threshold, features.breakout,
-                     emit_from=emit_from, reset_ratio=model.reset_ratio, reset_bars=model.reset_bars)
+                     emit_from=emit_from, start=consumed_from,
+                     reset_ratio=model.reset_ratio, reset_bars=model.reset_bars)
 
     emitted = {(e["t"], e["pair_index"], e["direction"]) for e in events}
     evaluations = _build_evaluations(model, bar_times, features, score, events, emitted, emit_from, before, state)

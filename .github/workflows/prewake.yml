@@ -1,0 +1,65 @@
+# PAIR_PREWAKE_V1 - motore di attenzione precoce, ciclo H1.
+#
+# Workflow SEPARATO da pre_rottura.yml: un errore PREWAKE non deve mai impedire
+# l'esecuzione di FX Bias (SS48). PREWAKE non legge alcuno stato FX Bias, quindi
+# non serve che giri nello stesso job.
+#
+# HH:10 = 5 minuti dopo il job FX Bias, barra H1 gia' chiusa (no-repaint).
+# I due flag partono OFF: il deploy installa il codice senza attivare nulla.
+name: prewake-h1
+
+on:
+  schedule:
+    - cron: "10 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prewake-h1
+  cancel-in-progress: false
+
+jobs:
+  prewake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Check OANDA secret
+        env:
+          OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$OANDA_ACCESS_TOKEN" ]; then
+            echo "OANDA_ACCESS_TOKEN secret is missing or empty"; exit 1
+          fi
+      - name: Run PREWAKE engine
+        env:
+          OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
+          OANDA_ENV: practice
+          PREWAKE_ENGINE_ENABLED: ${{ vars.PREWAKE_ENGINE_ENABLED }}
+          PREWAKE_EMAIL_ENABLED: ${{ vars.PREWAKE_EMAIL_ENABLED }}
+          FXBR_GMAIL_USER: ${{ secrets.FXBR_GMAIL_USER }}
+          FXBR_GMAIL_APP_PASSWORD: ${{ secrets.FXBR_GMAIL_APP_PASSWORD }}
+          FXBR_DIGEST_TO: ${{ secrets.FXBR_DIGEST_TO }}
+        run: python scripts/run_prewake.py --oanda
+      - name: Prospective outcome tracking
+        if: ${{ vars.PREWAKE_ENGINE_ENABLED == 'true' }}
+        continue-on-error: true
+        env:
+          OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
+          OANDA_ENV: practice
+        run: python scripts/prewake_outcomes.py --oanda
+      - name: Commit PREWAKE ledger
+        run: |
+          git config user.name "fx-bias-radar-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f reports/prewake/ 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "PREWAKE H1 run [skip ci]"
+          git pull --rebase --autostash origin main || true
+          git push
