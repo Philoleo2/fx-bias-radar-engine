@@ -1,12 +1,12 @@
 # Pre-Rottura (M3) - scan ORARIO H4 direzione + H1 timing.
-# Lo schedule e' ATTIVO (richiesta di Leonardo: refresh ogni ora anche se non
-# collegato). Al commit/push di questo file il cron parte. Richiede il secret
-# OANDA_ACCESS_TOKEN (gia' presente). HH:05 = 5 min dopo la chiusura H1 (no-repaint).
+# Trigger: cron-job.org alle :05 via workflow_dispatch. Il vecchio trigger
+# `schedule` di GitHub e' stato rimosso: generava un SECONDO run separato e
+# poteva partire con ritardi anche di mezz'ora. Una sola politica di
+# scheduling, esterna e puntuale. Richiede il secret OANDA_ACCESS_TOKEN
+# (gia' presente). HH:05 = 5 min dopo la chiusura H1 (no-repaint).
 name: pre-rottura-h1
 
 on:
-  schedule:
-    - cron: "5 * * * *"
   workflow_dispatch: {}
 
 permissions:

@@ -4,13 +4,14 @@
 # l'esecuzione di FX Bias (SS48). PREWAKE non legge alcuno stato FX Bias, quindi
 # non serve che giri nello stesso job.
 #
-# HH:10 = 5 minuti dopo il job FX Bias, barra H1 gia' chiusa (no-repaint).
+# Trigger: cron-job.org alle :10 via workflow_dispatch, cinque minuti dopo il
+# job FX Bias, barra H1 gia' chiusa (no-repaint). Nessun `schedule` GitHub:
+# genererebbe un secondo run separato e in ritardo. Una sola politica di
+# scheduling per entrambi i motori.
 # I due flag partono OFF: il deploy installa il codice senza attivare nulla.
 name: prewake-h1
 
 on:
-  schedule:
-    - cron: "10 * * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -73,8 +74,11 @@ jobs:
         env:
           OANDA_ACCESS_TOKEN: ${{ secrets.OANDA_ACCESS_TOKEN }}
           OANDA_ENV: practice
-          PREWAKE_ENGINE_ENABLED: ${{ vars.PREWAKE_ENGINE_ENABLED }}
-          PREWAKE_EMAIL_ENABLED: ${{ vars.PREWAKE_EMAIL_ENABLED }}
+          # Confronto ESPLICITO con 'true'. La stringa "false" e' truthy in
+          # un `if: ${{ vars.X }}`: normalizzarla qui evita che un flag
+          # disattivato accenda il motore.
+          PREWAKE_ENGINE_ENABLED: ${{ vars.PREWAKE_ENGINE_ENABLED == 'true' && 'true' || 'false' }}
+          PREWAKE_EMAIL_ENABLED: ${{ vars.PREWAKE_EMAIL_ENABLED == 'true' && 'true' || 'false' }}
           FXBR_GMAIL_USER: ${{ secrets.FXBR_GMAIL_USER }}
           FXBR_GMAIL_APP_PASSWORD: ${{ secrets.FXBR_GMAIL_APP_PASSWORD }}
           FXBR_DIGEST_TO: ${{ secrets.FXBR_DIGEST_TO }}

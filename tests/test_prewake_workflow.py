@@ -30,19 +30,42 @@ class TestWorkflowIsolation(unittest.TestCase):
         self.assertNotIn("prewake", self.fxbias.lower(),
                          "il workflow FX Bias non deve sapere nulla di PREWAKE")
 
-    def test_prewake_runs_after_fx_bias(self):
-        self.assertIn('cron: "10 * * * *"', self.prewake)
-        self.assertIn('cron: "5 * * * *"', self.fxbias)
+    def test_single_scheduling_policy_no_github_schedule(self):
+        """Trigger unico: cron-job.org via workflow_dispatch.
+
+        Il trigger `schedule` di GitHub generava un secondo run separato e
+        poteva partire con mezz'ora di ritardo. Entrambi i workflow devono
+        essere attivabili solo su dispatch."""
+        for name, body in (("prewake", self.prewake), ("pre_rottura", self.fxbias)):
+            self.assertNotIn("schedule:", body, f"{name} non deve avere un trigger schedule")
+            self.assertNotIn("cron:", body, f"{name} non deve avere un cron GitHub")
+            self.assertIn("workflow_dispatch:", body, f"{name} deve essere dispatchabile")
 
     def test_prewake_serialises_with_itself(self):
         self.assertIn("concurrency:", self.prewake)
         self.assertIn("group: prewake-h1", self.prewake)
         self.assertIn("cancel-in-progress: false", self.prewake)
 
-    def test_flags_default_off_and_are_not_secrets(self):
+    def test_flags_are_repository_variables_not_secrets(self):
         self.assertIn("vars.PREWAKE_ENGINE_ENABLED", self.prewake)
         self.assertIn("vars.PREWAKE_EMAIL_ENABLED", self.prewake)
         self.assertNotIn("secrets.PREWAKE_ENGINE_ENABLED", self.prewake)
+
+    def test_gating_never_relies_on_string_truthiness(self):
+        """La stringa "false" e' truthy in un `if: ${{ vars.X }}`.
+
+        Ogni uso di un flag deve passare da un confronto esplicito con 'true'.
+        """
+        for line in self.prewake.splitlines():
+            if "vars.PREWAKE_ENGINE_ENABLED" in line or "vars.PREWAKE_EMAIL_ENABLED" in line:
+                if line.strip().startswith("#"):
+                    continue
+                self.assertTrue("== 'true'" in line or '= "true"' in line,
+                                f"gating senza confronto esplicito: {line.strip()}")
+
+    def test_engine_and_email_are_gated_separately(self):
+        self.assertIn("vars.PREWAKE_ENGINE_ENABLED == 'true'", self.prewake)
+        self.assertIn("vars.PREWAKE_EMAIL_ENABLED == 'true'", self.prewake)
 
     def test_no_model_parameter_reaches_the_workflow(self):
         for banned in ("PREWAKE_THRESHOLD", "PREWAKE_EWMA", "PREWAKE_RESET",

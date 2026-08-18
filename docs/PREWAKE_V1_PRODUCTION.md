@@ -239,8 +239,14 @@ barra: una barra aperta 09:00 UTC chiude 10:00 UTC = 12:00 Europe/Rome in estate
 
 ## 10. Scheduler
 
-Workflow **separato**: `.github/workflows/prewake.yml`, cron `10 * * * *`
-(HH:10, cinque minuti dopo il job FX Bias `pre_rottura`).
+Workflow **separato**: `.github/workflows/prewake.yml`, attivato da
+**cron-job.org alle :10** via `workflow_dispatch`, cinque minuti dopo il job FX
+Bias `pre_rottura` (attivato allo stesso modo alle :05).
+
+Nessuno dei due workflow ha un trigger `schedule` di GitHub: generava un
+**secondo run separato** e poteva partire con ritardi anche di mezz'ora
+(osservati run alle 05:39 e 06:59 per uno schedule alle :05). Una sola politica
+di scheduling, esterna e puntuale.
 
 Motivo: isolamento totale (§48). Un errore PREWAKE non può toccare FX Bias
 perché gira in un job diverso. È possibile perché PREWAKE non legge alcuno
