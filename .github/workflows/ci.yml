@@ -12,8 +12,21 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          # Runtime canonico PREWAKE, pinnato al PATCH esatto della ricerca
+          # congelata (provenance.python = 3.12.10). "3.12" non basta:
+          # setup-python risolverebbe l'ultima patch disponibile, che cambia nel
+          # tempo sotto un modello che deve restare identico a se stesso.
+          # Deve coincidere con prewake.yml e .python-version.
+          python-version: "3.12.10"
+      # Le dipendenze vanno installate PRIMA di compilare/testare: la suite
+      # importa il motore PREWAKE, che usa numpy. Si installano i manifest
+      # dichiarati, non una lista hardcoded che potrebbe divergere da produzione.
+      - name: Install declared dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-prewake.txt
+          python -c "import numpy; print('numpy', numpy.__version__)"
       - name: Compile
-        run: python -m compileall fx_bias_radar scripts tests
+        run: python -m compileall fx_bias_radar prewake scripts tests
       - name: Unit tests
         run: python -m unittest discover -s tests -q
