@@ -124,3 +124,12 @@ class TestStaleDataPolicy(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestBootstrapSafety(unittest.TestCase):
+    def test_bootstrap_refuses_to_replay_with_email_on(self):
+        """Se prewake-data sparisce e le email sono attive, il job deve fermarsi:
+        ripartire dal seed rispedirebbe alert gia' inviati."""
+        wf = read(PREWAKE_WF)
+        self.assertIn('if [ "${{ vars.PREWAKE_EMAIL_ENABLED }}" = "true" ]', wf)
+        self.assertIn("STOP: prewake-data non esiste ma PREWAKE_EMAIL_ENABLED=true.", wf)

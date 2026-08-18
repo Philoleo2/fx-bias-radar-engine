@@ -49,6 +49,16 @@ jobs:
             cp -r /tmp/ledger/reports/prewake reports/prewake
             echo "ledger ripristinato da prewake-data ($(git -C /tmp/ledger rev-parse --short HEAD))"
           else
+            # prewake-data assente. Normale solo al primissimo run. Se pero' le
+            # email sono gia' attive, ripartire dal seed committato significa
+            # rielaborare barre gia' processate e RISPEDIRE alert gia' inviati:
+            # meglio un job rosso che una raffica di email duplicate.
+            if [ "${{ vars.PREWAKE_EMAIL_ENABLED }}" = "true" ]; then
+              echo "STOP: prewake-data non esiste ma PREWAKE_EMAIL_ENABLED=true."
+              echo "Il bootstrap dal seed rispedirebbe alert gia' inviati. Ripristinare"
+              echo "prewake-data, oppure disattivare le email prima di ripartire."
+              exit 1
+            fi
             echo "prewake-data non esiste ancora: bootstrap dal seed committato sul branch codice"
             ls -la reports/prewake/ || echo "NESSUN SEED: il run si fermera' con NOT_SEEDED"
           fi
