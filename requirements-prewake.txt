@@ -1,0 +1,32 @@
+# Dipendenze del motore PAIR_PREWAKE_V1.
+#
+# --- perche' separate da requirements.txt -----------------------------------
+# Vercel installa requirements.txt per OGNI function Python del progetto:
+# metterci numpy spingerebbe ~60 MB dentro le function che oggi servono FX Bias,
+# senza alcun beneficio. api/prewake.py non importa il package prewake (serve
+# solo lo snapshot JSON gia' calcolato), quindi la UI PREWAKE non ha bisogno di
+# numpy. Il motore gira esclusivamente su GitHub Actions.
+#
+# Chi esegue la suite completa o il motore deve installare ENTRAMBI i file:
+#   pip install -r requirements.txt -r requirements-prewake.txt
+#
+# --- perche' solo numpy ------------------------------------------------------
+# Dependency audit AST dell'intero repository: numpy e' l'unica dipendenza di
+# terze parti. Il modello congelato e' predict-only, quindi scikit-learn NON
+# serve in produzione: era necessario soltanto al fit della ricerca.
+#
+# --- perche' un pin ESATTO ---------------------------------------------------
+# PAIR_PREWAKE_V1 e' frozen e in validazione prospettica. Un range permetterebbe
+# a un runner di installare una numpy diversa senza alcun commit, cambiando
+# potenzialmente la semantica numerica sotto un modello che deve restare
+# identico a se stesso. Il bump di questa riga e' un atto deliberato che
+# richiede di rieseguire la parity storica.
+#
+# --- provenienza della versione ---------------------------------------------
+# 2.4.4 e' la versione effettivamente usata dalla ricerca congelata Phase 1/2,
+# recuperata da provenance.numpy in reports/pair_prewake_summary.json
+# (stesso record che riporta python 3.12.10 su Windows-11).
+# Runtime canonico di produzione: Python 3.12, allineato alla ricerca.
+# Parity storica ZERO DIFFERENCES (1104/1104, max score diff 4.441e-16)
+# verificata in clean room su Python 3.12 con questa esatta versione.
+numpy==2.4.4

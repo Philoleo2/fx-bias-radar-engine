@@ -1,1 +1,10 @@
-# Runtime uses the Python standard library only.
+# Runtime FX Bias: solo libreria standard.
+#
+# Questo file e' anche cio' che Vercel installa per le function Python, quindi
+# resta deliberatamente vuoto: le function servono JSON gia' calcolati e non
+# hanno bisogno di pacchetti scientifici.
+#
+# Il motore PAIR_PREWAKE_V1 (che gira su GitHub Actions, non su Vercel) ha le
+# proprie dipendenze dichiarate in requirements-prewake.txt.
+# Per eseguire la suite completa:
+#   pip install -r requirements.txt -r requirements-prewake.txt

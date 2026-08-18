@@ -55,3 +55,17 @@ reports/prerottura/*
 !reports/ichimoku_align/
 !reports/ichimoku_align/ichimoku_align.md
 !reports/ichimoku_align/ichimoku_align.json
+
+# PREWAKE: allow-list del ledger, come per reports/prerottura
+!reports/prewake/
+reports/prewake/*
+!reports/prewake/prewake_state.json
+!reports/prewake/prewake_events.jsonl
+!reports/prewake/prewake_runs.jsonl
+!reports/prewake/prewake_email.jsonl
+!reports/prewake/prewake_outcomes.jsonl
+!reports/prewake/prewake_fx_bias_links.jsonl
+!reports/prewake/prewake_corrections.jsonl
+!reports/prewake/prewake_latest.json
+!reports/prewake/prewake_health.json
+reports/prewake/*.tmp

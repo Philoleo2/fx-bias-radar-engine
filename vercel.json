@@ -8,13 +8,14 @@
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
     {
-      "source": "/(styles.css|pre_rottura.html|pre_rottura.js)",
+      "source": "/(styles.css|pre_rottura.html|pre_rottura.js|prewake.html|prewake.js)",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     }
   ],
   "functions": {
     "api/scan.py": { "maxDuration": 60 },
     "api/health.py": { "maxDuration": 10 },
-    "api/pre_rottura.py": { "maxDuration": 10, "includeFiles": "reports/prerottura/**" }
+    "api/pre_rottura.py": { "maxDuration": 10, "includeFiles": "reports/prerottura/**" },
+    "api/prewake.py": { "maxDuration": 10, "includeFiles": "reports/prewake/**" }
   }
 }
