@@ -12,7 +12,13 @@
 name: prewake-h1
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      email_test:
+        description: "Invia solo una email tecnica di prova PREWAKE"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -22,7 +28,37 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  email-test:
+    if: ${{ inputs.email_test == true }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.10"
+      - name: Install PREWAKE dependencies
+        run: pip install -r requirements.txt -r requirements-prewake.txt
+      - name: Send PREWAKE test email
+        env:
+          FXBR_GMAIL_USER: ${{ secrets.FXBR_GMAIL_USER }}
+          FXBR_GMAIL_APP_PASSWORD: ${{ secrets.FXBR_GMAIL_APP_PASSWORD }}
+          FXBR_DIGEST_TO: ${{ secrets.FXBR_DIGEST_TO }}
+        run: |
+          python - <<'PY'
+          from prewake.notify import send
+
+          send(
+              "[PREWAKE TEST] Configurazione email OK",
+              "Test tecnico PREWAKE completato con successo.\n\n"
+              "La configurazione Gmail e i secret richiesti risultano operativi.\n"
+              "Nessun evento PREWAKE e stato generato da questa prova.",
+          )
+          print("PREWAKE test email sent.")
+          PY
+
   prewake:
+    if: ${{ inputs.email_test != true }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
