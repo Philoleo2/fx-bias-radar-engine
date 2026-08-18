@@ -16,7 +16,8 @@ jobs:
           # congelata (provenance.python = 3.12.10). "3.12" non basta:
           # setup-python risolverebbe l'ultima patch disponibile, che cambia nel
           # tempo sotto un modello che deve restare identico a se stesso.
-          # Deve coincidere con prewake.yml e .python-version.
+          # Deve coincidere con prewake.yml. .python-version configura invece
+          # il solo runtime Vercel sulla famiglia compatibile Python 3.12.
           python-version: "3.12.10"
       # Le dipendenze vanno installate PRIMA di compilare/testare: la suite
       # importa il motore PREWAKE, che usa numpy. Si installano i manifest
