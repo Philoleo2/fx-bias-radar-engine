@@ -1,0 +1,1 @@
+{"attempts": 1, "event_id": "1d488d48e2e13debca4f2279b5b5f837", "idempotency_key": "prewake:pair-prewake-v1:1d488d48e2e13debca4f2279b5b5f837", "model_version": "pair-prewake-v1", "recorded_at": "2026-08-19T09:10:46+00:00", "sent_at": "2026-08-19T09:10:47+00:00", "status": "SENT", "subject": "[PREWAKE] EURCHF LONG — 10:00"}
