@@ -14,6 +14,11 @@ def read(*parts: str) -> str:
 
 
 class TestPrewakeHistoryUi(unittest.TestCase):
+    def test_online_home_page_links_the_history(self):
+        home = read("public", "pre_rottura.html")
+        self.assertIn('href="/prewake_history.html"', home)
+        self.assertIn("PREWAKE &middot; 20 giorni", home)
+
     def test_main_prewake_page_links_the_history(self):
         self.assertIn('href="/prewake_history.html"', read("public", "prewake.html"))
 

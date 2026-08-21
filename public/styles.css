@@ -121,6 +121,13 @@ h2 {
   font-weight: 800;
 }
 
+.button.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .status-pill,
 .badge,
 .state,
