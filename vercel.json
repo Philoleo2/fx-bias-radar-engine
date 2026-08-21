@@ -9,7 +9,7 @@
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
     {
-      "source": "/(styles.css|pre_rottura.html|pre_rottura.js|prewake.html|prewake.js)",
+      "source": "/(styles.css|pre_rottura.html|pre_rottura.js|prewake.html|prewake.js|prewake_history.html|prewake_history.js)",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     }
   ],

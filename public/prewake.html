@@ -31,12 +31,22 @@
                    border: 1px solid var(--border, #2a2f3a); background: var(--card, #151922); color: inherit; }
   .pw-auth button { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border, #2a2f3a);
                     background: #222836; color: inherit; }
+  .pw-nav { display: flex; margin: 14px 0 10px; }
+  .pw-nav a { display: inline-flex; align-items: center; min-height: 38px; padding: 0 12px;
+              border: 1px solid var(--border, #2a2f3a); border-radius: 8px;
+              background: #222836; color: inherit; font-size: .88rem; font-weight: 700;
+              text-decoration: none; }
+  .pw-nav a:hover, .pw-nav a:focus-visible { border-color: var(--blue, #6aa7ff); outline: none; }
 </style>
 </head>
 <body>
 <div class="pw-wrap">
   <h1 style="font-size:1.1rem;letter-spacing:.08em;margin:6px 0 2px">PREWAKE</h1>
   <div class="pw-note">Radar di attenzione precoce. Non è un consiglio di trade: apri il grafico e verifica a mano.</div>
+
+  <nav class="pw-nav" aria-label="Navigazione PREWAKE">
+    <a href="/prewake_history.html">Chiamate ultimi 20 giorni</a>
+  </nav>
 
   <div class="pw-auth" id="authRow">
     <input id="tokenInput" type="password" placeholder="dashboard token" autocomplete="off" />

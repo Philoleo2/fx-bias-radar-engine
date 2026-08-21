@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Chiamate PREWAKE — Ultimi 20 giorni</title>
+<link rel="stylesheet" href="/styles.css" />
+<style>
+  .ph-wrap { width: min(820px, calc(100% - 24px)); margin: 0 auto; padding: 18px 0 36px; }
+  .ph-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+            padding-bottom: 14px; border-bottom: 1px solid var(--line, #30343a); }
+  .ph-kicker { color: var(--muted, #a7ada8); font-size: .72rem; font-weight: 800;
+               letter-spacing: .08em; text-transform: uppercase; }
+  .ph-top h1 { margin: 4px 0 6px; font-size: clamp(1.55rem, 5vw, 2.4rem); line-height: 1.08; }
+  .ph-note { margin: 0; color: var(--muted, #a7ada8); font-size: .88rem; line-height: 1.45; }
+  .ph-back { display: inline-flex; align-items: center; min-height: 38px; padding: 0 12px;
+             border: 1px solid var(--line, #30343a); border-radius: 8px;
+             background: var(--panel-2, #202328); color: inherit; font-size: .86rem;
+             font-weight: 700; text-decoration: none; white-space: nowrap; }
+  .ph-back:hover, .ph-back:focus-visible { border-color: var(--blue, #6aa7ff); outline: none; }
+  .ph-auth { display: flex; gap: 7px; margin: 16px 0 12px; }
+  .ph-auth input, .ph-filters select { min-height: 40px; border: 1px solid var(--line, #30343a);
+             border-radius: 8px; background: var(--panel, #191b1f); color: inherit; padding: 0 10px; }
+  .ph-auth input { flex: 1; min-width: 0; }
+  .ph-auth button { min-height: 40px; padding: 0 14px; border: 1px solid var(--line, #30343a);
+                    border-radius: 8px; background: #e7efe7; color: #121412; font-weight: 800; }
+  .ph-summary { display: grid; grid-template-columns: .8fr 1.5fr; gap: 9px; margin: 12px 0; }
+  .ph-metric { padding: 12px; border: 1px solid var(--line, #30343a); border-radius: 9px;
+               background: var(--panel, #191b1f); }
+  .ph-metric span { display: block; color: var(--muted, #a7ada8); font-size: .7rem;
+                    font-weight: 800; text-transform: uppercase; }
+  .ph-metric strong { display: block; margin-top: 6px; font-size: 1rem; line-height: 1.35; }
+  .ph-filters { display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 7px; margin: 12px 0; }
+  .ph-card { margin: 9px 0; padding: 14px; border: 1px solid var(--line, #30343a);
+             border-radius: 10px; background: var(--panel, #191b1f); }
+  .ph-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .ph-pair { font-size: 1.35rem; font-weight: 900; letter-spacing: .02em; }
+  .ph-direction { display: inline-flex; margin-top: 4px; padding: 3px 8px; border-radius: 6px;
+                  font-size: .78rem; font-weight: 900; }
+  .ph-direction.long { color: #b9f2c8; background: var(--green-soft, #183b29); }
+  .ph-direction.short { color: #ffd5d8; background: var(--red-soft, #462026); }
+  .ph-event { color: var(--blue, #6aa7ff); font-size: .78rem; font-weight: 800;
+              letter-spacing: .04em; text-align: right; }
+  .ph-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 13px;
+             padding-top: 11px; border-top: 1px solid var(--line, #30343a); }
+  .ph-meta span { color: var(--muted, #a7ada8); font-size: .73rem; font-weight: 800;
+                  text-transform: uppercase; }
+  .ph-meta strong { display: block; margin-top: 4px; font-size: .88rem; }
+  .ph-email.ok { color: #b9f2c8; } .ph-email.wait { color: #ffe2ac; }
+  .ph-email.error { color: #ffd5d8; }
+  .ph-empty { min-height: 130px; display: grid; place-items: center; margin-top: 14px;
+              padding: 20px; border: 1px dashed var(--line, #30343a); border-radius: 10px;
+              color: var(--muted, #a7ada8); text-align: center; line-height: 1.5; }
+  .ph-status { margin-top: 16px; color: var(--muted, #a7ada8); font-size: .78rem; line-height: 1.5; }
+  .ph-status.warning { color: #ffe2ac; }
+  @media (max-width: 620px) {
+    .ph-top { flex-direction: column; }
+    .ph-summary, .ph-filters, .ph-meta { grid-template-columns: 1fr; }
+    .ph-back { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<main class="ph-wrap">
+  <header class="ph-top">
+    <div>
+      <div class="ph-kicker">PREWAKE</div>
+      <h1>Chiamate ultimi 20 giorni</h1>
+      <p class="ph-note">Solo chiamate prospettiche reali, dalla più recente alla più vecchia.</p>
+    </div>
+    <a class="ph-back" href="/prewake.html">Torna a PREWAKE</a>
+  </header>
+
+  <section class="ph-auth" aria-label="Accesso dashboard">
+    <input id="tokenInput" type="password" placeholder="dashboard token" autocomplete="off" aria-label="Dashboard token" />
+    <button id="saveToken" type="button">Salva</button>
+  </section>
+
+  <section class="ph-summary" aria-label="Riepilogo periodo">
+    <div class="ph-metric"><span>Chiamate</span><strong id="callCount">—</strong></div>
+    <div class="ph-metric"><span>Periodo osservato</span><strong id="period">—</strong></div>
+  </section>
+
+  <section class="ph-filters" aria-label="Filtri chiamate">
+    <select id="fPair" aria-label="Filtra per coppia"><option value="">tutte le coppie</option></select>
+    <select id="fDir" aria-label="Filtra per direzione"><option value="">LONG e SHORT</option><option value="LONG">LONG</option><option value="SHORT">SHORT</option></select>
+    <select id="fType" aria-label="Filtra per tipo"><option value="">tutti i tipi di chiamata</option></select>
+  </section>
+
+  <section id="list" aria-live="polite"></section>
+  <div class="ph-status" id="status" role="status" aria-live="polite"></div>
+</main>
+<script src="/prewake_history.js"></script>
+</body>
+</html>
