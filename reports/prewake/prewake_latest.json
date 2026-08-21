@@ -127,6 +127,12 @@
             "mfe": 0.0008207423988062512,
             "raw_breakout_by_horizon": true
           },
+          "12": {
+            "directional_return": 0.0012184206798763284,
+            "mae": -0.00032916187932796603,
+            "mfe": 0.002591157674435962,
+            "raw_breakout_by_horizon": true
+          },
           "2": {
             "directional_return": 0.000372828279615129,
             "mae": -0.00032916187932796603,
@@ -158,7 +164,7 @@
             "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 8,
+        "matured_through_h1": 12,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 1
@@ -459,8 +465,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-21T19:10:49+00:00",
-  "last_complete_h1_utc": "2026-08-21T18:00:00+00:00",
+  "generated_at_utc": "2026-08-21T20:10:48+00:00",
+  "last_complete_h1_utc": "2026-08-21T19:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
