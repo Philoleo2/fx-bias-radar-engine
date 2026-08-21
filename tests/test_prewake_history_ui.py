@@ -22,6 +22,12 @@ class TestPrewakeHistoryUi(unittest.TestCase):
     def test_main_prewake_page_links_the_history(self):
         self.assertIn('href="/prewake_history.html"', read("public", "prewake.html"))
 
+    def test_history_returns_to_the_main_dashboard(self):
+        page = read("public", "prewake_history.html")
+        self.assertIn('href="/pre_rottura.html"', page)
+        self.assertIn("Torna a Pre-Rottura", page)
+        self.assertNotIn("Torna a PREWAKE", page)
+
     def test_history_reuses_the_protected_prewake_api(self):
         page = read("public", "prewake_history.html")
         script = read("public", "prewake_history.js")
