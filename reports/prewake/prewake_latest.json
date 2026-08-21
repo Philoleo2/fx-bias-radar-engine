@@ -36,8 +36,15 @@
       "outcomes": {
         "breakout_time": null,
         "fresh_breakout_same_direction": false,
-        "horizons": {},
-        "matured_through_h1": 0,
+        "horizons": {
+          "1": {
+            "directional_return": -0.0005135147865049807,
+            "mae": -0.0005133829603528595,
+            "mfe": 0.0003500338366042577,
+            "raw_breakout_by_horizon": false
+          }
+        },
+        "matured_through_h1": 1,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -89,9 +96,15 @@
             "mae": -0.00032916187932796603,
             "mfe": 0.0008207423988062512,
             "raw_breakout_by_horizon": true
+          },
+          "2": {
+            "directional_return": 0.000372828279615129,
+            "mae": -0.00032916187932796603,
+            "mfe": 0.0009016459702642088,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 1
@@ -392,8 +405,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-21T09:10:50+00:00",
-  "last_complete_h1_utc": "2026-08-21T08:00:00+00:00",
+  "generated_at_utc": "2026-08-21T10:10:45+00:00",
+  "last_complete_h1_utc": "2026-08-21T09:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
