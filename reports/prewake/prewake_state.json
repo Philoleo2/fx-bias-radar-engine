@@ -31,36 +31,36 @@
     true
   ],
   "ewma_state": [
-    -0.0559416449822327,
-    -0.11241206269924434,
-    0.6991946064475743,
-    0.2111163525758339,
-    -0.28108941723332526,
-    0.22340723562728412,
-    -0.29180777983078665,
-    0.06798369407779561,
-    -0.4012823971729662,
-    0.289492069427522,
-    -1.0826013452748708,
-    -0.46551873539498845,
-    -0.3383191331173063,
-    -0.49178676260074905,
-    0.2048809538545745,
-    -1.010916629426112,
-    -0.573155202652158,
-    -0.2804596676823855,
-    -0.6014939432157805,
-    0.4250520685602554,
-    0.006495441444205011,
-    -0.07693636740761528,
-    1.0477555175502553,
-    0.5271507209018836,
-    0.371330722524107,
-    0.6180873944861253,
-    0.6091637569490824,
-    0.036595721265250875
+    0.5253946886784495,
+    0.6265321036695981,
+    1.0090019360687137,
+    0.6673925568516479,
+    -0.874853254484184,
+    -0.13989362190635038,
+    -0.6470627454823517,
+    -0.31970125987234044,
+    -0.6268148713204116,
+    0.28605442462000713,
+    -1.0158646435810064,
+    -0.2208975866039374,
+    -0.5302891130155778,
+    -0.47529547318704235,
+    0.4248256522844386,
+    -0.7431039111762516,
+    -0.04282235264387674,
+    -0.279554600057123,
+    -0.7828526387878827,
+    0.22897284592038353,
+    -0.30860225594347257,
+    -0.06810669575304723,
+    0.9918180025387601,
+    0.37272999352602315,
+    0.5192348338633146,
+    0.7333077130748121,
+    0.3264443652511385,
+    0.35777038698701735
   ],
-  "last_bar_time_utc": "2026-08-21T07:00:00+00:00",
+  "last_bar_time_utc": "2026-08-21T08:00:00+00:00",
   "lifecycle": {
     "AUDCAD:LONG": {
       "armed": true,
@@ -74,7 +74,7 @@
     },
     "AUDCHF:LONG": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "AUDCHF:SHORT": {
@@ -94,7 +94,7 @@
     },
     "AUDNZD:LONG": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "AUDNZD:SHORT": {
@@ -104,7 +104,7 @@
     },
     "AUDUSD:LONG": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "AUDUSD:SHORT": {
@@ -139,7 +139,7 @@
     },
     "CHFJPY:SHORT": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "EURAUD:LONG": {
@@ -149,7 +149,7 @@
     },
     "EURAUD:SHORT": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "EURCAD:LONG": {
@@ -159,7 +159,7 @@
     },
     "EURCAD:SHORT": {
       "armed": false,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "EURCHF:LONG": {
@@ -173,13 +173,13 @@
       "seen": true
     },
     "EURGBP:LONG": {
-      "armed": false,
+      "armed": true,
       "low_streak": 0,
       "seen": true
     },
     "EURGBP:SHORT": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "EURJPY:LONG": {
@@ -189,7 +189,7 @@
     },
     "EURJPY:SHORT": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "EURNZD:LONG": {
@@ -204,7 +204,7 @@
     },
     "EURUSD:LONG": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "EURUSD:SHORT": {
@@ -219,7 +219,7 @@
     },
     "GBPAUD:SHORT": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "GBPCAD:LONG": {
@@ -229,12 +229,12 @@
     },
     "GBPCAD:SHORT": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 2,
       "seen": true
     },
     "GBPCHF:LONG": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "GBPCHF:SHORT": {
@@ -249,7 +249,7 @@
     },
     "GBPJPY:SHORT": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "GBPNZD:LONG": {
@@ -264,7 +264,7 @@
     },
     "GBPUSD:LONG": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "GBPUSD:SHORT": {
@@ -304,7 +304,7 @@
     },
     "NZDUSD:LONG": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "NZDUSD:SHORT": {
@@ -319,7 +319,7 @@
     },
     "USDCAD:SHORT": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "USDCHF:LONG": {
@@ -339,7 +339,7 @@
     },
     "USDJPY:SHORT": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     }
   },
@@ -379,5 +379,5 @@
   "seeded_at_utc": "2026-08-18T05:43:11+00:00",
   "seeded_from_utc": "2018-07-25T13:00:00+00:00",
   "state_version": 1,
-  "updated_at_utc": "2026-08-21T08:10:49+00:00"
+  "updated_at_utc": "2026-08-21T09:10:50+00:00"
 }
