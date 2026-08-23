@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-08-22T23:05:27+00:00",
+  "generated_at_utc": "2026-08-23T00:05:27+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1231,9 +1231,9 @@
       },
       {
         "pair": "CHFJPY",
-        "count": 7,
+        "count": 6,
         "dir": "SHORT",
-        "first_call_utc": "2026-08-03T00:00:00+00:00",
+        "first_call_utc": "2026-08-06T06:00:00+00:00",
         "last_call_utc": "2026-08-13T03:00:00+00:00"
       },
       {
