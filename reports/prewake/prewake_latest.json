@@ -33,7 +33,15 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 3.926751865286335e-05,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": null,
+        "fresh_breakout_same_direction": false,
+        "horizons": {},
+        "matured_through_h1": 0,
+        "primary_hit_plus1_plus12": false,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": null
+      },
       "pair": "AUDNZD",
       "same_bar_raw_breakout": false,
       "score": 0.5974352973224064,
@@ -972,8 +980,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-24T20:10:54+00:00",
-  "last_complete_h1_utc": "2026-08-24T19:00:00+00:00",
+  "generated_at_utc": "2026-08-24T21:10:54+00:00",
+  "last_complete_h1_utc": "2026-08-24T20:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
