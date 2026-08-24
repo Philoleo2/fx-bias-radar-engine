@@ -2,16 +2,16 @@
   "email_enabled": true,
   "email_queue_status": {
     "pending": 0,
-    "sent": 4
+    "sent": 5
   },
   "engine_enabled": true,
   "event_count_today": 1,
-  "event_count_total": 6,
-  "generated_at_utc": "2026-08-24T00:10:45+00:00",
-  "last_complete_h1_seen": "2026-08-23T23:00:00+00:00",
-  "last_prewake_run": "2026-08-24T00:10:45+00:00",
-  "last_successful_evaluation": "2026-08-24T00:10:45+00:00",
+  "event_count_total": 7,
+  "generated_at_utc": "2026-08-24T01:10:45+00:00",
+  "last_complete_h1_seen": "2026-08-24T00:00:00+00:00",
+  "last_prewake_run": "2026-08-24T01:10:44+00:00",
+  "last_successful_evaluation": "2026-08-24T01:10:44+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_version": "pair-prewake-v1",
-  "total_prewake_ms": 1764.4
+  "total_prewake_ms": 1590.3
 }
