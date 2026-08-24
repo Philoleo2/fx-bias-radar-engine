@@ -54,14 +54,15 @@ def render(event: dict) -> tuple[str, str]:
     """Return (subject, body) for one PREWAKE event."""
     side = _side(event)
     hhmm = bar_close_rome(event["bar_time_utc"])
-    subject = f"[PREWAKE] {event['pair']} {side} — {hhmm}"
+    subject = f"[PREWAKE] {event['pair']} — {hhmm}"
 
     dual = event.get("dual_leg")
     lines = [
         "PAIR_PREWAKE_V1",
         "",
         event["pair"],
-        f"Direzione da osservare: {side}",
+        f"Pressione sperimentale registrata: {side}",
+        "Non e' un segnale direzionale.",
         "",
         f"H1 chiusa: {hhmm} Europe/Rome ({bar_close_rome_full(event['bar_time_utc'])})",
         "",
@@ -76,7 +77,7 @@ def render(event: dict) -> tuple[str, str]:
         lines.append("Nota: rottura grezza gia' presente sulla stessa H1 (diagnostica).")
     lines += [
         "",
-        "Radar di attenzione: aprire il grafico e verificare manualmente.",
+        "Radar di attenzione: verificare direzione e contesto con ValutaVision e grafico.",
         "",
         PAGE_URL,
     ]

@@ -1,7 +1,7 @@
 /* PREWAKE — minimal mobile-first view.
-   Deliberately NOT a research dashboard (SS43): pair, direction, event, time,
-   FX Bias present/absent, optional dual-leg badge. No coefficients, no PCA,
-   no regression diagnostics. */
+   Deliberately NOT a research dashboard (SS43): the live view identifies the
+   pair to inspect without presenting the frozen experimental direction as an
+   operational call. No coefficients, no PCA, no regression diagnostics. */
 (function () {
   "use strict";
 
@@ -12,7 +12,6 @@
     saveToken: document.getElementById("saveToken"),
     fDate: document.getElementById("fDate"),
     fPair: document.getElementById("fPair"),
-    fDir: document.getElementById("fDir"),
     fType: document.getElementById("fType"),
     fSample: document.getElementById("fSample"),
     fFx: document.getElementById("fFx")
@@ -39,7 +38,6 @@
   }
 
   function card(e) {
-    var side = e.direction === "LONG" ? "pw-long" : "pw-short";
     var badges = "";
     if (e.dual_leg) badges += '<span class="pw-badge dual">DUAL LEG</span>';
     if (e.is_backfill) badges += '<span class="pw-badge backfill">BACKFILL</span>';
@@ -57,19 +55,18 @@
     }
     return '<div class="pw-card">' + badges +
       '<div class="pw-pair">' + e.pair + "</div>" +
-      '<div class="pw-dir ' + side + '">' + e.direction + " DA OSSERVARE</div>" +
+      '<div class="pw-alert">PREWAKE rilevato</div>' +
       '<div class="pw-meta">' + meta + "</div></div>";
   }
 
   function apply() {
     if (!payload) return;
     var rows = (payload.events || []).slice();
-    var d = els.fDate.value, p = els.fPair.value, dir = els.fDir.value;
+    var d = els.fDate.value, p = els.fPair.value;
     var ty = els.fType.value, sa = els.fSample.value, fx = els.fFx.value;
     rows = rows.filter(function (e) {
       if (d && e.bar_time_utc.slice(0, 10) !== d) return false;
       if (p && e.pair !== p) return false;
-      if (dir && e.direction !== dir) return false;
       if (ty && e.event_type !== ty) return false;
       if (sa === "prospective" && !e.is_prospective) return false;
       if (sa === "backfill" && !e.is_backfill) return false;
@@ -130,7 +127,7 @@
   els.tokenInput.addEventListener("keydown", function (e) {
     if (e.key === "Enter") els.saveToken.click();
   });
-  [els.fDate, els.fPair, els.fDir, els.fType, els.fSample, els.fFx].forEach(function (el) {
+  [els.fDate, els.fPair, els.fType, els.fSample, els.fFx].forEach(function (el) {
     el.addEventListener("change", apply);
   });
 

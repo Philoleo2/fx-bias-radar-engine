@@ -324,7 +324,14 @@ Riusa l'SMTP Gmail di FX Bias (`FXBR_GMAIL_USER`, `FXBR_GMAIL_APP_PASSWORD`,
 `FXBR_DIGEST_TO`; opzionale `FXBR_PREWAKE_TO`). Nessun secondo sistema SMTP.
 **Le email FX Bias non sono state toccate.**
 
-Subject: `[PREWAKE] GBPCHF LONG — 10:00`
+Subject: `[PREWAKE] GBPCHF — 10:00`
+
+La direzione congelata resta nel ledger e nel corpo come
+`Pressione sperimentale registrata`, accompagnata dall'avvertenza che non è un
+segnale direzionale. La vista live non mostra LONG/SHORT; la cronologia conserva
+il dato con stile neutro per audit. Direzione e contesto operativo si verificano
+separatamente con ValutaVision e grafico. Questa è una modifica esclusivamente
+di presentazione: modello, lifecycle, eventi e outcome restano invariati.
 
 Vietati nel corpo: BUY, SELL, ENTRY, STOP, TARGET, qualunque raccomandazione
 operativa. Vietato esporre token, credenziali, stack trace (§62): un errore

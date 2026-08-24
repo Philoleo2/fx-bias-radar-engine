@@ -50,6 +50,22 @@ class TestPrewakeHistoryUi(unittest.TestCase):
             self.assertIn("event." + field, script)
         self.assertIn('timeZone: "Europe/Rome"', script)
 
+    def test_direction_is_not_presented_as_an_operational_call(self):
+        live_page = read("public", "prewake.html")
+        live_script = read("public", "prewake.js")
+        history_page = read("public", "prewake_history.html")
+        history_script = read("public", "prewake_history.js")
+        self.assertNotIn('id="fDir"', live_page)
+        self.assertNotIn("DA OSSERVARE", live_script)
+        self.assertNotIn("pw-long", live_page + live_script)
+        self.assertNotIn("pw-short", live_page + live_script)
+        self.assertIn("PREWAKE rilevato", live_script)
+        self.assertIn("pressione sperimentale", history_page.lower())
+        self.assertIn("Pressione sperimentale: ", history_script)
+        self.assertNotIn("ph-direction", history_page + history_script)
+        self.assertNotIn("green-soft", history_page)
+        self.assertNotIn("red-soft", history_page)
+
     def test_new_assets_are_never_cached(self):
         config = json.loads(read("vercel.json"))
         sources = [header["source"] for header in config["headers"]]

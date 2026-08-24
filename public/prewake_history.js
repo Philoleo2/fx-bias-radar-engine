@@ -95,7 +95,7 @@
     return '<article class="ph-card">' +
       '<div class="ph-card-top"><div>' +
       '<div class="ph-pair">' + escapeHtml(event.pair) + '</div>' +
-      '<div class="ph-direction ' + (direction === "LONG" ? "long" : "short") + '">' + direction + '</div>' +
+      '<div class="ph-pressure">Pressione sperimentale: ' + direction + '</div>' +
       '</div><div class="ph-event">' + escapeHtml(eventLabel(event.event_type)) + '</div></div>' +
       '<div class="ph-meta"><div><span>Chiusura H1 · ora di Roma</span>' +
       '<strong><time datetime="' + escapeHtml(close ? close.toISOString() : "") + '">' + escapeHtml(formatRome(close, true)) + '</time></strong></div>' +

@@ -273,10 +273,14 @@ class TestEmailRendering(unittest.TestCase):
 
     def test_subject_and_forbidden_language(self):
         subject, body = notify.render(self._event())
-        self.assertTrue(subject.startswith("[PREWAKE] GBPCHF LONG"))
+        self.assertEqual(subject, "[PREWAKE] GBPCHF — 11:00")
+        self.assertNotIn("LONG", subject)
+        self.assertNotIn("SHORT", subject)
         for banned in ("BUY", "SELL", "ENTRY", "STOP", "TARGET"):
             self.assertNotIn(banned, body.upper().replace("PREWAKE", ""))
-        self.assertIn("Direzione da osservare: LONG", body)
+        self.assertIn("Pressione sperimentale registrata: LONG", body)
+        self.assertIn("Non e' un segnale direzionale.", body)
+        self.assertIn("ValutaVision", body)
         self.assertIn("Radar di attenzione", body)
 
     def test_no_secrets_in_body(self):

@@ -35,10 +35,9 @@
              border-radius: 10px; background: var(--panel, #191b1f); }
   .ph-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
   .ph-pair { font-size: 1.35rem; font-weight: 900; letter-spacing: .02em; }
-  .ph-direction { display: inline-flex; margin-top: 4px; padding: 3px 8px; border-radius: 6px;
-                  font-size: .78rem; font-weight: 900; }
-  .ph-direction.long { color: #b9f2c8; background: var(--green-soft, #183b29); }
-  .ph-direction.short { color: #ffd5d8; background: var(--red-soft, #462026); }
+  .ph-pressure { display: inline-flex; margin-top: 5px; padding: 3px 8px;
+                 border: 1px solid var(--line, #30343a); border-radius: 6px;
+                 color: var(--muted, #a7ada8); font-size: .72rem; font-weight: 700; }
   .ph-event { color: var(--blue, #6aa7ff); font-size: .78rem; font-weight: 800;
               letter-spacing: .04em; text-align: right; }
   .ph-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 13px;
@@ -66,7 +65,7 @@
     <div>
       <div class="ph-kicker">PREWAKE</div>
       <h1>Chiamate ultimi 20 giorni</h1>
-      <p class="ph-note">Solo chiamate prospettiche reali, dalla più recente alla più vecchia.</p>
+      <p class="ph-note">Solo chiamate prospettiche reali. La pressione registrata è un dato sperimentale, non un segnale direzionale.</p>
     </div>
     <a class="ph-back" href="/pre_rottura.html">Torna a Pre-Rottura</a>
   </header>
@@ -83,7 +82,7 @@
 
   <section class="ph-filters" aria-label="Filtri chiamate">
     <select id="fPair" aria-label="Filtra per coppia"><option value="">tutte le coppie</option></select>
-    <select id="fDir" aria-label="Filtra per direzione"><option value="">LONG e SHORT</option><option value="LONG">LONG</option><option value="SHORT">SHORT</option></select>
+    <select id="fDir" aria-label="Filtra per pressione sperimentale"><option value="">tutte le pressioni</option><option value="LONG">pressione LONG</option><option value="SHORT">pressione SHORT</option></select>
     <select id="fType" aria-label="Filtra per tipo"><option value="">tutti i tipi di chiamata</option></select>
   </section>
 

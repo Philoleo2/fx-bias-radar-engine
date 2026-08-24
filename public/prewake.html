@@ -10,8 +10,8 @@
   .pw-card { border: 1px solid var(--border, #2a2f3a); border-radius: 10px; padding: 12px 14px;
              margin: 10px 0; background: var(--card, #151922); }
   .pw-pair { font-size: 1.35rem; font-weight: 700; letter-spacing: .02em; }
-  .pw-dir { font-size: 1rem; font-weight: 600; margin-top: 2px; }
-  .pw-long { color: #4ec9a5; } .pw-short { color: #e2757a; }
+  .pw-alert { color: var(--muted, #a7ada8); font-size: .82rem; font-weight: 700;
+              letter-spacing: .05em; margin-top: 3px; text-transform: uppercase; }
   .pw-meta { font-size: .9rem; opacity: .82; margin-top: 8px; line-height: 1.5; }
   .pw-badge { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .06em;
               padding: 2px 7px; border-radius: 999px; border: 1px solid currentColor; margin-right: 6px; }
@@ -42,7 +42,7 @@
 <body>
 <div class="pw-wrap">
   <h1 style="font-size:1.1rem;letter-spacing:.08em;margin:6px 0 2px">PREWAKE</h1>
-  <div class="pw-note">Radar di attenzione precoce. Non è un consiglio di trade: apri il grafico e verifica a mano.</div>
+  <div class="pw-note">Indica quale coppia osservare, non il verso del movimento. Verifica direzione e contesto con ValutaVision e grafico.</div>
 
   <nav class="pw-nav" aria-label="Navigazione PREWAKE">
     <a href="/prewake_history.html">Chiamate ultimi 20 giorni</a>
@@ -56,7 +56,6 @@
   <div class="pw-filters">
     <input id="fDate" type="date" />
     <select id="fPair"><option value="">tutte le coppie</option></select>
-    <select id="fDir"><option value="">entrambe</option><option value="LONG">LONG</option><option value="SHORT">SHORT</option></select>
     <select id="fType"><option value="">tutti gli eventi</option></select>
     <select id="fSample"><option value="">prospective + backfill</option><option value="prospective">solo prospective</option><option value="backfill">solo backfill</option></select>
     <select id="fFx"><option value="">FX Bias dopo: tutti</option><option value="yes">sì</option><option value="no">no</option></select>
