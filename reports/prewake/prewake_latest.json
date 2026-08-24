@@ -33,7 +33,15 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 2.8650298442644365e-05,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": null,
+        "fresh_breakout_same_direction": false,
+        "horizons": {},
+        "matured_through_h1": 0,
+        "primary_hit_plus1_plus12": false,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": null
+      },
       "pair": "EURNZD",
       "same_bar_raw_breakout": false,
       "score": 0.597390462954915,
@@ -72,7 +80,15 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": -2.9797976323455105e-05,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": null,
+        "fresh_breakout_same_direction": false,
+        "horizons": {},
+        "matured_through_h1": 0,
+        "primary_hit_plus1_plus12": false,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": null
+      },
       "pair": "AUDNZD",
       "same_bar_raw_breakout": false,
       "score": 0.5986361253298259,
@@ -111,7 +127,15 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 2.1406301344980387e-05,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": null,
+        "fresh_breakout_same_direction": false,
+        "horizons": {},
+        "matured_through_h1": 0,
+        "primary_hit_plus1_plus12": false,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": null
+      },
       "pair": "AUDCHF",
       "same_bar_raw_breakout": false,
       "score": 0.5975833944355278,
@@ -165,9 +189,15 @@
             "mae": -8.359806052504748e-05,
             "mfe": 0.001067101876843779,
             "raw_breakout_by_horizon": true
+          },
+          "3": {
+            "directional_return": 0.0007108955492061446,
+            "mae": -8.359806052504748e-05,
+            "mfe": 0.0012556504269212176,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 2,
+        "matured_through_h1": 3,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 1
@@ -720,8 +750,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-24T04:10:55+00:00",
-  "last_complete_h1_utc": "2026-08-24T03:00:00+00:00",
+  "generated_at_utc": "2026-08-24T05:10:48+00:00",
+  "last_complete_h1_utc": "2026-08-24T04:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
