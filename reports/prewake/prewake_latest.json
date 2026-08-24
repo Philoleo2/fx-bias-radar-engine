@@ -54,9 +54,15 @@
             "mae": -0.0005626310674646806,
             "mfe": 0.00041941588665550533,
             "raw_breakout_by_horizon": false
+          },
+          "4": {
+            "directional_return": -0.0001994981859955837,
+            "mae": -0.0005626310674646806,
+            "mfe": 0.00041941588665550533,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 3,
+        "matured_through_h1": 4,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -120,9 +126,15 @@
             "mae": -0.000833138934248745,
             "mfe": 0.00025021268077862757,
             "raw_breakout_by_horizon": false
+          },
+          "4": {
+            "directional_return": -0.0008501488272398338,
+            "mae": -0.0010744896174317287,
+            "mfe": 0.00025021268077862757,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 3,
+        "matured_through_h1": 4,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -186,9 +198,15 @@
             "mae": -0.0019495213228895025,
             "mfe": 0.00024422580420080386,
             "raw_breakout_by_horizon": false
+          },
+          "4": {
+            "directional_return": -0.001986236387817485,
+            "mae": -0.002227404030209046,
+            "mfe": 0.00024422580420080386,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 3,
+        "matured_through_h1": 4,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -415,6 +433,12 @@
             "mfe": 0.0003500338366042577,
             "raw_breakout_by_horizon": false
           },
+          "24": {
+            "directional_return": -0.001436169528007956,
+            "mae": -0.0019135183067697792,
+            "mfe": 0.0007000676732082933,
+            "raw_breakout_by_horizon": true
+          },
           "3": {
             "directional_return": 0.00038496311245624407,
             "mae": -0.0009100879751708923,
@@ -440,7 +464,7 @@
             "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 12,
+        "matured_through_h1": 24,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 3
@@ -837,8 +861,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-24T08:10:49+00:00",
-  "last_complete_h1_utc": "2026-08-24T07:00:00+00:00",
+  "generated_at_utc": "2026-08-24T09:10:49+00:00",
+  "last_complete_h1_utc": "2026-08-24T08:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
