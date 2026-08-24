@@ -34,14 +34,20 @@
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 2.8650298442644365e-05,
       "outcomes": {
-        "breakout_time": null,
-        "fresh_breakout_same_direction": false,
+        "breakout_time": "2026-08-24T14:00:00+00:00",
+        "fresh_breakout_same_direction": true,
         "horizons": {
           "1": {
             "directional_return": 8.694829395026168e-05,
             "mae": -0.000255741394302178,
             "mfe": 0.00013298552503715477,
             "raw_breakout_by_horizon": false
+          },
+          "12": {
+            "directional_return": 0.0017834835794795563,
+            "mae": -0.0006956165925017244,
+            "mfe": 0.0018924863178353402,
+            "raw_breakout_by_horizon": true
           },
           "2": {
             "directional_return": -8.695585461347407e-05,
@@ -74,10 +80,10 @@
             "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 8,
-        "primary_hit_plus1_plus12": false,
+        "matured_through_h1": 12,
+        "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
-        "time_to_breakout": null
+        "time_to_breakout": 11
       },
       "pair": "EURNZD",
       "same_bar_raw_breakout": false,
@@ -127,6 +133,12 @@
             "mfe": 0.00025021268077862757,
             "raw_breakout_by_horizon": false
           },
+          "12": {
+            "directional_return": -0.0011000551136835165,
+            "mae": -0.0019390650876741633,
+            "mfe": 0.00025021268077862757,
+            "raw_breakout_by_horizon": false
+          },
           "2": {
             "directional_return": -0.00047517225888138627,
             "mae": -0.000783189748546187,
@@ -158,7 +170,7 @@
             "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 8,
+        "matured_through_h1": 12,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -211,6 +223,12 @@
             "mfe": 0.00024422580420080386,
             "raw_breakout_by_horizon": false
           },
+          "12": {
+            "directional_return": -0.0006973744137016993,
+            "mae": -0.0028173913043477716,
+            "mfe": 0.00024422580420080386,
+            "raw_breakout_by_horizon": false
+          },
           "2": {
             "directional_return": -0.000819364950872829,
             "mae": -0.001149745662323176,
@@ -242,7 +260,7 @@
             "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 8,
+        "matured_through_h1": 12,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -915,8 +933,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-24T16:10:52+00:00",
-  "last_complete_h1_utc": "2026-08-24T15:00:00+00:00",
+  "generated_at_utc": "2026-08-24T17:10:49+00:00",
+  "last_complete_h1_utc": "2026-08-24T16:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
