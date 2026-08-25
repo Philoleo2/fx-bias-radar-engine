@@ -34,14 +34,20 @@
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": -3.9121786647897816e-05,
       "outcomes": {
-        "breakout_time": null,
-        "fresh_breakout_same_direction": false,
+        "breakout_time": "2026-08-25T14:00:00+00:00",
+        "fresh_breakout_same_direction": true,
         "horizons": {
           "1": {
             "directional_return": -3.448216410405101e-05,
             "mae": -0.00020688941760627078,
             "mfe": 0.00017240784800520714,
             "raw_breakout_by_horizon": false
+          },
+          "12": {
+            "directional_return": 0.0,
+            "mae": -0.001913727112858088,
+            "mfe": 0.0008965208096272104,
+            "raw_breakout_by_horizon": true
           },
           "2": {
             "directional_return": 0.00010343935876836424,
@@ -74,10 +80,10 @@
             "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 8,
-        "primary_hit_plus1_plus12": false,
+        "matured_through_h1": 12,
+        "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
-        "time_to_breakout": null
+        "time_to_breakout": 11
       },
       "pair": "CADCHF",
       "same_bar_raw_breakout": false,
@@ -1137,8 +1143,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-25T16:10:48+00:00",
-  "last_complete_h1_utc": "2026-08-25T15:00:00+00:00",
+  "generated_at_utc": "2026-08-25T17:10:49+00:00",
+  "last_complete_h1_utc": "2026-08-25T16:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
