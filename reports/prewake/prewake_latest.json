@@ -33,7 +33,15 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 0.00016440897191710092,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": null,
+        "fresh_breakout_same_direction": false,
+        "horizons": {},
+        "matured_through_h1": 0,
+        "primary_hit_plus1_plus12": false,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": null
+      },
       "pair": "AUDCAD",
       "same_bar_raw_breakout": false,
       "score": 0.599483920197841,
@@ -1464,8 +1472,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-26T17:10:47+00:00",
-  "last_complete_h1_utc": "2026-08-26T16:00:00+00:00",
+  "generated_at_utc": "2026-08-26T18:10:47+00:00",
+  "last_complete_h1_utc": "2026-08-26T17:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
