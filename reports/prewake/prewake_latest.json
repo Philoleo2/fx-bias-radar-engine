@@ -34,8 +34,8 @@
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": -9.091252954542633e-05,
       "outcomes": {
-        "breakout_time": null,
-        "fresh_breakout_same_direction": false,
+        "breakout_time": "2026-08-26T01:00:00+00:00",
+        "fresh_breakout_same_direction": true,
         "horizons": {
           "1": {
             "directional_return": -8.793583202391318e-05,
@@ -48,12 +48,18 @@
             "mae": -0.00038929562607536994,
             "mfe": 0.0005970899720311174,
             "raw_breakout_by_horizon": false
+          },
+          "3": {
+            "directional_return": 0.0009426552151293962,
+            "mae": -0.00038929562607536994,
+            "mfe": 0.0014846128683223547,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 2,
-        "primary_hit_plus1_plus12": false,
+        "matured_through_h1": 3,
+        "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
-        "time_to_breakout": null
+        "time_to_breakout": 3
       },
       "pair": "USDJPY",
       "same_bar_raw_breakout": false,
@@ -94,8 +100,8 @@
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": -3.694188640497419e-05,
       "outcomes": {
-        "breakout_time": null,
-        "fresh_breakout_same_direction": false,
+        "breakout_time": "2026-08-26T01:00:00+00:00",
+        "fresh_breakout_same_direction": true,
         "horizons": {
           "1": {
             "directional_return": 0.00011549587115110582,
@@ -108,12 +114,18 @@
             "mae": -0.00011547586554405687,
             "mfe": 0.0006093141014194003,
             "raw_breakout_by_horizon": false
+          },
+          "3": {
+            "directional_return": 0.001912649286257508,
+            "mae": -0.0004512540665336795,
+            "mfe": 0.0024944742658667973,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 2,
-        "primary_hit_plus1_plus12": false,
+        "matured_through_h1": 3,
+        "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
-        "time_to_breakout": null
+        "time_to_breakout": 3
       },
       "pair": "GBPAUD",
       "same_bar_raw_breakout": false,
@@ -154,8 +166,8 @@
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": -6.3161187959424614e-06,
       "outcomes": {
-        "breakout_time": null,
-        "fresh_breakout_same_direction": false,
+        "breakout_time": "2026-08-26T01:00:00+00:00",
+        "fresh_breakout_same_direction": true,
         "horizons": {
           "1": {
             "directional_return": 8.070373662674422e-05,
@@ -168,12 +180,18 @@
             "mae": -6.053024494578896e-05,
             "mfe": 0.0007465396876638053,
             "raw_breakout_by_horizon": false
+          },
+          "3": {
+            "directional_return": 0.002337768094112669,
+            "mae": -6.053024494578896e-05,
+            "mfe": 0.0029659820023404393,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 2,
-        "primary_hit_plus1_plus12": false,
+        "matured_through_h1": 3,
+        "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
-        "time_to_breakout": null
+        "time_to_breakout": 3
       },
       "pair": "AUDCAD",
       "same_bar_raw_breakout": false,
@@ -1329,8 +1347,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-26T02:10:51+00:00",
-  "last_complete_h1_utc": "2026-08-26T01:00:00+00:00",
+  "generated_at_utc": "2026-08-26T03:10:47+00:00",
+  "last_complete_h1_utc": "2026-08-26T02:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
