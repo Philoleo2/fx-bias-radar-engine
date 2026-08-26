@@ -42,9 +42,15 @@
             "mae": -0.00038929562607536994,
             "mfe": 0.0,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": 0.00021359064805442468,
+            "mae": -0.00038929562607536994,
+            "mfe": 0.0005970899720311174,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -96,9 +102,15 @@
             "mae": -0.00011547586554405687,
             "mfe": 0.0003886146413192293,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": -9.448670106704811e-05,
+            "mae": -0.00011547586554405687,
+            "mfe": 0.0006093141014194003,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -150,9 +162,15 @@
             "mae": -6.053024494578896e-05,
             "mfe": 0.0003127395988862247,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": 0.00020174713083143136,
+            "mae": -6.053024494578896e-05,
+            "mfe": 0.0007465396876638053,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -1311,8 +1329,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-26T01:10:48+00:00",
-  "last_complete_h1_utc": "2026-08-26T00:00:00+00:00",
+  "generated_at_utc": "2026-08-26T02:10:51+00:00",
+  "last_complete_h1_utc": "2026-08-26T01:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
