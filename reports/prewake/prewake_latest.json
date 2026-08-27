@@ -204,9 +204,15 @@
             "mae": -0.0002130469981679317,
             "mfe": 0.0006178362946864802,
             "raw_breakout_by_horizon": true
+          },
+          "6": {
+            "directional_return": -0.0005967095906319208,
+            "mae": -0.0007243597937705015,
+            "mfe": 0.0007030550939537417,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 4,
+        "matured_through_h1": 6,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 1
@@ -276,9 +282,15 @@
             "mae": -0.0006544728049326931,
             "mfe": 0.000344803806634042,
             "raw_breakout_by_horizon": false
+          },
+          "6": {
+            "directional_return": -0.000551343914724594,
+            "mae": -0.0008953784695916456,
+            "mfe": 0.000344803806634042,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 4,
+        "matured_through_h1": 6,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -1905,8 +1917,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-27T10:10:47+00:00",
-  "last_complete_h1_utc": "2026-08-27T09:00:00+00:00",
+  "generated_at_utc": "2026-08-27T11:10:48+00:00",
+  "last_complete_h1_utc": "2026-08-27T10:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
