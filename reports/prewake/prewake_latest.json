@@ -60,9 +60,15 @@
             "mae": -0.0004469162776840063,
             "mfe": 0.0007696891449000542,
             "raw_breakout_by_horizon": true
+          },
+          "6": {
+            "directional_return": 0.0005088584924720211,
+            "mae": -0.0004469162776840063,
+            "mfe": 0.0007821034859469833,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 4,
+        "matured_through_h1": 6,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 3
@@ -132,9 +138,15 @@
             "mae": -0.000661915583699324,
             "mfe": 0.0005891059580702684,
             "raw_breakout_by_horizon": true
+          },
+          "6": {
+            "directional_return": 0.0009129932822357071,
+            "mae": -0.000661915583699324,
+            "mfe": 0.0012674364623783685,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 4,
+        "matured_through_h1": 6,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 4
@@ -343,6 +355,12 @@
             "mfe": 0.00020254136107800136,
             "raw_breakout_by_horizon": false
           },
+          "12": {
+            "directional_return": 0.00020252085234574957,
+            "mae": -0.001224159587830731,
+            "mfe": 0.00031983965372028855,
+            "raw_breakout_by_horizon": false
+          },
           "2": {
             "directional_return": -0.00033034073348330283,
             "mae": -0.0005219651455110608,
@@ -374,7 +392,7 @@
             "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 8,
+        "matured_through_h1": 12,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -1917,8 +1935,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-27T11:10:48+00:00",
-  "last_complete_h1_utc": "2026-08-27T10:00:00+00:00",
+  "generated_at_utc": "2026-08-27T12:10:50+00:00",
+  "last_complete_h1_utc": "2026-08-27T11:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
