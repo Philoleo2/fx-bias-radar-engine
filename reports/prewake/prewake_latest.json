@@ -33,7 +33,15 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 2.295997860805056e-05,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": null,
+        "fresh_breakout_same_direction": false,
+        "horizons": {},
+        "matured_through_h1": 0,
+        "primary_hit_plus1_plus12": false,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": null
+      },
       "pair": "USDCHF",
       "same_bar_raw_breakout": false,
       "score": 0.6041544097970666,
@@ -72,7 +80,15 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 1.4031366934166138e-05,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": null,
+        "fresh_breakout_same_direction": false,
+        "horizons": {},
+        "matured_through_h1": 0,
+        "primary_hit_plus1_plus12": false,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": null
+      },
       "pair": "GBPUSD",
       "same_bar_raw_breakout": false,
       "score": 0.5969617868756704,
@@ -112,13 +128,20 @@
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 3.4616204186678235e-05,
       "outcomes": {
-        "breakout_time": null,
-        "fresh_breakout_same_direction": false,
-        "horizons": {},
-        "matured_through_h1": 0,
-        "primary_hit_plus1_plus12": false,
+        "breakout_time": "2026-08-27T04:00:00+00:00",
+        "fresh_breakout_same_direction": true,
+        "horizons": {
+          "1": {
+            "directional_return": 0.00013847096126285547,
+            "mae": -0.0002130469981679317,
+            "mfe": 0.00017043759853407892,
+            "raw_breakout_by_horizon": true
+          }
+        },
+        "matured_through_h1": 1,
+        "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
-        "time_to_breakout": null
+        "time_to_breakout": 1
       },
       "pair": "EURCHF",
       "same_bar_raw_breakout": false,
@@ -161,8 +184,15 @@
       "outcomes": {
         "breakout_time": null,
         "fresh_breakout_same_direction": false,
-        "horizons": {},
-        "matured_through_h1": 0,
+        "horizons": {
+          "1": {
+            "directional_return": -0.00018955875947488822,
+            "mae": -0.00024122126882397676,
+            "mfe": 0.00022409543017687383,
+            "raw_breakout_by_horizon": false
+          }
+        },
+        "matured_through_h1": 1,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -232,9 +262,15 @@
             "mae": -0.0006497102931152243,
             "mfe": 0.00020254136107800136,
             "raw_breakout_by_horizon": false
+          },
+          "6": {
+            "directional_return": -0.0006605723780019443,
+            "mae": -0.0006922847526945608,
+            "mfe": 0.00020254136107800136,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 4,
+        "matured_through_h1": 6,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -287,6 +323,12 @@
             "mfe": 0.00014075161361670752,
             "raw_breakout_by_horizon": false
           },
+          "12": {
+            "directional_return": -0.0025399962454339584,
+            "mae": -0.002666773604956596,
+            "mfe": 0.00016086222150724083,
+            "raw_breakout_by_horizon": false
+          },
           "2": {
             "directional_return": -0.0004321542958569515,
             "mae": -0.0005425281813249416,
@@ -318,7 +360,7 @@
             "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 8,
+        "matured_through_h1": 12,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -1771,8 +1813,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-27T05:10:51+00:00",
-  "last_complete_h1_utc": "2026-08-27T04:00:00+00:00",
+  "generated_at_utc": "2026-08-27T06:10:48+00:00",
+  "last_complete_h1_utc": "2026-08-27T05:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
