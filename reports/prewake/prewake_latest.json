@@ -36,8 +36,15 @@
       "outcomes": {
         "breakout_time": null,
         "fresh_breakout_same_direction": false,
-        "horizons": {},
-        "matured_through_h1": 0,
+        "horizons": {
+          "1": {
+            "directional_return": 0.0001489609973210985,
+            "mae": -0.0004469162776840063,
+            "mfe": 0.0003724302314032091,
+            "raw_breakout_by_horizon": false
+          }
+        },
+        "matured_through_h1": 1,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -83,8 +90,15 @@
       "outcomes": {
         "breakout_time": null,
         "fresh_breakout_same_direction": false,
-        "horizons": {},
-        "matured_through_h1": 0,
+        "horizons": {
+          "1": {
+            "directional_return": -8.095110189919987e-05,
+            "mae": -0.0002575157820386975,
+            "mfe": 0.00016929690260281127,
+            "raw_breakout_by_horizon": false
+          }
+        },
+        "matured_through_h1": 1,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -136,9 +150,15 @@
             "mae": -0.0002130469981679317,
             "mfe": 0.00017043759853407892,
             "raw_breakout_by_horizon": true
+          },
+          "2": {
+            "directional_return": 0.0001917239181460433,
+            "mae": -0.0002130469981679317,
+            "mfe": 0.0002769610976181003,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 1
@@ -190,9 +210,15 @@
             "mae": -0.00024122126882397676,
             "mfe": 0.00022409543017687383,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": -0.0001206324588943239,
+            "mae": -0.0003101202577444617,
+            "mfe": 0.00022409543017687383,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -1813,8 +1839,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-27T06:10:48+00:00",
-  "last_complete_h1_utc": "2026-08-27T05:00:00+00:00",
+  "generated_at_utc": "2026-08-27T07:10:48+00:00",
+  "last_complete_h1_utc": "2026-08-27T06:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
