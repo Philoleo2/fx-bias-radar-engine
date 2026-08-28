@@ -33,7 +33,15 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 0.00013616691252148091,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": null,
+        "fresh_breakout_same_direction": false,
+        "horizons": {},
+        "matured_through_h1": 0,
+        "primary_hit_plus1_plus12": false,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": null
+      },
       "pair": "USDCAD",
       "same_bar_raw_breakout": false,
       "score": 0.5976677540791674,
@@ -93,9 +101,15 @@
             "mae": -0.00039703451312744775,
             "mfe": 0.0003537216571498636,
             "raw_breakout_by_horizon": false
+          },
+          "4": {
+            "directional_return": 0.00022375805351679793,
+            "mae": -0.00039703451312744775,
+            "mfe": 0.0004259097504457632,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 3,
+        "matured_through_h1": 4,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -159,9 +173,15 @@
             "mae": -0.0003176183772276575,
             "mfe": 0.00032641280912582005,
             "raw_breakout_by_horizon": true
+          },
+          "4": {
+            "directional_return": 7.728605720435436e-05,
+            "mae": -0.0003176183772276575,
+            "mfe": 0.00032641280912582005,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 3,
+        "matured_through_h1": 4,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 1
@@ -225,9 +245,15 @@
             "mae": -0.00031493124001258366,
             "mfe": 0.00037350888250831105,
             "raw_breakout_by_horizon": true
+          },
+          "4": {
+            "directional_return": 1.1667862622771418e-05,
+            "mae": -0.00046649406386300996,
+            "mfe": 0.00037350888250831105,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 3,
+        "matured_through_h1": 4,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 1
@@ -291,9 +317,15 @@
             "mae": -0.0006254097947244741,
             "mfe": 0.000656512605041959,
             "raw_breakout_by_horizon": true
+          },
+          "4": {
+            "directional_return": -0.0015532025311108635,
+            "mae": -0.0015821828076187927,
+            "mfe": 0.000656512605041959,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 3,
+        "matured_through_h1": 4,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 2
@@ -2658,8 +2690,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-28T09:10:54+00:00",
-  "last_complete_h1_utc": "2026-08-28T08:00:00+00:00",
+  "generated_at_utc": "2026-08-28T10:10:47+00:00",
+  "last_complete_h1_utc": "2026-08-28T09:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
