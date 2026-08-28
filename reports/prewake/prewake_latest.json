@@ -33,7 +33,15 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 5.4754789638739336e-05,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": null,
+        "fresh_breakout_same_direction": false,
+        "horizons": {},
+        "matured_through_h1": 0,
+        "primary_hit_plus1_plus12": false,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": null
+      },
       "pair": "AUDUSD",
       "same_bar_raw_breakout": false,
       "score": 0.6003174667752883,
@@ -73,20 +81,26 @@
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 6.179776016313068e-05,
       "outcomes": {
-        "breakout_time": null,
-        "fresh_breakout_same_direction": false,
+        "breakout_time": "2026-08-28T01:00:00+00:00",
+        "fresh_breakout_same_direction": true,
         "horizons": {
           "1": {
             "directional_return": 0.0,
             "mae": -0.00013336889837278765,
             "mfe": 0.00033948446858556025,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": 0.0008725792540461843,
+            "mae": -0.00013336889837278765,
+            "mfe": 0.0014064356555687496,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 1,
-        "primary_hit_plus1_plus12": false,
+        "matured_through_h1": 2,
+        "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
-        "time_to_breakout": null
+        "time_to_breakout": 2
       },
       "pair": "NZDCAD",
       "same_bar_raw_breakout": false,
@@ -127,20 +141,26 @@
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": -3.4964197858907846e-05,
       "outcomes": {
-        "breakout_time": null,
-        "fresh_breakout_same_direction": false,
+        "breakout_time": "2026-08-28T01:00:00+00:00",
+        "fresh_breakout_same_direction": true,
         "horizons": {
           "1": {
             "directional_return": 0.00022995848073229061,
             "mae": -8.174693193541138e-05,
             "mfe": 0.0004805332897104275,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": 0.0010173278896738111,
+            "mae": -8.174693193541138e-05,
+            "mfe": 0.0013866219127196544,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 1,
-        "primary_hit_plus1_plus12": false,
+        "matured_through_h1": 2,
+        "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
-        "time_to_breakout": null
+        "time_to_breakout": 2
       },
       "pair": "EURNZD",
       "same_bar_raw_breakout": false,
@@ -2232,8 +2252,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-28T02:10:50+00:00",
-  "last_complete_h1_utc": "2026-08-28T01:00:00+00:00",
+  "generated_at_utc": "2026-08-28T03:10:48+00:00",
+  "last_complete_h1_utc": "2026-08-28T02:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
