@@ -48,9 +48,15 @@
             "mae": -0.0007433817373480034,
             "mfe": 0.00025982274315095033,
             "raw_breakout_by_horizon": false
+          },
+          "3": {
+            "directional_return": -0.0002887336163732053,
+            "mae": -0.0007794682294522959,
+            "mfe": 0.00025982274315095033,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 2,
+        "matured_through_h1": 3,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -499,6 +505,12 @@
             "mfe": 0.00033948446858556025,
             "raw_breakout_by_horizon": false
           },
+          "12": {
+            "directional_return": -0.001674574770332077,
+            "mae": -0.002012657920900107,
+            "mfe": 0.001673173452314547,
+            "raw_breakout_by_horizon": true
+          },
           "2": {
             "directional_return": 0.0008725792540461843,
             "mae": -0.00013336889837278765,
@@ -530,7 +542,7 @@
             "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 8,
+        "matured_through_h1": 12,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 2
@@ -583,6 +595,12 @@
             "mfe": 0.0004805332897104275,
             "raw_breakout_by_horizon": false
           },
+          "12": {
+            "directional_return": -0.0009142005595866495,
+            "mae": -0.0011126536278631693,
+            "mfe": 0.0023046194817166743,
+            "raw_breakout_by_horizon": true
+          },
           "2": {
             "directional_return": 0.0010173278896738111,
             "mae": -8.174693193541138e-05,
@@ -614,7 +632,7 @@
             "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 8,
+        "matured_through_h1": 12,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 2
@@ -2733,8 +2751,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-28T12:15:46+00:00",
-  "last_complete_h1_utc": "2026-08-28T11:00:00+00:00",
+  "generated_at_utc": "2026-08-28T13:10:49+00:00",
+  "last_complete_h1_utc": "2026-08-28T12:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
