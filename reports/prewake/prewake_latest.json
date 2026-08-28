@@ -4,6 +4,45 @@
   "events": [
     {
       "artifact_hash": "sha256:c90c95fca01a7028880ce28fbea4a49976bbc33564dd6fbc447794ff410f7b94",
+      "bar_time_utc": "2026-08-28T08:00:00+00:00",
+      "direction": "LONG",
+      "direction_sign": 1,
+      "direction_source_value": 0.15501740555853027,
+      "email_attempts": 1,
+      "email_sent_at": "2026-08-28T09:10:54+00:00",
+      "email_status": "SENT",
+      "event_id": "3dd95e49bcfab5d16d88be88170f66d3",
+      "event_type": "REAWAKENING",
+      "ewma4_gap": 0.15501740555853027,
+      "features": {
+        "abs_pair_z": 0.17897936963377015,
+        "compression_ratio": 0.4197901049475468,
+        "dir_ret1": 0.0001515725656559603,
+        "dir_ret12": 0.0,
+        "dir_ret24": -0.001860304674596499,
+        "dir_ret4": 0.00021653927024257606,
+        "fx_bias_same": 0.0,
+        "pair_vol120": 0.0005281825782473105
+      },
+      "fx_bias_link": null,
+      "fx_bias_same": 0.0,
+      "gap_robust_z": 0.4661601763568978,
+      "generated_at_utc": "2026-08-28T09:10:52+00:00",
+      "is_backfill": false,
+      "is_prospective": true,
+      "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
+      "model_version": "pair-prewake-v1",
+      "ols_lopo_gap": 0.00013616691252148091,
+      "outcomes": null,
+      "pair": "USDCAD",
+      "same_bar_raw_breakout": false,
+      "score": 0.5976677540791674,
+      "state_after": "ACTIVE",
+      "state_before": "ARMED",
+      "threshold": 0.5965942096795052
+    },
+    {
+      "artifact_hash": "sha256:c90c95fca01a7028880ce28fbea4a49976bbc33564dd6fbc447794ff410f7b94",
       "bar_time_utc": "2026-08-28T04:00:00+00:00",
       "direction": "LONG",
       "direction_sign": 1,
@@ -48,9 +87,15 @@
             "mae": -0.00039703451312744775,
             "mfe": 0.0001732514239101146,
             "raw_breakout_by_horizon": false
+          },
+          "3": {
+            "directional_return": 7.218548786087958e-05,
+            "mae": -0.00039703451312744775,
+            "mfe": 0.0003537216571498636,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 2,
+        "matured_through_h1": 3,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -108,9 +153,15 @@
             "mae": -0.0003176183772276575,
             "mfe": 0.0002490852558705292,
             "raw_breakout_by_horizon": true
+          },
+          "3": {
+            "directional_return": -8.58663919469307e-05,
+            "mae": -0.0003176183772276575,
+            "mfe": 0.00032641280912582005,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 2,
+        "matured_through_h1": 3,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 1
@@ -168,9 +219,15 @@
             "mae": -1.1667658417535698e-05,
             "mfe": 0.00037350888250831105,
             "raw_breakout_by_horizon": true
+          },
+          "3": {
+            "directional_return": -0.00015166982674538472,
+            "mae": -0.00031493124001258366,
+            "mfe": 0.00037350888250831105,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 2,
+        "matured_through_h1": 3,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 1
@@ -228,9 +285,15 @@
             "mae": -0.0005145070820387065,
             "mfe": 0.00048472607927285694,
             "raw_breakout_by_horizon": true
+          },
+          "3": {
+            "directional_return": -0.0004490629041031388,
+            "mae": -0.0006254097947244741,
+            "mfe": 0.000656512605041959,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 2,
+        "matured_through_h1": 3,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 2
@@ -300,9 +363,15 @@
             "mae": -0.0011103400416377918,
             "mfe": 0.0005282767057777082,
             "raw_breakout_by_horizon": false
+          },
+          "6": {
+            "directional_return": 0.00016675004207388898,
+            "mae": -0.0011103400416377918,
+            "mfe": 0.0006952169076752668,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 4,
+        "matured_through_h1": 6,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -378,9 +447,15 @@
             "mae": -0.00013336889837278765,
             "mfe": 0.001673173452314547,
             "raw_breakout_by_horizon": true
+          },
+          "8": {
+            "directional_return": 0.0008604653102910772,
+            "mae": -0.00013336889837278765,
+            "mfe": 0.001673173452314547,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 6,
+        "matured_through_h1": 8,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 2
@@ -456,9 +531,15 @@
             "mae": -8.174693193541138e-05,
             "mfe": 0.0023046194817166743,
             "raw_breakout_by_horizon": true
+          },
+          "8": {
+            "directional_return": 0.0013498452795601024,
+            "mae": -8.174693193541138e-05,
+            "mfe": 0.0023046194817166743,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 6,
+        "matured_through_h1": 8,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 2
@@ -2577,8 +2658,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-28T08:10:46+00:00",
-  "last_complete_h1_utc": "2026-08-28T07:00:00+00:00",
+  "generated_at_utc": "2026-08-28T09:10:54+00:00",
+  "last_complete_h1_utc": "2026-08-28T08:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
