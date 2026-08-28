@@ -36,8 +36,15 @@
       "outcomes": {
         "breakout_time": null,
         "fresh_breakout_same_direction": false,
-        "horizons": {},
-        "matured_through_h1": 0,
+        "horizons": {
+          "1": {
+            "directional_return": -5.0532942074718504e-05,
+            "mae": -0.00015159499592143355,
+            "mfe": 0.0001732514239101146,
+            "raw_breakout_by_horizon": false
+          }
+        },
+        "matured_through_h1": 1,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -81,13 +88,20 @@
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": -7.167262999112925e-05,
       "outcomes": {
-        "breakout_time": null,
-        "fresh_breakout_same_direction": false,
-        "horizons": {},
-        "matured_through_h1": 0,
-        "primary_hit_plus1_plus12": false,
+        "breakout_time": "2026-08-28T05:00:00+00:00",
+        "fresh_breakout_same_direction": true,
+        "horizons": {
+          "1": {
+            "directional_return": 9.446154777982918e-05,
+            "mae": -3.434685168168805e-05,
+            "mfe": 0.0002490852558705292,
+            "raw_breakout_by_horizon": true
+          }
+        },
+        "matured_through_h1": 1,
+        "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
-        "time_to_breakout": null
+        "time_to_breakout": 1
       },
       "pair": "EURUSD",
       "same_bar_raw_breakout": false,
@@ -128,13 +142,20 @@
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 1.938229763541837e-05,
       "outcomes": {
-        "breakout_time": null,
-        "fresh_breakout_same_direction": false,
-        "horizons": {},
-        "matured_through_h1": 0,
-        "primary_hit_plus1_plus12": false,
+        "breakout_time": "2026-08-28T05:00:00+00:00",
+        "fresh_breakout_same_direction": true,
+        "horizons": {
+          "1": {
+            "directional_return": 0.00014002333745162816,
+            "mae": -1.1667658417535698e-05,
+            "mfe": 0.0002334103587517955,
+            "raw_breakout_by_horizon": true
+          }
+        },
+        "matured_through_h1": 1,
+        "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
-        "time_to_breakout": null
+        "time_to_breakout": 1
       },
       "pair": "EURGBP",
       "same_bar_raw_breakout": false,
@@ -177,8 +198,15 @@
       "outcomes": {
         "breakout_time": null,
         "fresh_breakout_same_direction": false,
-        "horizons": {},
-        "matured_through_h1": 0,
+        "horizons": {
+          "1": {
+            "directional_return": 0.0001059880739172811,
+            "mae": -0.0005145070820387065,
+            "mfe": 0.00023220595658757226,
+            "raw_breakout_by_horizon": false
+          }
+        },
+        "matured_through_h1": 1,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -242,9 +270,15 @@
             "mae": -0.0011103400416377918,
             "mfe": 6.947821857838932e-05,
             "raw_breakout_by_horizon": false
+          },
+          "4": {
+            "directional_return": 0.00029183082357502125,
+            "mae": -0.0011103400416377918,
+            "mfe": 0.0005282767057777082,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 3,
+        "matured_through_h1": 4,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -314,9 +348,15 @@
             "mae": -0.00013336889837278765,
             "mfe": 0.0016489245617012926,
             "raw_breakout_by_horizon": true
+          },
+          "6": {
+            "directional_return": 7.274402592895105e-05,
+            "mae": -0.00013336889837278765,
+            "mfe": 0.001673173452314547,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 4,
+        "matured_through_h1": 6,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 2
@@ -386,9 +426,15 @@
             "mae": -8.174693193541138e-05,
             "mfe": 0.0021403846547733973,
             "raw_breakout_by_horizon": true
+          },
+          "6": {
+            "directional_return": 0.0008485536759270875,
+            "mae": -8.174693193541138e-05,
+            "mfe": 0.0023046194817166743,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 4,
+        "matured_through_h1": 6,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 2
@@ -2507,8 +2553,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-28T06:10:49+00:00",
-  "last_complete_h1_utc": "2026-08-28T05:00:00+00:00",
+  "generated_at_utc": "2026-08-28T07:10:47+00:00",
+  "last_complete_h1_utc": "2026-08-28T06:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
