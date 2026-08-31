@@ -595,6 +595,12 @@
             "mfe": 0.0014064356555687496,
             "raw_breakout_by_horizon": true
           },
+          "24": {
+            "directional_return": -0.0024278338663188057,
+            "mae": -0.004389049200999029,
+            "mfe": 0.001673173452314547,
+            "raw_breakout_by_horizon": true
+          },
           "3": {
             "directional_return": 0.0013812324241125262,
             "mae": -0.00013336889837278765,
@@ -620,7 +626,7 @@
             "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 12,
+        "matured_through_h1": 24,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 2
@@ -685,6 +691,12 @@
             "mfe": 0.0013866219127196544,
             "raw_breakout_by_horizon": true
           },
+          "24": {
+            "directional_return": -0.0003678236122921677,
+            "mae": -0.0024669459820381157,
+            "mfe": 0.0023046194817166743,
+            "raw_breakout_by_horizon": true
+          },
           "3": {
             "directional_return": 0.0018360312117516042,
             "mae": -8.174693193541138e-05,
@@ -710,7 +722,7 @@
             "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 12,
+        "matured_through_h1": 24,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 2
@@ -2835,8 +2847,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-08-31T00:10:47+00:00",
-  "last_complete_h1_utc": "2026-08-30T23:00:00+00:00",
+  "generated_at_utc": "2026-08-31T01:10:45+00:00",
+  "last_complete_h1_utc": "2026-08-31T00:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
