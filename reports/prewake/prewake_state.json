@@ -31,36 +31,36 @@
     true
   ],
   "ewma_state": [
-    0.26926340653230985,
-    0.266927251358713,
-    0.007187128897264278,
-    0.10873099369028197,
-    -0.02308335855454874,
-    -0.3676957548066191,
-    0.1178466244105557,
-    -0.15666504818496937,
-    0.03419778397751422,
-    -0.49706695720399713,
-    0.1492772963784938,
-    0.29431096563627235,
-    0.0438662819502056,
-    0.0672362023497747,
-    -0.24333682998435482,
-    0.17078782095267914,
-    0.3372886307796327,
-    0.011319792868457065,
-    0.379738791038833,
-    0.03160548859997498,
-    -0.08599627827871839,
-    -0.038463344424476305,
-    -0.3568682928419353,
-    -0.548790121808451,
-    -0.23631837269826322,
-    0.18220423049358653,
-    -0.02503915257366887,
-    0.328123750555141
+    0.1064603142626125,
+    0.16437896319724124,
+    0.014306822775124507,
+    0.1439930509831932,
+    0.5390564668148734,
+    -0.0010266085253266555,
+    -0.03532924112080703,
+    -0.1981777095067654,
+    0.532498678718065,
+    -0.0315500972312488,
+    0.016975598932225153,
+    -0.04663072106192925,
+    -0.1428830948601859,
+    0.5966373264409524,
+    0.16217743764098777,
+    0.08620826000418774,
+    0.07159444722754296,
+    -0.11947849372280621,
+    0.5656754885612169,
+    0.5448936991816514,
+    0.5561636739683822,
+    0.4922869327390975,
+    -0.013294593345404448,
+    0.057180520253234224,
+    0.18740498400550237,
+    0.06695758506147086,
+    -0.07202996368286124,
+    0.24542028303933786
   ],
-  "last_bar_time_utc": "2026-09-03T21:00:00+00:00",
+  "last_bar_time_utc": "2026-09-03T22:00:00+00:00",
   "lifecycle": {
     "AUDCAD:LONG": {
       "armed": true,
@@ -79,12 +79,12 @@
     },
     "AUDCHF:SHORT": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "AUDJPY:LONG": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "AUDJPY:SHORT": {
@@ -114,27 +114,27 @@
     },
     "CADCHF:LONG": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "CADCHF:SHORT": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "CADJPY:LONG": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "CADJPY:SHORT": {
       "armed": true,
-      "low_streak": 22,
+      "low_streak": 0,
       "seen": true
     },
     "CHFJPY:LONG": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "CHFJPY:SHORT": {
@@ -169,7 +169,7 @@
     },
     "EURCHF:SHORT": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "EURGBP:LONG": {
@@ -184,7 +184,7 @@
     },
     "EURJPY:LONG": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 2,
       "seen": true
     },
     "EURJPY:SHORT": {
@@ -224,7 +224,7 @@
     },
     "GBPCAD:LONG": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "GBPCAD:SHORT": {
@@ -234,7 +234,7 @@
     },
     "GBPCHF:LONG": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "GBPCHF:SHORT": {
@@ -244,7 +244,7 @@
     },
     "GBPJPY:LONG": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 2,
       "seen": true
     },
     "GBPJPY:SHORT": {
@@ -299,7 +299,7 @@
     },
     "NZDJPY:SHORT": {
       "armed": true,
-      "low_streak": 1,
+      "low_streak": 0,
       "seen": true
     },
     "NZDUSD:LONG": {
@@ -329,17 +329,17 @@
     },
     "USDCHF:SHORT": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "USDJPY:LONG": {
       "armed": true,
-      "low_streak": 0,
+      "low_streak": 1,
       "seen": true
     },
     "USDJPY:SHORT": {
       "armed": true,
-      "low_streak": 33,
+      "low_streak": 0,
       "seen": true
     }
   },
@@ -379,5 +379,5 @@
   "seeded_at_utc": "2026-08-18T05:43:11+00:00",
   "seeded_from_utc": "2018-07-25T13:00:00+00:00",
   "state_version": 1,
-  "updated_at_utc": "2026-09-03T22:10:54+00:00"
+  "updated_at_utc": "2026-09-03T23:10:43+00:00"
 }
