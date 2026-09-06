@@ -1,7 +1,7 @@
 {
   "ok": true,
   "kind": "pre_rottura",
-  "generated_at_utc": "2026-09-06T04:05:27+00:00",
+  "generated_at_utc": "2026-09-06T05:05:26+00:00",
   "dir_timeframe": "H4",
   "timing_timeframe": "H1",
   "h4_last_bar_utc": null,
@@ -1194,15 +1194,7 @@
   "nuove_allineate": [],
   "classifica_chiamate": {
     "window_days": 20,
-    "nuove": [
-      {
-        "pair": "NZDCHF",
-        "count": 1,
-        "dir": "LONG",
-        "first_call_utc": "2026-08-17T05:00:00+00:00",
-        "last_call_utc": "2026-08-17T05:00:00+00:00"
-      }
-    ],
+    "nuove": [],
     "classifica": [
       {
         "pair": "AUDCAD",
