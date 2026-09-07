@@ -127,6 +127,12 @@
             "mfe": 0.00032535843654435403,
             "raw_breakout_by_horizon": false
           },
+          "12": {
+            "directional_return": 0.001808593479993687,
+            "mae": -0.00019511349101397624,
+            "mfe": 0.0021875814910323754,
+            "raw_breakout_by_horizon": true
+          },
           "2": {
             "directional_return": 5.782435852715297e-05,
             "mae": -0.00015176151761520096,
@@ -158,7 +164,7 @@
             "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 8,
+        "matured_through_h1": 12,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 4
@@ -211,6 +217,12 @@
             "mfe": 3.209792005476331e-05,
             "raw_breakout_by_horizon": false
           },
+          "12": {
+            "directional_return": -0.0007753741568583926,
+            "mae": -0.0014796139115756946,
+            "mfe": 0.00027289801640595357,
+            "raw_breakout_by_horizon": false
+          },
           "2": {
             "directional_return": -0.0010051971674292395,
             "mae": -0.0011007801645825932,
@@ -242,7 +254,7 @@
             "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 8,
+        "matured_through_h1": 12,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -3135,8 +3147,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-09-07T17:10:46+00:00",
-  "last_complete_h1_utc": "2026-09-07T16:00:00+00:00",
+  "generated_at_utc": "2026-09-07T18:10:47+00:00",
+  "last_complete_h1_utc": "2026-09-07T17:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
