@@ -33,7 +33,15 @@
       "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 2.063644564257388e-05,
-      "outcomes": null,
+      "outcomes": {
+        "breakout_time": null,
+        "fresh_breakout_same_direction": false,
+        "horizons": {},
+        "matured_through_h1": 0,
+        "primary_hit_plus1_plus12": false,
+        "same_bar_raw_breakout": false,
+        "time_to_breakout": null
+      },
       "pair": "EURUSD",
       "same_bar_raw_breakout": false,
       "score": 0.6081069300359947,
@@ -81,9 +89,15 @@
             "mae": -0.00015176151761520096,
             "mfe": 0.00032535843654435403,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": 5.782435852715297e-05,
+            "mae": -0.00015176151761520096,
+            "mfe": 0.00043385830187858687,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -135,9 +149,15 @@
             "mae": -0.0002620559088259977,
             "mfe": 3.209792005476331e-05,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": -0.0010051971674292395,
+            "mae": -0.0011007801645825932,
+            "mfe": 3.209792005476331e-05,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -3030,8 +3050,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-09-07T07:10:44+00:00",
-  "last_complete_h1_utc": "2026-09-07T06:00:00+00:00",
+  "generated_at_utc": "2026-09-07T08:10:42+00:00",
+  "last_complete_h1_utc": "2026-09-07T07:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
