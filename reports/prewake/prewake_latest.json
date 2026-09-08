@@ -42,9 +42,15 @@
             "mae": -4.942665085017062e-05,
             "mfe": 0.0007172359211533585,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": 1.2357349842870089e-05,
+            "mae": -0.00014826529603639838,
+            "mfe": 0.0007791147772102658,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -96,9 +102,15 @@
             "mae": -0.0003144804942140089,
             "mfe": 0.00019721658111726548,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": 0.0001705511471034548,
+            "mae": -0.0003144804942140089,
+            "mfe": 0.0004424047630469108,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -150,9 +162,15 @@
             "mae": -0.0006506631226291804,
             "mfe": 6.92693469286354e-05,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": 0.00018010404520795744,
+            "mae": -0.0006506631226291804,
+            "mfe": 0.0004018958396851957,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -204,9 +222,15 @@
             "mae": -0.0003935660506503291,
             "mfe": 0.0006337786913326315,
             "raw_breakout_by_horizon": false
+          },
+          "2": {
+            "directional_return": 0.00018831908155938855,
+            "mae": -0.0003935660506503291,
+            "mfe": 0.00066805988557328,
+            "raw_breakout_by_horizon": false
           }
         },
-        "matured_through_h1": 1,
+        "matured_through_h1": 2,
         "primary_hit_plus1_plus12": false,
         "same_bar_raw_breakout": false,
         "time_to_breakout": null
@@ -3369,8 +3393,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-09-08T01:10:45+00:00",
-  "last_complete_h1_utc": "2026-09-08T00:00:00+00:00",
+  "generated_at_utc": "2026-09-08T02:10:47+00:00",
+  "last_complete_h1_utc": "2026-09-08T01:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
