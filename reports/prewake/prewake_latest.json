@@ -54,9 +54,15 @@
             "mae": -0.00014826529603639838,
             "mfe": 0.0009895601405174315,
             "raw_breakout_by_horizon": true
+          },
+          "4": {
+            "directional_return": -0.0001482762884218839,
+            "mae": -0.00019767729182118554,
+            "mfe": 0.0011877072301678115,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 3,
+        "matured_through_h1": 4,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 3
@@ -120,9 +126,15 @@
             "mae": -0.0003144804942140089,
             "mfe": 0.0008474982810176002,
             "raw_breakout_by_horizon": true
+          },
+          "4": {
+            "directional_return": 0.0006553970581882183,
+            "mae": -0.0003144804942140089,
+            "mfe": 0.0012579219768564798,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 3,
+        "matured_through_h1": 4,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 3
@@ -166,8 +178,8 @@
       "model_version": "pair-prewake-v1",
       "ols_lopo_gap": 1.141925003673709e-05,
       "outcomes": {
-        "breakout_time": null,
-        "fresh_breakout_same_direction": false,
+        "breakout_time": "2026-09-08T02:00:00+00:00",
+        "fresh_breakout_same_direction": true,
         "horizons": {
           "1": {
             "directional_return": -0.0003878062679314791,
@@ -186,12 +198,18 @@
             "mae": -0.0006506631226291804,
             "mfe": 0.0006515109509286354,
             "raw_breakout_by_horizon": false
+          },
+          "4": {
+            "directional_return": 0.0012614100353646,
+            "mae": -0.0006506631226291804,
+            "mfe": 0.0017624202053843074,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 3,
-        "primary_hit_plus1_plus12": false,
+        "matured_through_h1": 4,
+        "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
-        "time_to_breakout": null
+        "time_to_breakout": 4
       },
       "pair": "AUDUSD",
       "same_bar_raw_breakout": false,
@@ -252,9 +270,15 @@
             "mae": -0.0003935660506503291,
             "mfe": 0.0014228408818184324,
             "raw_breakout_by_horizon": true
+          },
+          "4": {
+            "directional_return": 0.001096172071739247,
+            "mae": -0.0003935660506503291,
+            "mfe": 0.0018006585265468722,
+            "raw_breakout_by_horizon": true
           }
         },
-        "matured_through_h1": 3,
+        "matured_through_h1": 4,
         "primary_hit_plus1_plus12": true,
         "same_bar_raw_breakout": false,
         "time_to_breakout": 3
@@ -3417,8 +3441,8 @@
       "threshold": 0.5965942096795052
     }
   ],
-  "generated_at_utc": "2026-09-08T03:10:45+00:00",
-  "last_complete_h1_utc": "2026-09-08T02:00:00+00:00",
+  "generated_at_utc": "2026-09-08T04:10:48+00:00",
+  "last_complete_h1_utc": "2026-09-08T03:00:00+00:00",
   "model_fingerprint": "6c767bcbc66f9719d9c4e47ff2756dc789901568f587772f1a27180f8872bd17",
   "model_name": "PAIR_PREWAKE_V1",
   "model_version": "pair-prewake-v1",
